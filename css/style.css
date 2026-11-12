@@ -814,3 +814,33 @@ a {
     padding: 24px;
   }
 }
+
+/* ==========================================
+   CLOSEST DIVISION — TEAM RECORDS
+========================================== */
+
+#glance-division-teams {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.division-team-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.division-team-row span {
+  color: #c4cfdd;
+}
+
+.division-team-row strong {
+  color: #d7b46a;
+  font-size: 17px;
+  font-weight: 800;
+  white-space: nowrap;
+}
