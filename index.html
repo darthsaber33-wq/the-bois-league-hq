@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Bois League HQ | Official Website</title>
+
+  <style>
+    :root {
+      --navy: #101d30;
+      --dark: #0a111d;
+      --card: #192a40;
+      --gold: #d8b765;
+      --white: #ffffff;
+      --muted: #9aabc0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--dark);
+      color: var(--white);
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background: var(--navy);
+      border-bottom: 2px solid var(--gold);
+      padding: 20px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: var(--gold);
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: bold;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--gold);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 85px 20px;
+      background: linear-gradient(135deg, #203750, #0a111d);
+      border-bottom: 1px solid #34445a;
+    }
+
+    .hero .eyebrow {
+      color: var(--gold);
+      font-size: 12px;
+      letter-spacing: 3px;
+      font-weight: bold;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 72px);
+      margin: 18px 0;
+      letter-spacing: 2px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .section {
+      max-width: 1200px;
+      margin: auto;
+      padding: 55px 24px;
+    }
+
+    .section-title {
+      font-size: 26px;
+      text-transform: uppercase;
+      border-left: 4px solid var(--gold);
+      padding-left: 15px;
+      margin-bottom: 30px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      display: block;
+      background: linear-gradient(145deg, #1c3049, #111c2d);
+      border: 1px solid #34445a;
+      border-radius: 12px;
+      padding: 30px 22px;
+      text-decoration: none;
+      color: var(--white);
+      transition: 0.25s ease;
+    }
+
+    .card:hover {
+      border-color: var(--gold);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(216,183,101,0.2);
+    }
+
+    .card h3 {
+      margin: 0 0 12px;
+      color: var(--gold);
+      font-size: 18px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .card span {
+      font-size: 12px;
+      color: var(--gold);
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      border-top: 1px solid #34445a;
+      padding: 30px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 850px) {
+      .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 550px) {
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        justify-content: center;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      .hero {
+        padding: 60px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">THE BOIS LEAGUE</div>
+
+    <nav>
+      <a href="/">HOME</a>
+      <a href="#season">2026 SEASON</a>
+      <a href="#history">HISTORY</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">ESTABLISHED 2024</div>
+    <h1>THE BOIS LEAGUE HQ</h1>
+    <p>Every Franchise. Every Rivalry. Every Legacy.</p>
+  </section>
+
+  <section class="section" id="season">
+    <h2 class="section-title">2026 Season Central</h2>
+
+    <div class="card-grid">
+
+      <a href="#season" class="card">
+        <h3>2026 Standings</h3>
+        <p>Division standings, overall records, and the playoff race.</p>
+        <span>VIEW STANDINGS</span>
+      </a>
+
+      <a href="#season" class="card">
+        <h3>Weekly Matchups</h3>
+        <p>Schedules, results, and featured games.</p>
+        <span>VIEW MATCHUPS</span>
+      </a>
+
+      <a href="#season" class="card">
+        <h3>Power Rankings</h3>
+        <p>Weekly rankings of all twelve franchises.</p>
+        <span>VIEW RANKINGS</span>
+      </a>
+
+      <a href="#season" class="card">
+        <h3>Game of the Week</h3>
+        <p>Featured matchups, rivalries, and commissioner previews.</p>
+        <span>VIEW FEATURED GAME</span>
+      </a>
+
+      <a href="#season" class="card">
+        <h3>2026 Playoffs</h3>
+        <p>Playoff picture, championship bracket, and consolation bracket.</p>
+        <span>VIEW PLAYOFFS</span>
+      </a>
+
+      <a href="#history" class="card">
+        <h3>Franchise Profiles</h3>
+        <p>Team histories, accomplishments, records, and rivalries.</p>
+        <span>EXPLORE FRANCHISES</span>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="section" id="history">
+    <h2 class="section-title">League History</h2>
+
+    <div class="card-grid">
+
+      <a href="#history" class="card">
+        <h3>2024 Inaugural Season</h3>
+        <p>Seven franchises. The beginning of the league.</p>
+        <span>CHAMPION: RILEY REID OPTION</span>
+      </a>
+
+      <a href="#history" class="card">
+        <h3>2025 Season</h3>
+        <p>Ten franchises. A new era of competition.</p>
+        <span>CHAMPION: DREADLORD'S ROYAL GUARD</span>
+      </a>
+
+      <a href="#history" class="card">
+        <h3>League Record Book</h3>
+        <p>All-time records, championships, streaks, and achievements.</p>
+        <span>EXPLORE RECORDS</span>
+      </a>
+
+    </div>
+  </section>
+
+  <footer>
+    THE BOIS LEAGUE HQ | EST. 2024
+  </footer>
+
+</body>
+</html>
