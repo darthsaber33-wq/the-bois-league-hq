@@ -1,0 +1,384 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2026 Standings | The Bois League</title>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    .standings-page {
+      background: #0b1423;
+      color: #f5f6f8;
+      min-height: 100vh;
+      padding: 70px 24px 100px;
+    }
+
+    .standings-container {
+      max-width: 1250px;
+      margin: 0 auto;
+    }
+
+    .standings-eyebrow {
+      color: #d7b46a;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .standings-heading {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 900;
+      margin: 0 0 14px;
+      text-transform: uppercase;
+    }
+
+    .standings-intro {
+      color: #b9c6d6;
+      margin-bottom: 55px;
+      line-height: 1.7;
+    }
+
+    .standings-section {
+      margin-bottom: 65px;
+    }
+
+    .standings-section h2 {
+      font-size: 28px;
+      text-transform: uppercase;
+      margin-bottom: 25px;
+      border-left: 4px solid #d7b46a;
+      padding-left: 18px;
+    }
+
+    .standings-panel {
+      background: #192638;
+      border: 1px solid #34445a;
+      border-radius: 14px;
+      padding: 28px;
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+    }
+
+    .standings-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .standings-table th {
+      color: #d7b46a;
+      font-size: 12px;
+      text-transform: uppercase;
+      text-align: left;
+      padding: 15px 12px;
+      border-bottom: 1px solid #46546a;
+    }
+
+    .standings-table td {
+      padding: 15px 12px;
+      border-bottom: 1px solid #2c3a4e;
+      color: #d5deea;
+    }
+
+    .standings-table tbody tr:hover {
+      background: #23354b;
+    }
+
+    .standings-table .team-name {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .standings-table .rank {
+      font-weight: 800;
+      color: #d7b46a;
+    }
+
+    .standings-table .positive {
+      color: #27d6a0;
+      font-weight: 700;
+    }
+
+    .standings-table .negative {
+      color: #ff626b;
+      font-weight: 700;
+    }
+
+    .division-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .division-card {
+      background: #192638;
+      border: 1px solid #34445a;
+      border-radius: 14px;
+      padding: 24px;
+      min-width: 0;
+    }
+
+    .division-card h3 {
+      color: #d7b46a;
+      text-transform: uppercase;
+      font-size: 16px;
+      letter-spacing: 1px;
+      margin: 0 0 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #46546a;
+    }
+
+    .division-card .standings-table {
+      font-size: 12px;
+    }
+
+    .division-card .standings-table th,
+    .division-card .standings-table td {
+      padding: 12px 8px;
+    }
+
+    .standings-note {
+      font-size: 12px;
+      color: #91a2b7;
+      margin-top: 18px;
+    }
+
+    .standings-error {
+      color: #ff9298;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: #d7b46a;
+      font-weight: 700;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 850px) {
+      .division-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .standings-panel,
+      .division-card {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">THE BOIS LEAGUE</a>
+    <nav>
+      <a href="/">HOME</a>
+      <a href="/seasons/2026/">2026 SEASON</a>
+      <a href="/#history">LEAGUE HISTORY</a>
+    </nav>
+  </div>
+</header>
+
+<main class="standings-page">
+  <div class="standings-container">
+
+    <div class="standings-eyebrow">
+      THE BOIS LEAGUE • SEASON THREE
+    </div>
+
+    <h1 class="standings-heading">2026 Standings</h1>
+
+    <p class="standings-intro">
+      The complete league standings, divisional races,
+      and official franchise records for the 2026 season.
+    </p>
+
+    <section class="standings-section">
+      <h2>Overall League Standings</h2>
+
+      <div class="standings-panel">
+        <div class="standings-eyebrow">
+          THE BOIS LEAGUE — FULL STANDINGS
+        </div>
+
+        <div class="table-scroll">
+          <table class="standings-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Team</th>
+                <th>W–L</th>
+                <th>PF</th>
+                <th>PA</th>
+                <th>Diff</th>
+                <th>Division</th>
+              </tr>
+            </thead>
+            <tbody id="overall-standings">
+              <tr>
+                <td colspan="7">Loading standings...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="standings-note">
+          Official league rankings and tiebreakers.
+        </p>
+      </div>
+    </section>
+
+    <section class="standings-section">
+      <h2>Division Standings</h2>
+
+      <div class="division-grid" id="division-standings">
+        <p>Loading divisions...</p>
+      </div>
+    </section>
+
+    <a href="/seasons/2026/" class="back-link">
+      ← Back to 2026 Season
+    </a>
+
+  </div>
+</main>
+
+<script>
+const STANDINGS_API =
+  "https://script.google.com/macros/s/" +
+  "AKfycbyowj7BeP1m_2Gf2r4j9hIPzruxjDIXnzVO-ibSMFrr-Z0P4aJvUkqF6ihiVdcz4JOYag" +
+  "/exec?type=standings";
+
+function formatPoints(value) {
+  return Number(value).toLocaleString("en-CA", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+}
+
+function formatDiff(value) {
+  const number = Number(value);
+  return (number > 0 ? "+" : "") + formatPoints(number);
+}
+
+function diffClass(value) {
+  return Number(value) >= 0 ? "positive" : "negative";
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, character => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[character]);
+}
+
+function overallRow(team) {
+  return `
+    <tr>
+      <td class="rank">#${escapeHTML(team.rank)}</td>
+      <td class="team-name">
+        ${escapeHTML(team.name)}
+        (${escapeHTML(team.abbreviation)})
+      </td>
+      <td>${escapeHTML(team.wins)}–${escapeHTML(team.losses)}</td>
+      <td>${formatPoints(team.pointsFor)}</td>
+      <td>${formatPoints(team.pointsAgainst)}</td>
+      <td class="${diffClass(team.differential)}">
+        ${formatDiff(team.differential)}
+      </td>
+      <td>${escapeHTML(team.division)}</td>
+    </tr>
+  `;
+}
+
+function divisionCard(name, teams) {
+  const rows = teams.map(team => `
+    <tr>
+      <td class="team-name">${escapeHTML(team.name)}</td>
+      <td>${escapeHTML(team.wins)}–${escapeHTML(team.losses)}</td>
+      <td>${formatPoints(team.pointsFor)}</td>
+      <td>${formatPoints(team.pointsAgainst)}</td>
+      <td class="${diffClass(team.differential)}">
+        ${formatDiff(team.differential)}
+      </td>
+    </tr>
+  `).join("");
+
+  return `
+    <article class="division-card">
+      <h3>${escapeHTML(name)} Division</h3>
+
+      <div class="table-scroll">
+        <table class="standings-table">
+          <thead>
+            <tr>
+              <th>Team</th>
+              <th>W–L</th>
+              <th>PF</th>
+              <th>PA</th>
+              <th>Diff</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+
+      <p class="standings-note">
+        Live standings • Official tie-breakers
+      </p>
+    </article>
+  `;
+}
+
+async function loadStandings() {
+  const overall = document.getElementById("overall-standings");
+  const divisions = document.getElementById("division-standings");
+
+  try {
+    const response = await fetch(STANDINGS_API);
+
+    if (!response.ok) {
+      throw new Error("HTTP " + response.status);
+    }
+
+    const data = await response.json();
+
+    if (!data.success || !Array.isArray(data.teams)) {
+      throw new Error(data.error || "Invalid standings data");
+    }
+
+    overall.innerHTML = data.teams.map(overallRow).join("");
+
+    divisions.innerHTML = ["North", "Central", "East", "West"]
+      .map(name => divisionCard(name, data.divisions?.[name] || []))
+      .join("");
+
+  } catch (error) {
+    console.error("Standings loading error:", error);
+
+    overall.innerHTML =
+      '<tr><td colspan="7" class="standings-error">' +
+      'Unable to load standings.</td></tr>';
+
+    divisions.innerHTML =
+      '<p class="standings-error">Unable to load divisions.</p>';
+  }
+}
+
+loadStandings();
+</script>
+
+</body>
+</html>
