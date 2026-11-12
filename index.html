@@ -767,6 +767,21 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  // Keep season-specific card titles up to date.
+  document.querySelectorAll("#season a").forEach(link => {
+    const title = link.querySelector("h3");
+
+    if (!title) return;
+
+    if (/^\d{4}\s+Standings$/i.test(title.textContent.trim())) {
+      title.textContent = config.currentSeason + " Standings";
+    }
+
+    if (/^\d{4}\s+Playoffs$/i.test(title.textContent.trim())) {
+      title.textContent = config.currentSeason + " Playoffs";
+    }
+  });
+
   // Rename the homepage section to be season-independent.
   const heading = document.querySelector("#season h2");
 
