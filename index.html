@@ -176,6 +176,7 @@
       }
     }
   </style>
+  <script src="/js/config.js" defer></script>
 </head>
 
 <body>
@@ -720,6 +721,59 @@ if (data.closestDivision) {
 }
 
 updateLeagueGlance();
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const config = window.LEAGUE_CONFIG;
+
+  if (!config) {
+    console.error("League configuration not loaded.");
+    return;
+  }
+
+  const destinations = {
+    standings: config.standings,
+    matchups: config.matchups,
+    rankings: config.rankings,
+    gotw: config.gotw,
+    playoffs: config.playoffs,
+    franchises: config.franchises
+  };
+
+  // Update the six Season Central cards.
+  document.querySelectorAll("#season a").forEach(link => {
+    const text = link.textContent.toLowerCase();
+
+    let destination = null;
+
+    if (text.includes("standings")) destination = destinations.standings;
+    else if (text.includes("matchups")) destination = destinations.matchups;
+    else if (text.includes("rankings")) destination = destinations.rankings;
+    else if (text.includes("featured game")) destination = destinations.gotw;
+    else if (text.includes("playoffs")) destination = destinations.playoffs;
+    else if (text.includes("franchises")) destination = destinations.franchises;
+
+    if (destination) {
+      link.href = destination;
+    }
+  });
+
+  // Update the top navigation's season link.
+  document.querySelectorAll("header a").forEach(link => {
+    if (/^\d{4}\s+season$/i.test(link.textContent.trim())) {
+      link.href = config.seasonHome;
+      link.textContent = config.currentSeason + " SEASON";
+    }
+  });
+
+  // Rename the homepage section to be season-independent.
+  const heading = document.querySelector("#season h2");
+
+  if (heading) {
+    heading.textContent = "SEASON CENTRAL";
+  }
+});
 </script>
 
 </body>
