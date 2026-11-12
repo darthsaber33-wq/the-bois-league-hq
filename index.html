@@ -355,5 +355,93 @@
     THE BOIS LEAGUE HQ | EST. 2024
   </footer>
 
+<script>
+async function updateScoreboard() {
+  const track = document.querySelector(".scoreboard-track");
+  const label = document.querySelector(".scoreboard-label");
+
+  if (!track) return;
+
+  try {
+    const response = await fetch("/api/scoreboard");
+
+    if (!response.ok) {
+      throw new Error("Unable to fetch scoreboard");
+    }
+
+    const data = await response.json();
+
+    if (!data.success || !data.games?.length) {
+      throw new Error("No scoreboard games available");
+    }
+
+    // Update the week heading
+    if (label) {
+      label.textContent =
+        "THE BOIS LEAGUE • WEEK " +
+        data.week +
+        " RESULTS";
+    }
+
+    // Clear the old hardcoded cards
+    track.replaceChildren();
+
+    // Create a card for every matchup
+    data.games.forEach(game => {
+      const card = document.createElement("div");
+      card.className = "score-card";
+
+      if (game.gotw) {
+        card.classList.add("gotw-card");
+      }
+
+      const teams = document.createElement("div");
+      teams.className = "score-teams";
+
+      const teamLines = [
+        [game.team1, game.score1],
+        [game.team2, game.score2]
+      ];
+
+      teamLines.forEach(([name, score]) => {
+        const team = document.createElement("div");
+        team.className = "score-team";
+
+        if (game.winner === name) {
+          team.classList.add("score-winner");
+        } else if (game.completed) {
+          team.classList.add("score-loser");
+        }
+
+        const teamName = document.createElement("span");
+        teamName.textContent = name;
+
+        const teamScore = document.createElement("span");
+        teamScore.textContent =
+          score === null ? "—" : Number(score).toFixed(2);
+
+        team.append(teamName, teamScore);
+        teams.appendChild(team);
+      });
+
+      const status = document.createElement("div");
+      status.className = "score-status";
+      status.textContent =
+        (game.completed ? "FINAL" : "UPCOMING") +
+        (game.gotw ? " • GAME OF THE WEEK" : "");
+
+      card.append(teams, status);
+      track.appendChild(card);
+    });
+
+  } catch (error) {
+    console.error("Scoreboard update failed:", error);
+    // Keep the existing scoreboard visible if the API fails.
+  }
+}
+
+updateScoreboard();
+</script>
+
 </body>
 </html>
