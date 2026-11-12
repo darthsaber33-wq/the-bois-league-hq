@@ -514,3 +514,18 @@ a {
 .score-card.gotw-card .score-status {
   color: #e8c46d;
 }
+
+/* Keep both teams on separate rows */
+.score-teams {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.score-team {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
+}
