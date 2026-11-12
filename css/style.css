@@ -529,3 +529,181 @@ a {
   align-items: center;
   margin-bottom: 0;
 }
+
+/* ==========================================
+   THE BOIS LEAGUE — LEAGUE HEADLINES
+========================================== */
+
+.league-news-section {
+  background: #0b1422;
+  padding: 65px 24px 75px;
+  color: #f5f6f8;
+}
+
+.league-news-inner {
+  max-width: 1520px;
+  margin: 0 auto;
+}
+
+.league-news-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.league-news-eyebrow {
+  color: #d7b46a;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin: 0 0 12px;
+}
+
+.league-news-heading h2 {
+  color: #ffffff;
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.league-news-week {
+  color: #d7b46a;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+.league-news-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.news-featured,
+.news-small,
+.news-gotw {
+  border: 1px solid #34445b;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.news-featured {
+  background: linear-gradient(135deg, #263a54, #14243a);
+  padding: 38px;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 4px solid #d7b46a;
+}
+
+.news-category {
+  display: block;
+  color: #d7b46a;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.news-featured h3 {
+  color: #ffffff;
+  font-size: clamp(25px, 2.5vw, 38px);
+  line-height: 1.15;
+  margin: 0 0 20px;
+}
+
+.news-featured p {
+  color: #c5cfdd;
+  font-size: 16px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.news-secondary {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+}
+
+.news-small {
+  background: #1b2c43;
+  padding: 25px 28px;
+}
+
+.news-small h3 {
+  color: #ffffff;
+  font-size: 21px;
+  line-height: 1.3;
+  margin: 0 0 12px;
+}
+
+.news-small p {
+  color: #bac8d9;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.news-gotw {
+  background: linear-gradient(100deg, #1c3049, #101e30);
+  border-color: #d7b46a;
+  padding: 30px 35px;
+  margin-top: 20px;
+}
+
+.news-gotw h3 {
+  color: #ffffff;
+  font-size: 25px;
+  margin: 0 0 12px;
+}
+
+.news-gotw p {
+  color: #c5cfdd;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Tablet and mobile */
+@media (max-width: 850px) {
+  .league-news-section {
+    padding: 45px 18px;
+  }
+
+  .league-news-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .news-featured {
+    min-height: auto;
+    padding: 28px;
+  }
+
+  .news-secondary {
+    grid-template-rows: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .league-news-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .news-featured,
+  .news-small,
+  .news-gotw {
+    padding: 22px;
+  }
+
+  .news-gotw h3 {
+    font-size: 21px;
+  }
+}
