@@ -588,5 +588,109 @@ async function updateLeagueNews() {
 updateLeagueNews();
 </script>
 
+<script>
+async function updateLeagueGlance() {
+  try {
+    const response = await fetch("/api/stats");
+
+    if (!response.ok) {
+      throw new Error("Unable to fetch league statistics");
+    }
+
+    const data = await response.json();
+
+    if (!data.success) {
+      throw new Error("League statistics unavailable");
+    }
+
+    const names = {
+      "DRG": "Dreadlord's Royal Guard",
+      "501st": "501st Legion",
+      "RRO": "Riley Reid Option",
+      "JDS": "Josh Downs Syndrome",
+      "NIP": "Njigbas In Paris",
+      "LUN": "The Lunar Eclipses",
+      "WPG": "Winnipeg Redskins",
+      "CG": "Celestial Guardians",
+      "BAN": "The Banana Splitters",
+      "CAR": "Carolina-Panthers",
+      "OG": "The Outdoor Guys",
+      "XDM": "XDMemes124"
+    };
+
+    const fullName = abbreviation =>
+      names[abbreviation] || abbreviation;
+
+    const setText = (id, value) => {
+      const element = document.getElementById(id);
+      if (element) element.textContent = value;
+    };
+
+    if (data.bestRecord) {
+      setText(
+        "glance-record",
+        data.bestRecord.wins + "–" + data.bestRecord.losses
+      );
+      setText(
+        "glance-record-team",
+        fullName(data.bestRecord.team)
+      );
+    }
+
+    if (data.scoringLeader) {
+      setText(
+        "glance-scoring",
+        Number(data.scoringLeader.pointsFor)
+          .toLocaleString("en-CA", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          })
+      );
+      setText(
+        "glance-scoring-team",
+        fullName(data.scoringLeader.team)
+      );
+    }
+
+    if (data.longestStreak) {
+      setText(
+        "glance-streak",
+        "W" + data.longestStreak.wins
+      );
+      setText(
+        "glance-streak-team",
+        fullName(data.longestStreak.team)
+      );
+    }
+
+    if (data.closestDivision) {
+      setText(
+        "glance-division",
+        data.closestDivision.division
+      );
+      setText(
+        "glance-division-teams",
+        fullName(data.closestDivision.leader) +
+        " vs " +
+        fullName(data.closestDivision.runnerUp)
+      );
+    }
+
+  } catch (error) {
+    console.error("League at a Glance error:", error);
+
+    document.querySelectorAll(
+      ".league-glance-grid h3"
+    ).forEach(element => {
+      if (element.textContent === "Loading...") {
+        element.textContent = "Unavailable";
+      }
+    });
+  }
+}
+
+updateLeagueGlance();
+</script>
+
 </body>
 </html>
