@@ -663,18 +663,48 @@ async function updateLeagueGlance() {
       );
     }
 
-    if (data.closestDivision) {
-      setText(
-        "glance-division",
-        data.closestDivision.division
-      );
-      setText(
-        "glance-division-teams",
-        fullName(data.closestDivision.leader) +
-        " vs " +
-        fullName(data.closestDivision.runnerUp)
-      );
-    }
+  
+if (data.closestDivision) {
+  const division = data.closestDivision;
+
+  setText("glance-division", division.division);
+
+  const teamsElement = document.getElementById(
+    "glance-division-teams"
+  );
+
+  if (teamsElement) {
+    teamsElement.innerHTML = "";
+
+    const teams = [
+      {
+        name: fullName(division.leader),
+        wins: division.leaderWins,
+        losses: division.leaderLosses
+      },
+      {
+        name: fullName(division.runnerUp),
+        wins: division.runnerUpWins,
+        losses: division.runnerUpLosses
+      }
+    ];
+
+    teams.forEach(team => {
+      const row = document.createElement("div");
+      row.className = "division-team-row";
+
+      const name = document.createElement("span");
+      name.textContent = team.name;
+
+      const record = document.createElement("strong");
+      record.textContent = team.wins + "–" + team.losses;
+
+      row.append(name, record);
+      teamsElement.appendChild(row);
+    });
+  }
+}
+
 
   } catch (error) {
     console.error("League at a Glance error:", error);
