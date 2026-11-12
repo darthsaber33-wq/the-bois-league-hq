@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>2026 Season | The Bois League</title>
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    .season-hub {
+      background: #0b1423;
+      min-height: 100vh;
+      color: #f5f6f8;
+    }
+
+    .season-hub-inner {
+      max-width: 1250px;
+      margin: 0 auto;
+      padding: 75px 24px 100px;
+    }
+
+    .season-eyebrow {
+      color: #d7b46a;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .season-title {
+      font-size: clamp(42px, 6vw, 76px);
+      font-weight: 900;
+      margin: 16px 0;
+      line-height: 1.05;
+    }
+
+    .season-description {
+      color: #bdc9d8;
+      font-size: 17px;
+      line-height: 1.7;
+      max-width: 760px;
+      margin-bottom: 45px;
+    }
+
+    .season-hub-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .season-hub-card {
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(145deg, #20344d, #17283e);
+      border: 1px solid #34445b;
+      border-radius: 12px;
+      padding: 28px;
+      min-height: 190px;
+      text-decoration: none;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+
+    .season-hub-card:hover {
+      transform: translateY(-4px);
+      border-color: #d7b46a;
+    }
+
+    .season-hub-card h2 {
+      color: #d7b46a;
+      font-size: 21px;
+      margin: 0 0 15px;
+    }
+
+    .season-hub-card p {
+      color: #bdc9d8;
+      font-size: 14px;
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .season-hub-card span {
+      color: #d7b46a;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .5px;
+    }
+
+    @media (max-width: 850px) {
+      .season-hub-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 550px) {
+      .season-hub-inner {
+        padding: 45px 18px 70px;
+      }
+
+      .season-hub-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo">THE BOIS LEAGUE</a>
+
+      <nav>
+        <a href="/">HOME</a>
+        <a href="/seasons/2026/" class="active">2026 SEASON</a>
+        <a href="/#history">LEAGUE HISTORY</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="season-hub">
+    <div class="season-hub-inner">
+
+      <p class="season-eyebrow">
+        THE BOIS LEAGUE • SEASON THREE
+      </p>
+
+      <h1 class="season-title">2026 SEASON</h1>
+
+      <p class="season-description">
+        Twelve franchises. Four divisions. One championship.
+        Explore the standings, weekly matchups, power rankings,
+        featured rivalries, and the road to the 2026 title.
+      </p>
+
+      <div class="season-hub-grid">
+
+        <a class="season-hub-card" href="standings.html">
+          <h2>2026 Standings</h2>
+          <p>Overall records, divisional standings, and the playoff race.</p>
+          <span>VIEW STANDINGS →</span>
+        </a>
+
+        <a class="season-hub-card" href="matchups.html">
+          <h2>Weekly Matchups</h2>
+          <p>Schedules, scores, results, and featured games.</p>
+          <span>VIEW MATCHUPS →</span>
+        </a>
+
+        <a class="season-hub-card" href="rankings.html">
+          <h2>Power Rankings</h2>
+          <p>Weekly rankings and commissioner commentary.</p>
+          <span>VIEW RANKINGS →</span>
+        </a>
+
+        <a class="season-hub-card" href="gotw.html">
+          <h2>Game of the Week</h2>
+          <p>Featured matchups, rivalries, and commissioner previews.</p>
+          <span>VIEW FEATURED GAME →</span>
+        </a>
+
+        <a class="season-hub-card" href="playoffs.html">
+          <h2>2026 Playoffs</h2>
+          <p>Playoff picture, championship bracket, and consolation bracket.</p>
+          <span>VIEW PLAYOFFS →</span>
+        </a>
+
+        <a class="season-hub-card" href="/franchises/">
+          <h2>Franchise Profiles</h2>
+          <p>Team histories, accomplishments, records, and rivalries.</p>
+          <span>EXPLORE FRANCHISES →</span>
+        </a>
+
+      </div>
+    </div>
+  </main>
+</body>
+</html>
