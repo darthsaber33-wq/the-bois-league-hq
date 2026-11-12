@@ -484,3 +484,33 @@ a {
   background-size: cover;
   background-repeat: no-repeat;
 }
+
+/* ========================================
+   LIVE SCOREBOARD ENHANCEMENTS
+======================================== */
+
+.score-card.gotw-card {
+  border: 2px solid #d7b46a;
+  background: #21334c;
+}
+
+.score-team {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+.score-team.score-winner {
+  color: #e8c46d;
+}
+
+.score-team.score-loser {
+  color: #b5bfce;
+}
+
+.score-card.gotw-card .score-status {
+  color: #e8c46d;
+}
