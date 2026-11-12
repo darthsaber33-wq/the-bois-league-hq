@@ -102,21 +102,83 @@
         grid-template-columns: 1fr;
       }
     }
+    
+/* Season Hub navigation */
+.season-site-header {
+  background: #0b1423;
+  border-bottom: 1px solid #d7b46a;
+  padding: 20px 24px;
+}
+
+.season-header-inner {
+  max-width: 1520px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.season-site-logo {
+  color: #d7b46a;
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-decoration: none;
+}
+
+.season-header-nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.season-header-nav a {
+  color: #f5f6f8;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.season-header-nav a:hover,
+.season-header-nav a.active {
+  color: #d7b46a;
+}
+
+@media (max-width: 650px) {
+  .season-header-inner {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .season-header-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+}
+
   </style>
 </head>
 
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <a href="/" class="site-logo">THE BOIS LEAGUE</a>
+  
+<header class="season-site-header">
+  <div class="season-header-inner">
 
-      <nav>
-        <a href="/">HOME</a>
-        <a href="/seasons/2026/" class="active">2026 SEASON</a>
-        <a href="/#history">LEAGUE HISTORY</a>
-      </nav>
-    </div>
-  </header>
+    <a href="/" class="season-site-logo">
+      THE BOIS LEAGUE
+    </a>
+
+    <nav class="season-header-nav">
+      <a href="/">HOME</a>
+      <a href="/seasons/2026/" class="active">2026 SEASON</a>
+      <a href="/#history">LEAGUE HISTORY</a>
+    </nav>
+
+  </div>
+</header>
+
 
   <main class="season-hub">
     <div class="season-hub-inner">
