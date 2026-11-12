@@ -707,3 +707,110 @@ a {
     font-size: 21px;
   }
 }
+
+/* ==========================================
+   THE BOIS LEAGUE — LEAGUE AT A GLANCE
+========================================== */
+
+.league-glance-section {
+  background: #101c30;
+  padding: 55px 24px 65px;
+  color: #f5f6f8;
+  border-top: 1px solid #263a54;
+  border-bottom: 1px solid #263a54;
+}
+
+.league-glance-inner {
+  max-width: 1520px;
+  margin: 0 auto;
+}
+
+.league-glance-heading {
+  margin-bottom: 28px;
+}
+
+.league-glance-heading p {
+  color: #d7b46a;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin: 0 0 12px;
+}
+
+.league-glance-heading h2 {
+  color: #ffffff;
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.league-glance-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.glance-card {
+  background: linear-gradient(145deg, #20344d, #17283e);
+  border: 1px solid #34445b;
+  border-radius: 12px;
+  padding: 28px 24px;
+  min-height: 185px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.glance-card:hover {
+  transform: translateY(-4px);
+  border-color: #d7b46a;
+}
+
+.glance-label {
+  color: #d7b46a;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.glance-card h3 {
+  color: #ffffff;
+  font-size: clamp(27px, 2.4vw, 38px);
+  font-weight: 900;
+  line-height: 1.1;
+  margin: 0 0 15px;
+}
+
+.glance-card p {
+  color: #c4cfdd;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (max-width: 1050px) {
+  .league-glance-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .league-glance-section {
+    padding: 40px 18px 50px;
+  }
+
+  .league-glance-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .glance-card {
+    min-height: 140px;
+    padding: 24px;
+  }
+}
