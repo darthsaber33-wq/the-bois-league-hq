@@ -1,0 +1,419 @@
+
+/* ========================================
+   THE BOIS LEAGUE HQ
+   GLOBAL DESIGN SYSTEM
+======================================== */
+
+:root {
+  --bg: #090f19;
+  --navy: #101d30;
+  --navy-light: #192a40;
+  --navy-hover: #223650;
+  --gold: #d8b765;
+  --gold-bright: #f1d48a;
+  --white: #ffffff;
+  --muted: #a2b0c4;
+  --border: rgba(216,183,101,0.22);
+  --shadow: 0 12px 30px rgba(0,0,0,0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--white);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+}
+
+/* ========================================
+   NAVIGATION
+======================================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(12,22,37,0.97);
+  border-bottom: 1px solid var(--gold);
+  backdrop-filter: blur(12px);
+}
+
+.nav-inner {
+  max-width: 1400px;
+  margin: auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.site-logo {
+  color: var(--gold);
+  font-size: 21px;
+  font-weight: 900;
+  letter-spacing: 1.3px;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--gold);
+}
+
+/* ========================================
+   STADIUM HERO
+======================================== */
+
+.stadium-hero {
+  min-height: 460px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 24px;
+  position: relative;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5,12,23,0.88),
+      rgba(9,20,35,0.62),
+      rgba(5,12,23,0.88)
+    ),
+    url("../assets/stadium.jpg") center/cover no-repeat,
+    linear-gradient(135deg,#203750,#090f19);
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+}
+
+.hero-eyebrow {
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  font-size: clamp(40px,6vw,78px);
+  font-weight: 900;
+  letter-spacing: 2px;
+  line-height: 1.1;
+  margin: 20px 0;
+  text-transform: uppercase;
+}
+
+.hero-subtitle {
+  color: #d0d9e6;
+  font-size: 17px;
+}
+
+/* ========================================
+   WEEKLY SCOREBOARD
+======================================== */
+
+.scoreboard-strip {
+  background: #101d30;
+  border-bottom: 1px solid var(--border);
+  padding: 18px 0;
+}
+
+.scoreboard-inner {
+  max-width: 1400px;
+  margin: auto;
+  padding: 0 24px;
+}
+
+.scoreboard-label {
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+}
+
+.scoreboard-track {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.score-card {
+  flex: 0 0 200px;
+  background: var(--navy-light);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 14px;
+  transition: 0.2s ease;
+}
+
+.score-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+
+.score-teams {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.score-status {
+  color: var(--muted);
+  font-size: 10px;
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+
+/* ========================================
+   GENERAL SECTIONS
+======================================== */
+
+.content-section {
+  max-width: 1250px;
+  margin: auto;
+  padding: 55px 24px;
+}
+
+.section-heading {
+  border-left: 4px solid var(--gold);
+  padding-left: 15px;
+  margin-bottom: 26px;
+  font-size: 26px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+/* ========================================
+   NAVIGATION CARDS
+======================================== */
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 18px;
+}
+
+.feature-card {
+  display: block;
+  padding: 26px;
+  background: linear-gradient(145deg,#1b2d45,#101a2b);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  transition: 0.25s ease;
+}
+
+.feature-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(216,183,101,0.2);
+}
+
+.feature-card h3 {
+  margin: 0 0 10px;
+  color: var(--gold);
+  font-size: 18px;
+}
+
+.feature-card p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.feature-card .action {
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.6px;
+}
+
+/* ========================================
+   LEAGUE HEADLINES
+======================================== */
+
+.news-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 18px;
+}
+
+.news-feature,
+.news-small {
+  background: linear-gradient(145deg,#1b2d45,#101a2b);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.news-feature {
+  min-height: 260px;
+}
+
+.news-tag {
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.news-feature h3 {
+  font-size: 28px;
+  line-height: 1.2;
+  margin: 14px 0;
+}
+
+.news-small h3 {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.news-feature p,
+.news-small p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.news-stack {
+  display: grid;
+  gap: 18px;
+}
+
+/* ========================================
+   LEAGUE AT A GLANCE
+======================================== */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 16px;
+}
+
+.stat-card {
+  background: linear-gradient(145deg,#1b2d45,#101a2b);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+  text-align: center;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stat-value {
+  color: var(--gold);
+  font-size: 25px;
+  font-weight: 900;
+  margin: 10px 0;
+}
+
+.stat-detail {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ========================================
+   FOOTER
+======================================== */
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 30px 24px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  background: var(--navy);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+======================================== */
+
+@media (max-width: 900px) {
+  .feature-grid {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .news-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .nav-links {
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .stadium-hero {
+    min-height: 350px;
+    padding: 65px 20px;
+  }
+
+  .feature-grid,
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .content-section {
+    padding: 40px 18px;
+  }
+
+  .news-feature h3 {
+    font-size: 23px;
+  }
+}
