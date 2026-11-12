@@ -109,7 +109,7 @@ a {
       rgba(9,20,35,0.62),
       rgba(5,12,23,0.88)
     ),
-    url("../assets/stadium.jpg.png") center/cover no-repeat,
+    url("../stadium.jpg.png") center/cover no-repeat,
     linear-gradient(135deg,#203750,#090f19);
   border-bottom: 1px solid var(--border);
 }
