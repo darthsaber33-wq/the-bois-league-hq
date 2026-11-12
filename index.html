@@ -494,5 +494,60 @@ async function updateScoreboard() {
 updateScoreboard();
 </script>
 
+<script>
+async function updateLeagueNews() {
+  try {
+    const response = await fetch("/api/news");
+
+    if (!response.ok) {
+      throw new Error("Unable to fetch league news");
+    }
+
+    const data = await response.json();
+
+    if (!data.success || !data.stories?.length) {
+      throw new Error("No league headlines available");
+    }
+
+    const weekLabel = document.getElementById("news-week");
+
+    if (weekLabel) {
+      weekLabel.textContent = "WEEK " + data.week;
+    }
+
+    const sections = {
+      "Top Story": "news-top",
+      "Upset Alert": "news-upset",
+      "Power Rankings": "news-rankings",
+      "Game of the Week": "news-gotw"
+    };
+
+    data.stories.forEach(story => {
+      const sectionId = sections[story.type];
+      if (!sectionId) return;
+
+      const section = document.getElementById(sectionId);
+      if (!section) return;
+
+      const headline = section.querySelector("h3");
+      const description = section.querySelector("p");
+
+      if (headline) {
+        headline.textContent = story.headline;
+      }
+
+      if (description) {
+        description.textContent = story.description;
+      }
+    });
+
+  } catch (error) {
+    console.error("League Headlines error:", error);
+  }
+}
+
+updateLeagueNews();
+</script>
+
 </body>
 </html>
