@@ -7,6 +7,29 @@
   <title>2026 Playoffs | The Bois League</title>
   <link rel="stylesheet" href="/css/style.css">
 
+.playoff-race-label {
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: 5px;
+  padding: 5px 9px;
+  border-radius: 5px;
+  background: rgba(224, 182, 92, 0.1);
+  color: #e0b65c;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+}
+
+.picture-team {
+  transition: transform 0.2s ease,
+              border-color 0.2s ease;
+}
+
+.picture-team:hover {
+  transform: translateY(-3px);
+  border-color: #b99042;
+}
+
   <style>
     .playoff-page {
       background: #0b1423;
@@ -326,9 +349,34 @@ async function loadPlayoffStandings() {
       }
     });
 
-    hunt.forEach(team => {
-      huntContainer.appendChild(makePlayoffCard(team, null));
-    });
+    
+const finalWildcard = wildcards[wildcards.length - 1];
+
+hunt.forEach(team => {
+  const card = makePlayoffCard(team, null);
+
+  const seedLabel = card.querySelector(".picture-seed");
+  seedLabel.textContent = "IN THE HUNT";
+
+  const gamesBack = finalWildcard
+    ? (finalWildcard.wins - team.wins) +
+      (team.losses - finalWildcard.losses) / 2
+    : 0;
+
+  const raceLabel = document.createElement("span");
+  raceLabel.className = "playoff-race-label";
+
+  if (gamesBack <= 0) {
+    raceLabel.textContent = "TIEBREAKER / DIVISION RACE";
+  } else {
+    raceLabel.textContent =
+      gamesBack.toFixed(1) + " GB • WILD CARD";
+  }
+
+  card.appendChild(raceLabel);
+  huntContainer.appendChild(card);
+});
+
 
     note.textContent =
       "Live playoff projections • " +
