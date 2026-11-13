@@ -385,6 +385,28 @@ console.log(
 );
 
 console.table(playoffPossibilities);
+    const divisionPossibilities = playoffPossibilities.map(team => {
+  const divisionOpponents = playoffPossibilities.filter(
+    opponent =>
+      opponent.division === team.division &&
+      opponent.abbreviation !== team.abbreviation
+  );
+
+  const highestOpponentWins = Math.max(
+    ...divisionOpponents.map(opponent => opponent.wins)
+  );
+
+  return {
+    team: team.name,
+    division: team.division,
+    maximumWins: team.maximumWins,
+    currentDivisionLeaderWins: highestOpponentWins,
+    divisionStillPossible:
+      team.maximumWins >= highestOpponentWins
+  };
+});
+
+console.table(divisionPossibilities);
     // Each division's highest-ranked team qualifies automatically.
     const divisionLeaders = new Map();
 
