@@ -289,10 +289,21 @@ async function loadPlayoffStandings() {
   "type=schedule"
 );
 
-const [response, scheduleResponse] = await Promise.all([
-  fetch(PLAYOFF_STANDINGS_API),
-  fetch(scheduleApi)
-]);
+const resultsApi = PLAYOFF_STANDINGS_API.replace(
+  "type=standings",
+  "type=results"
+);
+
+const [response, scheduleResponse, resultsResponse] =
+  await Promise.all([
+    fetch(PLAYOFF_STANDINGS_API),
+    fetch(scheduleApi),
+    fetch(resultsApi)
+  ]);
+
+if (!resultsResponse.ok) {
+  throw new Error("Results API request failed");
+}
 
 if (!scheduleResponse.ok) {
   throw new Error("Schedule API request failed");
@@ -310,7 +321,21 @@ if (
 }
 
 const remainingGames = scheduleData.games;
+const resultsData = await resultsResponse.json();
 
+if (
+  !resultsData.success ||
+  !Array.isArray(resultsData.games)
+) {
+  throw new Error("Invalid completed results data");
+}
+
+const completedGames = resultsData.games;
+
+console.log(
+  "Completed regular-season games loaded:",
+  completedGames.length
+);
 console.log(
   "Remaining regular-season games loaded:",
   remainingGames.length
