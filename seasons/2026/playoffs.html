@@ -284,10 +284,37 @@ async function loadPlayoffStandings() {
   const note = document.querySelector(".picture-note");
 
   try {
-    const response = await fetch(PLAYOFF_STANDINGS_API);
+    const scheduleApi = PLAYOFF_STANDINGS_API.replace(
+  "type=standings",
+  "type=schedule"
+);
+
+const [response, scheduleResponse] = await Promise.all([
+  fetch(PLAYOFF_STANDINGS_API),
+  fetch(scheduleApi)
+]);
+
+if (!scheduleResponse.ok) {
+  throw new Error("Schedule API request failed");
+}
     if (!response.ok) throw new Error("API request failed");
 
     const data = await response.json();
+    const scheduleData = await scheduleResponse.json();
+
+if (
+  !scheduleData.success ||
+  !Array.isArray(scheduleData.games)
+) {
+  throw new Error("Invalid schedule data");
+}
+
+const remainingGames = scheduleData.games;
+
+console.log(
+  "Remaining regular-season games loaded:",
+  remainingGames.length
+);
     if (!data.success || !Array.isArray(data.teams)) {
       throw new Error("Invalid standings data");
     }
