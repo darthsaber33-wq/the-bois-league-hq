@@ -432,27 +432,14 @@
 
 <script>
 (function () {
-  const projectedSeeds = [
-    "Dreadlord's Royal Guard",
-    "501st Legion",
-    "Josh Downs Syndrome",
-    "Winnipeg Redskins",
-    "Celestial Guardians",
-    "Njigbas In Paris",
-    "Carolina-Panthers",
-    "Riley Reid Option",
-    "The Banana Splitters",
-    "XDMemes124",
-    "The Outdoor Guys",
-    "The Lunar Eclipses"
-  ];
+  let projectedSeeds = [];
 
   function team(seed) {
-    return {
-      seed: seed,
-      name: projectedSeeds[seed - 1]
-    };
-  }
+  return {
+    seed: seed,
+    name: projectedSeeds[seed - 1] || "TBD"
+  };
+}
 
   function placeholder(name) {
     return { seed: null, name: name };
@@ -474,7 +461,7 @@
       teamHTML(a) + teamHTML(b) +
       '</div>';
   }
-
+function renderBrackets() {
   document.getElementById("champ-opening").innerHTML =
     match("MATCHUP #1", team(2), team(7)) +
     match("MATCHUP #2", team(3), team(6)) +
@@ -515,7 +502,32 @@
     match("🏆 CONSOLATION CHAMPIONSHIP",
       placeholder("Consolation Finalist 1"),
       placeholder("Consolation Finalist 2"));
+}
+  async function loadLiveBracketSeeds() {
+  try {
+    const url = new URL(PLAYOFF_STANDINGS_API);
+    url.searchParams.set("type", "standings");
 
+    const response = await fetch(url.toString());
+    if (!response.ok) {
+      throw new Error("Standings request failed");
+    }
+
+    const data = await response.json();
+    if (!data.success || !Array.isArray(data.teams)) {
+      throw new Error("Invalid standings data");
+    }
+
+    projectedSeeds = data.teams
+      .slice()
+      .sort((a, b) => Number(a.rank) - Number(b.rank))
+      .map(t => t.name);
+
+    renderBrackets();
+  } catch (error) {
+    console.error("Unable to load bracket standings:", error);
+  }
+}
   document.querySelectorAll(".bracket-tabs button")
     .forEach(button => {
       button.addEventListener("click", function () {
@@ -534,6 +546,8 @@
           .style.display = consolation ? "block" : "none";
       });
     });
+  renderBrackets();
+window.addEventListener("load", loadLiveBracketSeeds);
 })();
 </script>
 
