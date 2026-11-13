@@ -296,5 +296,42 @@
 
   </main>
 
+<script>
+  const PLAYOFF_STANDINGS_API =
+    "https://script.google.com/macros/s/" +
+    "AKfycbyowj7BeP1m_2Gf2r4j9hIPzru xjDIXnzVO-ibSMFrr-Z0P4aJvUkqF6ihiVdcz4JOYag".replace(" ", "") +
+    "/exec?type=standings";
+
+  async function loadPlayoffStandings() {
+    try {
+      const response = await fetch(PLAYOFF_STANDINGS_API);
+
+      if (!response.ok) {
+        throw new Error("API request failed");
+      }
+
+      const data = await response.json();
+
+      if (!data.success || !Array.isArray(data.teams)) {
+        throw new Error("Invalid standings data");
+      }
+
+      console.log("Playoff standings loaded:", data);
+
+      document.querySelector(".picture-note").textContent =
+        "Live standings connected • " +
+        data.teams.length +
+        " franchises loaded • Projected playoff seeds";
+    } catch (error) {
+      console.error("Playoff standings error:", error);
+
+      document.querySelector(".picture-note").textContent =
+        "Unable to load live standings. Showing current playoff picture.";
+    }
+  }
+
+  loadPlayoffStandings();
+</script>
+
 </body>
 </html>
