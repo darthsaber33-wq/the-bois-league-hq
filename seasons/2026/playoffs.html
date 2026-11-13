@@ -237,33 +237,111 @@
     "AKfycbyowj7BeP1m_2Gf2r4j9hIPzru xjDIXnzVO-ibSMFrr-Z0P4aJvUkqF6ihiVdcz4JOYag".replace(" ", "") +
     "/exec?type=standings";
 
-  async function loadPlayoffStandings() {
-    try {
-      const response = await fetch(PLAYOFF_STANDINGS_API);
+function makePlayoffCard(team, seed, isBye = false) {
+  const card = document.createElement("div");
+  card.className = "picture-team" + (isBye ? " bye-team" : "");
 
-      if (!response.ok) {
-        throw new Error("API request failed");
-      }
+  const seedLabel = document.createElement("span");
+  seedLabel.className = "picture-seed";
+  seedLabel.textContent = seed
+    ? "#" + seed + " SEED"
+    : "#" + team.rank + " OVERALL";
 
-      const data = await response.json();
+  const name = document.createElement("strong");
+  name.textContent = team.name;
 
-      if (!data.success || !Array.isArray(data.teams)) {
-        throw new Error("Invalid standings data");
-      }
+  const record = document.createElement("span");
+  record.textContent = team.wins + "–" + team.losses;
 
-      console.log("Playoff standings loaded:", data);
+  card.append(seedLabel, name, record);
+  return card;
+}
 
-      document.querySelector(".picture-note").textContent =
-        "Live standings connected • " +
-        data.teams.length +
-        " franchises loaded • Projected playoff seeds";
-    } catch (error) {
-      console.error("Playoff standings error:", error);
+async function loadPlayoffStandings() {
+  const note = document.querySelector(".picture-note");
 
-      document.querySelector(".picture-note").textContent =
-        "Unable to load live standings. Showing current playoff picture.";
+  try {
+    const response = await fetch(PLAYOFF_STANDINGS_API);
+    if (!response.ok) throw new Error("API request failed");
+
+    const data = await response.json();
+    if (!data.success || !Array.isArray(data.teams)) {
+      throw new Error("Invalid standings data");
     }
+
+    const teams = [...data.teams].sort((a, b) => a.rank - b.rank);
+
+    // Each division's highest-ranked team qualifies automatically.
+    const divisionLeaders = new Map();
+
+    for (const team of teams) {
+      if (!divisionLeaders.has(team.division)) {
+        divisionLeaders.set(team.division, team);
+      }
+    }
+
+    const leaders = [...divisionLeaders.values()];
+    const leaderCodes = new Set(leaders.map(t => t.abbreviation));
+
+    // The three best non-division leaders receive wild cards.
+    const wildcards = teams
+      .filter(t => !leaderCodes.has(t.abbreviation))
+      .slice(0, 3);
+
+    // Division leaders and wild cards make up the seven qualifiers.
+    const qualifiers = [...leaders, ...wildcards]
+      .sort((a, b) => a.rank - b.rank);
+
+    const qualifierCodes = new Set(
+      qualifiers.map(t => t.abbreviation)
+    );
+
+    const hunt = teams.filter(
+      t => !qualifierCodes.has(t.abbreviation)
+    );
+
+    const byeContainer = document.getElementById("playoff-bye");
+    const leadersContainer = document.getElementById(
+      "playoff-division-leaders"
+    );
+    const wildcardsContainer = document.getElementById(
+      "playoff-wildcards"
+    );
+    const huntContainer = document.getElementById("playoff-hunt");
+
+    byeContainer.replaceChildren();
+    leadersContainer.replaceChildren();
+    wildcardsContainer.replaceChildren();
+    huntContainer.replaceChildren();
+
+    qualifiers.forEach((team, index) => {
+      const seed = index + 1;
+
+      if (seed === 1) {
+        byeContainer.appendChild(makePlayoffCard(team, seed, true));
+      } else if (leaderCodes.has(team.abbreviation)) {
+        leadersContainer.appendChild(makePlayoffCard(team, seed));
+      } else {
+        wildcardsContainer.appendChild(makePlayoffCard(team, seed));
+      }
+    });
+
+    hunt.forEach(team => {
+      huntContainer.appendChild(makePlayoffCard(team, null));
+    });
+
+    note.textContent =
+      "Live playoff projections • " +
+      data.teams.length +
+      " franchises • Division winners qualify automatically • " +
+      "Top seed receives a first-round bye.";
+  } catch (error) {
+    console.error("Playoff standings error:", error);
+    note.textContent = "Unable to load live playoff standings.";
   }
+}
+
+  
 
   loadPlayoffStandings();
 </script>
