@@ -505,7 +505,9 @@
         ? '<span class="bracket-seed">' + t.seed + '</span>'
         : '') +
       '<span class="bracket-team-name">' + t.name + '</span>' +
-      '<span class="bracket-score">—</span>' +
+      '<span class="bracket-score">' +
+  (t.score ?? "—") +
+'</span>' +
       '</div>';
   }
 
@@ -557,10 +559,146 @@ function renderBrackets() {
       placeholder("Consolation Finalist 1"),
       placeholder("Consolation Finalist 2"));
 }
-window.updatePlayoffBrackets = function(seeds) {
-  window.projectedPlayoffSeeds = seeds.map(team => team.name);
+
+let bracketTeamNames = {};
+let playoffLoadNumber = 0;
+
+window.updatePlayoffBrackets = function(seeds, allTeams) {
+  window.projectedPlayoffSeeds = seeds.map(t => t.name);
+
+  bracketTeamNames = {};
+  allTeams.forEach(t => {
+    bracketTeamNames[t.abbreviation] = t.name;
+  });
+
   renderBrackets();
+  loadActualPlayoffGames();
 };
+
+function escapeBracketText(value) {
+  return String(value).replace(/[&<>"']/g, c => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[c]);
+}
+
+function actualTeam(code, score) {
+  const name = bracketTeamNames[code] || code;
+  const index = window.projectedPlayoffSeeds.indexOf(name);
+
+  return {
+    seed: index >= 0 ? index + 1 : null,
+    name: escapeBracketText(name),
+    score: score === null || score === undefined
+      ? "—"
+      : Number(score).toFixed(2)
+  };
+}
+
+function showActualRound(containerId, games, expected, title) {
+  if (!games.length) return;
+
+  let html = "";
+
+  games.slice(0, expected).forEach((game, index) => {
+    const first = actualTeam(game.team1, game.score1);
+    const second = actualTeam(game.team2, game.score2);
+
+    html += match(
+      title + " " + (index + 1),
+      first,
+      second
+    );
+  });
+
+  for (let i = games.length; i < expected; i++) {
+    html += match(
+      title + " " + (i + 1),
+      placeholder("TBD"),
+      placeholder("TBD")
+    );
+  }
+
+  document.getElementById(containerId).innerHTML = html;
+}
+
+async function loadActualPlayoffGames() {
+  const requestNumber = ++playoffLoadNumber;
+
+  try {
+    const url = new URL(PLAYOFF_STANDINGS_API);
+    url.searchParams.set("type", "playoff-results");
+
+    const response = await fetch(url.toString());
+
+    if (!response.ok) {
+      throw new Error("Playoff results request failed");
+    }
+
+    const data = await response.json();
+
+    if (!data.success || !Array.isArray(data.games)) {
+      throw new Error("Invalid playoff results data");
+    }
+
+    if (requestNumber !== playoffLoadNumber) return;
+
+    const getGames = (bracket, week) =>
+      data.games.filter(g =>
+        g.bracket === bracket &&
+        Number(g.week) === week
+      );
+
+    showActualRound(
+      "champ-opening",
+      getGames("championship", 15),
+      3,
+      "WILD CARD"
+    );
+
+    showActualRound(
+      "champ-semis",
+      getGames("championship", 16),
+      2,
+      "SEMIFINAL"
+    );
+
+    showActualRound(
+      "champ-final",
+      getGames("championship", 17),
+      1,
+      "CHAMPIONSHIP"
+    );
+
+    showActualRound(
+      "consol-opening",
+      getGames("consolation", 15),
+      2,
+      "CONSOLATION MATCH"
+    );
+
+    showActualRound(
+      "consol-semis",
+      getGames("consolation", 16),
+      2,
+      "CONSOLATION SEMIFINAL"
+    );
+
+    showActualRound(
+      "consol-final",
+      getGames("consolation", 17),
+      1,
+      "CONSOLATION FINAL"
+    );
+
+  } catch (error) {
+    console.error("Playoff bracket results error:", error);
+  }
+}
+
   document.querySelectorAll(".bracket-tabs button")
     .forEach(button => {
       button.addEventListener("click", function () {
@@ -843,10 +981,10 @@ console.table(scheduleAwareDivisions);
   )
 );
 
-window.updatePlayoffBrackets([
-  ...qualifiers,
-  ...consolationTeams
-]);
+window.updatePlayoffBrackets(
+  [...qualifiers, ...consolationTeams],
+  teams
+);
     const qualifierCodes = new Set(
       qualifiers.map(t => t.abbreviation)
     );
