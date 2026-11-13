@@ -244,13 +244,299 @@
 
     </section>
 
-    <section class="playoff-section">
-      <h2>PLAYOFF BRACKETS</h2>
+    
+<section class="league-brackets" id="playoff-brackets">
+  <div class="bracket-heading">
+    <div>
+      <div class="bracket-brand">THE BOIS LEAGUE HQ</div>
+      <h2>2026 PLAYOFF BRACKETS</h2>
+    </div>
+    <div class="bracket-tabs">
+      <button class="active" data-bracket="championship">
+        Championship Bracket
+      </button>
+      <button data-bracket="consolation">
+        Consolation Bracket
+      </button>
+    </div>
+  </div>
 
-      <div class="playoff-panel" id="playoff-brackets">
-        Championship and consolation brackets coming next.
+  <div id="championship-bracket" class="bracket-scroll">
+    <div class="bracket-columns">
+      <div class="bracket-round">
+        <h3>WEEK 15 · WILD CARD</h3>
+        <div id="champ-opening"></div>
+        <div class="bracket-bye" id="champ-bye"></div>
       </div>
-    </section>
+      <div class="bracket-round middle-round">
+        <h3>WEEK 16 · SEMIFINALS (RE-SEEDED)</h3>
+        <div id="champ-semis"></div>
+      </div>
+      <div class="bracket-round final-round">
+        <h3>WEEK 17 · CHAMPIONSHIP</h3>
+        <div id="champ-final"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="consolation-bracket" class="bracket-scroll"
+       style="display:none">
+    <div class="bracket-columns">
+      <div class="bracket-round">
+        <h3>WEEK 15 · ROUND 1</h3>
+        <div id="consol-opening"></div>
+        <div class="bracket-bye" id="consol-bye"></div>
+      </div>
+      <div class="bracket-round middle-round">
+        <h3>WEEK 16 · SEMIFINALS (RE-SEEDED)</h3>
+        <div id="consol-semis"></div>
+      </div>
+      <div class="bracket-round final-round">
+        <h3>WEEK 17 · CONSOLATION FINAL</h3>
+        <div id="consol-final"></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="bracket-footer">
+    7-team championship · 6-team consolation · NFL-style reseeding
+  </p>
+</section>
+
+<style>
+.league-brackets {
+  margin: 45px 0;
+  padding: 24px;
+  background: #192638;
+  border: 1px solid #34465d;
+  border-radius: 16px;
+  color: #f4f6fb;
+  font-family: Arial, sans-serif;
+}
+.bracket-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #a8813d;
+}
+.bracket-brand {
+  color: #d6a84d;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 1.2px;
+}
+.bracket-heading h2 {
+  font-size: 19px;
+  margin: 5px 0 0;
+}
+.bracket-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.bracket-tabs button {
+  padding: 10px 16px;
+  border: 1px solid #725b35;
+  border-radius: 24px;
+  background: transparent;
+  color: #d6a84d;
+  cursor: pointer;
+  font-weight: 700;
+}
+.bracket-tabs button.active {
+  background: #d6a84d;
+  color: #101b2b;
+}
+.bracket-scroll {
+  overflow-x: auto;
+  padding: 22px 0;
+}
+.bracket-columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(250px, 1fr));
+  gap: 20px;
+  min-width: 790px;
+}
+.bracket-round h3 {
+  color: #d6a84d;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-align: center;
+  margin: 0 0 20px;
+}
+.middle-round {
+  padding-top: 75px;
+}
+.final-round {
+  padding-top: 145px;
+}
+.bracket-match {
+  background: #223248;
+  border: 1px solid #354960;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+.bracket-match-title {
+  color: #94a6b9;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+.bracket-team {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  font-size: 13px;
+  font-weight: 700;
+  border-top: 1px solid #34445a;
+}
+.bracket-seed {
+  color: #d6a84d;
+  background: #34445a;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+.bracket-team-name {
+  flex: 1;
+}
+.bracket-score {
+  color: #a6b7ca;
+}
+.bracket-bye {
+  background: #242d3a;
+  border: 1px dashed #78613b;
+  border-radius: 8px;
+  color: #e1b457;
+  padding: 12px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+.bracket-footer {
+  color: #9eb0c4;
+  font-size: 12px;
+  margin: 6px 0 0;
+}
+@media (max-width: 650px) {
+  .league-brackets { padding: 15px; }
+  .bracket-heading h2 { font-size: 17px; }
+}
+</style>
+
+<script>
+(function () {
+  const projectedSeeds = [
+    "Dreadlord's Royal Guard",
+    "501st Legion",
+    "Josh Downs Syndrome",
+    "Winnipeg Redskins",
+    "Celestial Guardians",
+    "Njigbas In Paris",
+    "Carolina-Panthers",
+    "Riley Reid Option",
+    "The Banana Splitters",
+    "XDMemes124",
+    "The Outdoor Guys",
+    "The Lunar Eclipses"
+  ];
+
+  function team(seed) {
+    return {
+      seed: seed,
+      name: projectedSeeds[seed - 1]
+    };
+  }
+
+  function placeholder(name) {
+    return { seed: null, name: name };
+  }
+
+  function teamHTML(t) {
+    return '<div class="bracket-team">' +
+      (t.seed
+        ? '<span class="bracket-seed">' + t.seed + '</span>'
+        : '') +
+      '<span class="bracket-team-name">' + t.name + '</span>' +
+      '<span class="bracket-score">—</span>' +
+      '</div>';
+  }
+
+  function match(title, a, b) {
+    return '<div class="bracket-match">' +
+      '<div class="bracket-match-title">' + title + '</div>' +
+      teamHTML(a) + teamHTML(b) +
+      '</div>';
+  }
+
+  document.getElementById("champ-opening").innerHTML =
+    match("MATCHUP #1", team(2), team(7)) +
+    match("MATCHUP #2", team(3), team(6)) +
+    match("MATCHUP #3", team(4), team(5));
+
+  document.getElementById("champ-bye").textContent =
+    "★ #1 (" + team(1).name + ") — Bye to Semifinals";
+
+  document.getElementById("champ-semis").innerHTML =
+    match("SEMIFINAL 1 · 1 VS LOWEST REMAINING",
+      team(1), placeholder("Lowest Remaining Seed")) +
+    match("SEMIFINAL 2 · RESEEDED",
+      placeholder("Highest Remaining Seed"),
+      placeholder("Middle Remaining Seed"));
+
+  document.getElementById("champ-final").innerHTML =
+    match("🏆 CHAMPIONSHIP MATCHUP",
+      placeholder("Semifinal Winner 1"),
+      placeholder("Semifinal Winner 2"));
+
+  document.getElementById("consol-opening").innerHTML =
+    match("CONSOLATION MATCH 1", team(9), team(12)) +
+    match("CONSOLATION MATCH 2", team(10), team(11));
+
+  document.getElementById("consol-bye").textContent =
+    "★ Byes: #8 (" + team(8).name +
+    ") & Lowest Upper Round 1 Loser";
+
+  document.getElementById("consol-semis").innerHTML =
+    match("CONSOLATION SEMI 1",
+      team(8),
+      placeholder("Lowest Remaining Consolation Seed")) +
+    match("CONSOLATION SEMI 2",
+      placeholder("Lowest Upper R1 Loser"),
+      placeholder("Highest Remaining Consolation Seed"));
+
+  document.getElementById("consol-final").innerHTML =
+    match("🏆 CONSOLATION CHAMPIONSHIP",
+      placeholder("Consolation Finalist 1"),
+      placeholder("Consolation Finalist 2"));
+
+  document.querySelectorAll(".bracket-tabs button")
+    .forEach(button => {
+      button.addEventListener("click", function () {
+        document.querySelectorAll(".bracket-tabs button")
+          .forEach(b => b.classList.remove("active"));
+
+        this.classList.add("active");
+
+        const consolation =
+          this.dataset.bracket === "consolation";
+
+        document.getElementById("championship-bracket")
+          .style.display = consolation ? "none" : "block";
+
+        document.getElementById("consolation-bracket")
+          .style.display = consolation ? "block" : "none";
+      });
+    });
+})();
+</script>
+
 
   </main>
 
