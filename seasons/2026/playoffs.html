@@ -280,6 +280,72 @@ function makePlayoffCard(team, seed, isBye = false) {
   return card;
 }
 
+function checkDivisionPath(team, teams, remainingGames) {
+  const divisionTeams = teams.filter(
+    t => t.division === team.division
+  );
+
+  const divisionCodes = new Set(
+    divisionTeams.map(t => t.abbreviation)
+  );
+
+  // Only games involving a team in this division can
+  // change the final standings of this division.
+  const relevantGames = remainingGames.filter(
+    g =>
+      divisionCodes.has(g.team1) ||
+      divisionCodes.has(g.team2)
+  );
+
+  // Give the team being tested every possible win.
+  const otherGames = relevantGames.filter(
+    g => g.team1 !== team.abbreviation &&
+         g.team2 !== team.abbreviation
+  );
+
+  const baseWins = Object.fromEntries(
+    divisionTeams.map(t => [
+      t.abbreviation,
+      t.wins + relevantGames.filter(
+        g => g.team1 === t.abbreviation ||
+             g.team2 === t.abbreviation
+      ).filter(g =>
+        g.team1 === team.abbreviation ||
+        g.team2 === team.abbreviation
+      ).length * (t.abbreviation === team.abbreviation ? 1 : 0)
+    ])
+  );
+
+  const possibleOutcomes = Math.pow(2, otherGames.length);
+
+  for (let mask = 0; mask < possibleOutcomes; mask++) {
+    const wins = { ...baseWins };
+
+    for (let i = 0; i < otherGames.length; i++) {
+      const game = otherGames[i];
+      const winner = (mask & (1 << i))
+        ? game.team1
+        : game.team2;
+
+      if (divisionCodes.has(winner)) {
+        wins[winner]++;
+      }
+    }
+
+    const targetWins = wins[team.abbreviation];
+
+    const canFinishFirst = divisionTeams.every(
+      opponent =>
+        opponent.abbreviation === team.abbreviation ||
+        targetWins >= wins[opponent.abbreviation]
+    );
+
+    if (canFinishFirst) return true;
+  }
+
+  return false;
+}
+
 function calculatePlayoffPossibilities(teams, remainingGames) {
   const gamesRemaining = new Map();
 
@@ -407,6 +473,17 @@ console.table(playoffPossibilities);
 });
 
 console.table(divisionPossibilities);
+    const scheduleAwareDivisions = teams.map(team => ({
+  team: team.name,
+  division: team.division,
+  divisionPathExists: checkDivisionPath(
+    team,
+    teams,
+    remainingGames
+  )
+}));
+
+console.table(scheduleAwareDivisions);
     // Each division's highest-ranked team qualifies automatically.
     const divisionLeaders = new Map();
 
