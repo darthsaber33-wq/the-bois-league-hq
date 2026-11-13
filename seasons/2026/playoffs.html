@@ -436,7 +436,7 @@
   function team(seed) {
   return {
     seed: seed,
-    name: projectedSeeds[seed - 1] || "TBD"
+    name: window.projectedPlayoffSeeds[seed - 1] || "TBD"
   };
 }
 
@@ -502,31 +502,10 @@ function renderBrackets() {
       placeholder("Consolation Finalist 1"),
       placeholder("Consolation Finalist 2"));
 }
-  async function loadLiveBracketSeeds() {
-  try {
-    const url = new URL(PLAYOFF_STANDINGS_API);
-    url.searchParams.set("type", "standings");
-
-    const response = await fetch(url.toString());
-    if (!response.ok) {
-      throw new Error("Standings request failed");
-    }
-
-    const data = await response.json();
-    if (!data.success || !Array.isArray(data.teams)) {
-      throw new Error("Invalid standings data");
-    }
-
-    projectedSeeds = data.teams
-      .slice()
-      .sort((a, b) => Number(a.rank) - Number(b.rank))
-      .map(t => t.name);
-
-    renderBrackets();
-  } catch (error) {
-    console.error("Unable to load bracket standings:", error);
-  }
-}
+window.updatePlayoffBrackets = function(seeds) {
+  window.projectedPlayoffSeeds = seeds.map(team => team.name);
+  renderBrackets();
+};
   document.querySelectorAll(".bracket-tabs button")
     .forEach(button => {
       button.addEventListener("click", function () {
@@ -803,7 +782,16 @@ console.table(scheduleAwareDivisions);
     // Division leaders and wild cards make up the seven qualifiers.
     const qualifiers = [...leaders, ...wildcards]
       .sort((a, b) => a.rank - b.rank);
+    const consolationTeams = teams.filter(
+  team => !qualifiers.some(
+    qualifier => qualifier.abbreviation === team.abbreviation
+  )
+);
 
+window.updatePlayoffBrackets([
+  ...qualifiers,
+  ...consolationTeams
+]);
     const qualifierCodes = new Set(
       qualifiers.map(t => t.abbreviation)
     );
