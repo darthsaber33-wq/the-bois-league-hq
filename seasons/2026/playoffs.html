@@ -350,32 +350,42 @@ async function loadPlayoffStandings() {
     });
 
     
+
 const finalWildcard = wildcards[wildcards.length - 1];
 
 hunt.forEach(team => {
   const card = makePlayoffCard(team, null);
 
-  const seedLabel = card.querySelector(".picture-seed");
-  seedLabel.textContent = "IN THE HUNT";
+  const divisionLeader = divisionLeaders.get(team.division);
 
-  const gamesBack = finalWildcard
-    ? (finalWildcard.wins - team.wins) +
-      (team.losses - finalWildcard.losses) / 2
-    : 0;
+  function calculateGB(leader, challenger) {
+    if (!leader) return Infinity;
+
+    return Math.max(0, (
+      (leader.wins - challenger.wins) +
+      (challenger.losses - leader.losses)
+    ) / 2);
+  }
+
+  const wildcardGB = calculateGB(finalWildcard, team);
+  const divisionGB = calculateGB(divisionLeader, team);
+
+  const useDivision = divisionGB < wildcardGB;
+  const gamesBack = useDivision ? divisionGB : wildcardGB;
+  const route = useDivision ? "DIVISION" : "WILD CARD";
+
+  const seedLabel = card.querySelector(".picture-seed");
+  seedLabel.textContent = "PLAYOFF CONTENDER";
 
   const raceLabel = document.createElement("span");
   raceLabel.className = "playoff-race-label";
-
-  if (gamesBack <= 0) {
-    raceLabel.textContent = "TIEBREAKER / DIVISION RACE";
-  } else {
-    raceLabel.textContent =
-      gamesBack.toFixed(1) + " GB • WILD CARD";
-  }
+  raceLabel.textContent =
+    gamesBack.toFixed(1) + " GB • " + route;
 
   card.appendChild(raceLabel);
   huntContainer.appendChild(card);
 });
+
 
 
     note.textContent =
