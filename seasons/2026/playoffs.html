@@ -280,6 +280,40 @@ function makePlayoffCard(team, seed, isBye = false) {
   return card;
 }
 
+function calculatePlayoffPossibilities(teams, remainingGames) {
+  const gamesRemaining = new Map();
+
+  for (const team of teams) {
+    gamesRemaining.set(team.abbreviation, 0);
+  }
+
+  for (const game of remainingGames) {
+    gamesRemaining.set(
+      game.team1,
+      (gamesRemaining.get(game.team1) || 0) + 1
+    );
+
+    gamesRemaining.set(
+      game.team2,
+      (gamesRemaining.get(game.team2) || 0) + 1
+    );
+  }
+
+  return teams.map(team => {
+    const remaining = gamesRemaining.get(team.abbreviation) || 0;
+
+    return {
+      abbreviation: team.abbreviation,
+      name: team.name,
+      division: team.division,
+      wins: team.wins,
+      losses: team.losses,
+      remaining: remaining,
+      maximumWins: team.wins + remaining
+    };
+  });
+}
+
 async function loadPlayoffStandings() {
   const note = document.querySelector(".picture-note");
 
@@ -345,7 +379,12 @@ console.log(
     }
 
     const teams = [...data.teams].sort((a, b) => a.rank - b.rank);
+    const playoffPossibilities = calculatePlayoffPossibilities(
+  teams,
+  remainingGames
+);
 
+console.table(playoffPossibilities);
     // Each division's highest-ranked team qualifies automatically.
     const divisionLeaders = new Map();
 
