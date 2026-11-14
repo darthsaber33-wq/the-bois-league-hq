@@ -625,6 +625,59 @@ function showActualRound(containerId, games, expected, title) {
   document.getElementById(containerId).innerHTML = html;
 }
 
+function completedWinner(game) {
+  if (!game || !game.completed || !game.winner) return null;
+  return game.winner;
+}
+
+function bracketSeed(code) {
+  const name = bracketTeamNames[code] || code;
+  const index = window.projectedPlayoffSeeds.indexOf(name);
+  return index < 0 ? 99 : index + 1;
+}
+
+function predictedTeam(code) {
+  return code ? actualTeam(code, null) : placeholder("TBD");
+}
+
+function displayRound(id, pairs, titles) {
+  document.getElementById(id).innerHTML =
+    pairs.map((pair, i) =>
+      match(titles[i], predictedTeam(pair[0]), predictedTeam(pair[1]))
+    ).join("");
+}
+
+function findActualGame(games, a, b) {
+  if (!a || !b) return null;
+  return games.find(g =>
+    (g.team1 === a && g.team2 === b) ||
+    (g.team1 === b && g.team2 === a)
+  ) || null;
+}
+
+function displayProgressionRound(id, pairs, titles, games) {
+  document.getElementById(id).innerHTML =
+    pairs.map((pair, i) => {
+      const game = findActualGame(games, pair[0], pair[1]) ||
+        games[i] || null;
+
+      if (game) {
+        return match(
+          titles[i],
+          actualTeam(game.team1, game.score1),
+          actualTeam(game.team2, game.score2)
+        );
+      }
+
+      return match(
+        titles[i],
+        predictedTeam(pair[0]),
+        predictedTeam(pair[1])
+      );
+    }).join("");
+}
+
+
 async function loadActualPlayoffGames() {
   const requestNumber = ++playoffLoadNumber;
 
@@ -633,71 +686,171 @@ async function loadActualPlayoffGames() {
     url.searchParams.set("type", "playoff-results");
 
     const response = await fetch(url.toString());
-
-    if (!response.ok) {
-      throw new Error("Playoff results request failed");
-    }
+    if (!response.ok) throw new Error("Playoff results request failed");
 
     const data = await response.json();
-
     if (!data.success || !Array.isArray(data.games)) {
       throw new Error("Invalid playoff results data");
     }
 
     if (requestNumber !== playoffLoadNumber) return;
 
-    const getGames = (bracket, week) =>
+    const games = (bracket, week) =>
       data.games.filter(g =>
         g.bracket === bracket &&
         Number(g.week) === week
       );
 
-    showActualRound(
+    const c15 = games("championship", 15);
+    const c16 = games("championship", 16);
+    const c17 = games("championship", 17);
+
+    const s15 = games("consolation", 15);
+    const s16 = games("consolation", 16);
+    const s17 = games("consolation", 17);
+
+    const codes = window.projectedPlayoffSeeds.map(name =>
+      Object.keys(bracketTeamNames).find(
+        code => bracketTeamNames[code] === name
+      ) || null
+    );
+
+    const seedCode = n => codes[n - 1];
+
+    // CHAMPIONSHIP — WEEK 15
+    const openingPairs = [
+      [seedCode(2), seedCode(7)],
+      [seedCode(3), seedCode(6)],
+      [seedCode(4), seedCode(5)]
+    ];
+
+    displayProgressionRound(
       "champ-opening",
-      getGames("championship", 15),
-      3,
-      "WILD CARD"
+      openingPairs,
+      ["MATCHUP #1", "MATCHUP #2", "MATCHUP #3"],
+      c15
     );
 
-    showActualRound(
+    // Advance only completed championship games.
+    const championshipWinners = c15
+      .map(completedWinner)
+      .filter(Boolean);
+
+    const championshipLosers = c15
+      .filter(g => completedWinner(g) && g.loser)
+      .map(g => g.loser);
+
+    // CHAMPIONSHIP — WEEK 16
+    let championshipSemis = [
+      [seedCode(1), null],
+      [null, null]
+    ];
+
+    if (championshipWinners.length === 3) {
+      const remaining = [
+        seedCode(1),
+        ...championshipWinners
+      ].sort((a, b) => bracketSeed(a) - bracketSeed(b));
+
+      championshipSemis = [
+        [remaining[0], remaining[3]],
+        [remaining[1], remaining[2]]
+      ];
+    }
+
+    displayProgressionRound(
       "champ-semis",
-      getGames("championship", 16),
-      2,
-      "SEMIFINAL"
+      championshipSemis,
+      ["SEMIFINAL 1", "SEMIFINAL 2"],
+      c16
     );
 
-    showActualRound(
+    // CHAMPIONSHIP — WEEK 17
+    const championshipFinalists = c16
+      .map(completedWinner)
+      .filter(Boolean);
+
+    displayProgressionRound(
       "champ-final",
-      getGames("championship", 17),
-      1,
-      "CHAMPIONSHIP"
+      [[
+        championshipFinalists[0] || null,
+        championshipFinalists[1] || null
+      ]],
+      ["🏆 CHAMPIONSHIP MATCHUP"],
+      c17
     );
 
-    showActualRound(
+    // CONSOLATION — WEEK 15
+    const consolationOpening = [
+      [seedCode(9), seedCode(12)],
+      [seedCode(10), seedCode(11)]
+    ];
+
+    displayProgressionRound(
       "consol-opening",
-      getGames("consolation", 15),
-      2,
-      "CONSOLATION MATCH"
+      consolationOpening,
+      ["CONSOLATION MATCH 1", "CONSOLATION MATCH 2"],
+      s15
     );
 
-    showActualRound(
+    // The lowest-seeded championship R1 loser
+    // joins the consolation semifinals.
+    const upperLoser = championshipLosers.length === 3
+      ? championshipLosers.sort(
+          (a, b) => bracketSeed(b) - bracketSeed(a)
+        )[0]
+      : null;
+
+    const consolationWinners = s15
+      .map(completedWinner)
+      .filter(Boolean);
+
+    // CONSOLATION — WEEK 16
+    let consolationSemis = [
+      [seedCode(8), null],
+      [upperLoser, null]
+    ];
+
+    if (consolationWinners.length === 2 && upperLoser) {
+      const remaining = [
+        seedCode(8),
+        upperLoser,
+        ...consolationWinners
+      ].sort((a, b) => bracketSeed(a) - bracketSeed(b));
+
+      consolationSemis = [
+        [remaining[0], remaining[3]],
+        [remaining[1], remaining[2]]
+      ];
+    }
+
+    displayProgressionRound(
       "consol-semis",
-      getGames("consolation", 16),
-      2,
-      "CONSOLATION SEMIFINAL"
+      consolationSemis,
+      ["CONSOLATION SEMI 1", "CONSOLATION SEMI 2"],
+      s16
     );
 
-    showActualRound(
+    // CONSOLATION — WEEK 17
+    const consolationFinalists = s16
+      .map(completedWinner)
+      .filter(Boolean);
+
+    displayProgressionRound(
       "consol-final",
-      getGames("consolation", 17),
-      1,
-      "CONSOLATION FINAL"
+      [[
+        consolationFinalists[0] || null,
+        consolationFinalists[1] || null
+      ]],
+      ["🏆 CONSOLATION CHAMPIONSHIP"],
+      s17
     );
 
   } catch (error) {
-    console.error("Playoff bracket results error:", error);
+    console.error("Playoff bracket progression error:", error);
   }
 }
+
 
   document.querySelectorAll(".bracket-tabs button")
     .forEach(button => {
