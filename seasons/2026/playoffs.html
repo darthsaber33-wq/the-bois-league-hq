@@ -562,14 +562,55 @@ function renderBrackets() {
 
 let bracketTeamNames = {};
 let playoffLoadNumber = 0;
+// ==========================================
+// 2026 OFFICIAL PLAYOFF SEED LOCK
+// ==========================================
 
+// Keep false until the regular season ends.
+const PLAYOFF_SEEDS_LOCKED = false;
+
+// Enter the FINAL official seed order here.
+// Do not use projected seeds until confirmed.
+const OFFICIAL_2026_SEEDS = [
+  // "DRG",  // #1
+  // "501st", // #2
+  // "JDS",  // #3
+  // "WPG",  // #4
+  // "CG",   // #5
+  // "NIP",  // #6
+  // "CAR",  // #7
+  // "RRO",  // #8
+  // "BAN",  // #9
+  // "OG",   // #10
+  // "XDM",  // #11
+  // "LUN"   // #12
+];
 window.updatePlayoffBrackets = function(seeds, allTeams) {
-  window.projectedPlayoffSeeds = seeds.map(t => t.name);
-
   bracketTeamNames = {};
+
   allTeams.forEach(t => {
     bracketTeamNames[t.abbreviation] = t.name;
   });
+
+  let selectedSeeds = seeds;
+
+  if (PLAYOFF_SEEDS_LOCKED) {
+    if (
+      OFFICIAL_2026_SEEDS.length !== 12 ||
+      new Set(OFFICIAL_2026_SEEDS).size !== 12 ||
+      OFFICIAL_2026_SEEDS.some(code => !bracketTeamNames[code])
+    ) {
+      console.error("Invalid official 2026 playoff seed list.");
+      return;
+    }
+
+    selectedSeeds = OFFICIAL_2026_SEEDS.map(code => ({
+      abbreviation: code,
+      name: bracketTeamNames[code]
+    }));
+  }
+
+  window.projectedPlayoffSeeds = selectedSeeds.map(t => t.name);
 
   renderBrackets();
   loadActualPlayoffGames();
