@@ -490,14 +490,38 @@ function createSection(title, games, type, week, final = false) {
   `;
 
   if (!games.length) {
+  if (final) {
+    const placeholderGame = {
+      team1: "",
+      team2: "",
+      score1: null,
+      score2: null,
+      winner: null,
+      loser: null,
+      completed: false
+    };
+
+    html += '<div class="matchup-grid">';
+    html += createMatchupCard(
+      placeholderGame,
+      type === "consolation"
+        ? "CONSOLATION CHAMPIONSHIP"
+        : "THE BOIS LEAGUE CHAMPIONSHIP",
+      type,
+      true
+    );
+    html += "</div>";
+  } else {
     html += `
       <div class="empty-message">
         Matchups will appear once franchises are assigned
         in the Game Database.
       </div>
     `;
-    return html;
   }
+
+  return html;
+}
 
   html += '<div class="matchup-grid">';
 
