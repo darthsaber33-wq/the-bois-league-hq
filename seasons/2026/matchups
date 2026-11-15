@@ -1,0 +1,746 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 Weekly Matchups | The Bois League</title>
+<link rel="stylesheet" href="/css/style.css">
+
+<style>
+:root {
+  --navy: #0b1525;
+  --panel: #19283b;
+  --panel2: #20334b;
+  --gold: #d9ad52;
+  --silver: #b8c8da;
+  --muted: #a8bdd5;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--navy);
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.site-header {
+  background: #0b1525;
+  border-bottom: 1px solid var(--gold);
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: auto;
+  padding: 24px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.site-logo {
+  color: var(--gold);
+  font-size: 24px;
+  font-weight: 900;
+  text-decoration: none;
+  letter-spacing: 2px;
+}
+
+.site-header nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+
+.site-header nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.site-header nav a.active,
+.site-header nav a:hover {
+  color: var(--gold);
+}
+
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 70px 20px;
+}
+
+.eyebrow {
+  color: var(--gold);
+  letter-spacing: 3px;
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.page-title {
+  font-size: clamp(36px, 6vw, 64px);
+  margin: 20px 0;
+  font-weight: 900;
+}
+
+.page-description {
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 800px;
+}
+
+.week-controls {
+  margin-top: 45px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  background: var(--panel);
+  border: 1px solid #354a64;
+  border-radius: 12px;
+  padding: 22px;
+}
+
+.week-controls h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.week-navigation {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.week-navigation button,
+.week-navigation select {
+  background: #101e31;
+  border: 1px solid #52637a;
+  color: white;
+  padding: 11px 15px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.week-navigation button:hover {
+  border-color: var(--gold);
+}
+
+.week-navigation button:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+}
+
+.phase-banner {
+  margin: 28px 0;
+  padding: 28px;
+  border-radius: 12px;
+  background: linear-gradient(120deg, #203650, #111d30);
+  border-left: 5px solid var(--gold);
+}
+
+.phase-banner h2 {
+  font-size: 30px;
+  margin: 10px 0;
+}
+
+.phase-banner p {
+  color: var(--muted);
+  margin-bottom: 0;
+}
+
+.matchup-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin: 22px 0 35px;
+}
+
+.matchup-card {
+  background: var(--panel);
+  border: 1px solid #354a64;
+  border-radius: 12px;
+  padding: 22px;
+}
+
+.matchup-card.championship {
+  border-color: #947235;
+  background: linear-gradient(135deg, #243751, #17263b);
+}
+
+.matchup-card.consolation {
+  border-color: #71849c;
+}
+
+.matchup-label {
+  font-size: 11px;
+  color: var(--gold);
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin-bottom: 20px;
+}
+
+.matchup-card.consolation .matchup-label {
+  color: var(--silver);
+}
+
+.team-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  font-weight: bold;
+}
+
+.team-line + .team-line {
+  border-top: 1px solid #34475e;
+}
+
+.team-line.winner {
+  color: var(--gold);
+}
+
+.team-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.team-score {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.game-status {
+  margin-top: 15px;
+  color: var(--muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.section-heading {
+  margin: 45px 0 20px;
+  padding-left: 16px;
+  border-left: 4px solid var(--gold);
+  font-size: 24px;
+}
+
+.section-heading.silver {
+  border-color: var(--silver);
+}
+
+.playoff-divider {
+  border: none;
+  border-top: 1px solid #62748a;
+  margin: 45px 0;
+}
+
+.bye-note {
+  color: var(--gold);
+  font-size: 13px;
+  padding: 14px 18px;
+  border: 1px dashed #806631;
+  border-radius: 8px;
+  background: #1c2a3c;
+}
+
+.final-card {
+  grid-column: 1 / -1;
+  padding: 35px;
+  text-align: center;
+  border: 2px solid var(--gold);
+  background: linear-gradient(140deg, #273c57, #101b2d);
+  border-radius: 14px;
+}
+
+.final-card.consolation {
+  border-color: var(--silver);
+  background: linear-gradient(140deg, #24354b, #101b2d);
+}
+
+.final-card .matchup-label {
+  font-size: 14px;
+}
+
+.final-card .team-line {
+  font-size: clamp(17px, 3vw, 26px);
+  text-align: left;
+}
+
+.final-card .team-score {
+  font-size: clamp(20px, 4vw, 32px);
+}
+
+.champion-banner {
+  margin-top: 22px;
+  background: var(--gold);
+  color: #101827;
+  padding: 14px;
+  font-weight: 900;
+  border-radius: 6px;
+}
+
+.final-card.consolation .champion-banner {
+  background: var(--silver);
+}
+
+.empty-message {
+  background: var(--panel);
+  border: 1px dashed #53647a;
+  border-radius: 10px;
+  padding: 25px;
+  color: var(--muted);
+  margin: 20px 0;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 35px;
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+@media (max-width: 700px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .matchup-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .week-controls {
+    align-items: flex-start;
+  }
+
+  .final-card {
+    padding: 22px;
+  }
+
+  .page-container {
+    padding: 40px 16px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="site-logo" href="/">THE BOIS LEAGUE</a>
+    <nav>
+      <a href="/">HOME</a>
+      <a class="active" href="/seasons/2026/">2026 SEASON</a>
+      <a href="/history/">LEAGUE HISTORY</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page-container">
+  <div class="eyebrow">THE BOIS LEAGUE • SEASON THREE</div>
+
+  <h1 class="page-title">WEEKLY MATCHUPS</h1>
+
+  <p class="page-description">
+    Every matchup. Every score. Every victory.
+    Follow all seventeen weeks of the 2026 season,
+    from the regular season to the Bois League Championship.
+  </p>
+
+  <div class="week-controls">
+    <h2 id="week-heading">2026 MATCHUPS</h2>
+
+    <div class="week-navigation">
+      <button id="previous-week" type="button">←</button>
+      <select id="week-select" aria-label="Select week"></select>
+      <button id="next-week" type="button">→</button>
+    </div>
+  </div>
+
+  <section class="phase-banner">
+    <div class="eyebrow" id="phase-label">2026 SEASON</div>
+    <h2 id="phase-title">Loading matchups...</h2>
+    <p id="phase-description">Connecting to league data.</p>
+  </section>
+
+  <div id="matchup-content" aria-live="polite"></div>
+
+  <a class="back-link" href="/seasons/2026/">
+    ← Back to 2026 Season
+  </a>
+</main>
+
+<script>
+const API_BASE =
+  "https://script.google.com/macros/s/" +
+  "AKfycbyowj7BeP1m_2Gf2r4j9hIPzru xjDIXnzVO-ibSMFrr-Z0P4aJvUkqF6ihiVdcz4JOYag"
+    .replace(" ", "") +
+  "/exec";
+
+let currentWeek = 1;
+let regularGames = [];
+let playoffGames = [];
+let teamNames = {};
+let dataLoaded = false;
+
+const weekSelect = document.getElementById("week-select");
+const content = document.getElementById("matchup-content");
+
+for (let week = 1; week <= 17; week++) {
+  const option = document.createElement("option");
+  option.value = week;
+  option.textContent = "Week " + week;
+  weekSelect.appendChild(option);
+}
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function getName(code) {
+  return teamNames[code] || code || "TBD";
+}
+
+function formatScore(score) {
+  if (score === null || score === undefined || score === "") {
+    return "—";
+  }
+
+  const number = Number(score);
+  return Number.isFinite(number) ? number.toFixed(2) : "—";
+}
+
+function isCompleted(game) {
+  return Boolean(
+    game.completed ||
+    (game.winner && game.loser &&
+     game.score1 !== null && game.score2 !== null &&
+     game.score1 !== undefined && game.score2 !== undefined)
+  );
+}
+
+function createMatchupCard(game, label, type = "regular", final = false) {
+  const completed = isCompleted(game);
+  const winner = completed ? game.winner : null;
+
+  const teamRow = (code, score) => {
+    const winning = winner === code ? " winner" : "";
+
+    return `
+      <div class="team-line${winning}">
+        <span class="team-name">${escapeHTML(getName(code))}</span>
+        <span class="team-score">${formatScore(score)}</span>
+      </div>
+    `;
+  };
+
+  const cardClass = final
+    ? "final-card " + type
+    : "matchup-card " + type;
+
+  let winnerBanner = "";
+
+  if (final && completed && winner) {
+    const title = type === "consolation"
+      ? "CONSOLATION CHAMPION"
+      : "2026 BOIS LEAGUE CHAMPION";
+
+    winnerBanner = `
+      <div class="champion-banner">
+        🏆 ${title}: ${escapeHTML(getName(winner))}
+      </div>
+    `;
+  }
+
+  return `
+    <article class="${cardClass}">
+      <div class="matchup-label">${escapeHTML(label)}</div>
+      ${teamRow(game.team1, game.score1)}
+      ${teamRow(game.team2, game.score2)}
+      <div class="game-status">
+        ${completed ? "FINAL" : "UPCOMING / AWAITING FINAL RESULT"}
+      </div>
+      ${winnerBanner}
+    </article>
+  `;
+}
+
+function createSection(title, games, type, week, final = false) {
+  const silver = type === "consolation" ? " silver" : "";
+
+  let html = `
+    <h2 class="section-heading${silver}">
+      ${escapeHTML(title)}
+    </h2>
+  `;
+
+  if (!games.length) {
+    html += `
+      <div class="empty-message">
+        Matchups will appear once franchises are assigned
+        in the Game Database.
+      </div>
+    `;
+    return html;
+  }
+
+  html += '<div class="matchup-grid">';
+
+  games.forEach((game, index) => {
+    let label;
+
+    if (final) {
+      label = type === "consolation"
+        ? "CONSOLATION CHAMPIONSHIP"
+        : "THE BOIS LEAGUE CHAMPIONSHIP";
+    } else if (type === "regular") {
+      label = "WEEK " + week + " • MATCHUP " + (index + 1);
+    } else {
+      label = (type === "championship"
+        ? "CHAMPIONSHIP PLAYOFFS"
+        : "CONSOLATION PLAYOFFS") +
+        " • MATCHUP " + (index + 1);
+    }
+
+    html += createMatchupCard(game, label, type, final);
+  });
+
+  html += "</div>";
+  return html;
+}
+
+function updateWeekHeading() {
+  document.getElementById("week-heading").textContent =
+    "WEEK " + currentWeek;
+
+  document.getElementById("previous-week").disabled =
+    currentWeek === 1;
+
+  document.getElementById("next-week").disabled =
+    currentWeek === 17;
+
+  weekSelect.value = String(currentWeek);
+
+  const phaseLabel = document.getElementById("phase-label");
+  const phaseTitle = document.getElementById("phase-title");
+  const phaseDescription = document.getElementById("phase-description");
+
+  if (currentWeek <= 14) {
+    phaseLabel.textContent = "REGULAR SEASON";
+    phaseTitle.textContent = "Week " + currentWeek + " Matchups";
+    phaseDescription.textContent =
+      "Six games. Twelve franchises. Every point matters.";
+  } else if (currentWeek === 15) {
+    phaseLabel.textContent = "THE ROAD TO THE CHAMPIONSHIP";
+    phaseTitle.textContent = "Playoff Opening Round";
+    phaseDescription.textContent =
+      "The championship and consolation playoffs begin.";
+  } else if (currentWeek === 16) {
+    phaseLabel.textContent = "THE FINAL FOUR";
+    phaseTitle.textContent = "Playoff Semifinals";
+    phaseDescription.textContent =
+      "The remaining contenders fight for a place in the finals.";
+  } else {
+    phaseLabel.textContent = "THE FINAL CHAPTER";
+    phaseTitle.textContent = "Championship Week";
+    phaseDescription.textContent =
+      "Two championships. Two winners. One unforgettable finale.";
+  }
+}
+
+function renderWeek() {
+  updateWeekHeading();
+
+  if (!dataLoaded) {
+    content.innerHTML =
+      '<div class="empty-message">Loading league matchups...</div>';
+    return;
+  }
+
+  if (currentWeek <= 14) {
+    const games = regularGames.filter(game =>
+      Number(game.week) === currentWeek
+    );
+
+    content.innerHTML = createSection(
+      "WEEK " + currentWeek + " GAMES",
+      games,
+      "regular",
+      currentWeek
+    );
+    return;
+  }
+
+  const championship = playoffGames.filter(game =>
+    Number(game.week) === currentWeek &&
+    game.bracket === "championship"
+  );
+
+  const consolation = playoffGames.filter(game =>
+    Number(game.week) === currentWeek &&
+    game.bracket === "consolation"
+  );
+
+  const isFinal = currentWeek === 17;
+
+  let html = createSection(
+    isFinal ? "🏆 BOIS LEAGUE CHAMPIONSHIP" : "CHAMPIONSHIP PLAYOFFS",
+    championship,
+    "championship",
+    currentWeek,
+    isFinal
+  );
+
+  if (currentWeek === 15) {
+    html += `
+      <div class="bye-note">
+        ★ Championship #1 seed receives a bye to the semifinals.
+      </div>
+    `;
+  }
+
+  html += '<hr class="playoff-divider">';
+
+  html += createSection(
+    isFinal ? "🏅 CONSOLATION CHAMPIONSHIP" : "CONSOLATION PLAYOFFS",
+    consolation,
+    "consolation",
+    currentWeek,
+    isFinal
+  );
+
+  if (currentWeek === 15) {
+    html += `
+      <div class="bye-note">
+        ★ Consolation byes: #8 seed and the lowest-seeded
+        championship opening-round loser.
+      </div>
+    `;
+  }
+
+  content.innerHTML = html;
+}
+
+function changeWeek(week) {
+  currentWeek = Math.max(1, Math.min(17, Number(week)));
+  renderWeek();
+}
+
+document.getElementById("previous-week").addEventListener(
+  "click",
+  () => changeWeek(currentWeek - 1)
+);
+
+document.getElementById("next-week").addEventListener(
+  "click",
+  () => changeWeek(currentWeek + 1)
+);
+
+weekSelect.addEventListener("change", event => {
+  changeWeek(event.target.value);
+});
+
+async function fetchAPI(type) {
+  const response = await fetch(
+    API_BASE + "?type=" + encodeURIComponent(type)
+  );
+
+  if (!response.ok) {
+    throw new Error(type + " API request failed");
+  }
+
+  const data = await response.json();
+
+  if (!data.success) {
+    throw new Error(type + " API returned an error");
+  }
+
+  return data;
+}
+
+async function loadMatchups() {
+  try {
+    const [standings, schedule, results, playoffs] =
+      await Promise.all([
+        fetchAPI("standings"),
+        fetchAPI("schedule"),
+        fetchAPI("results"),
+        fetchAPI("playoff-results")
+      ]);
+
+    standings.teams.forEach(team => {
+      teamNames[team.abbreviation] = team.name;
+    });
+
+    const completed = results.games.map(game => ({
+      ...game,
+      completed: true
+    }));
+
+    const upcoming = schedule.games.map(game => ({
+      ...game,
+      score1: null,
+      score2: null,
+      winner: null,
+      loser: null,
+      completed: false
+    }));
+
+    regularGames = [...completed, ...upcoming].sort(
+      (a, b) => Number(a.week) - Number(b.week)
+    );
+
+    playoffGames = playoffs.games || [];
+    dataLoaded = true;
+
+    // Open at the earliest unfinished regular-season week.
+    // Once the regular season is complete, show the playoffs.
+    const unfinished = upcoming
+      .map(game => Number(game.week))
+      .filter(week => week >= 1 && week <= 14);
+
+    if (unfinished.length) {
+      currentWeek = Math.min(...unfinished);
+    } else {
+      const latestPlayoffWeek = playoffGames.length
+        ? Math.max(...playoffGames.map(g => Number(g.week)))
+        : 15;
+
+      currentWeek = Math.min(17, latestPlayoffWeek);
+    }
+
+    renderWeek();
+
+  } catch (error) {
+    console.error("Weekly matchup loading error:", error);
+
+    content.innerHTML = `
+      <div class="empty-message">
+        Unable to load league matchups right now.
+        Please try refreshing the page.
+      </div>
+    `;
+  }
+}
+
+renderWeek();
+loadMatchups();
+</script>
+
+</body>
+</html>
