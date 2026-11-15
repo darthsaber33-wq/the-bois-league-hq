@@ -1,0 +1,450 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2026 Power Rankings | The Bois League</title>
+<link rel="stylesheet" href="/css/style.css">
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #0b1525;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.site-header {
+  background: #0b1525;
+  border-bottom: 1px solid #d9ad52;
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: auto;
+  padding: 24px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.site-logo {
+  color: #d9ad52;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-decoration: none;
+}
+
+.site-header nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+
+.site-header nav a {
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.site-header nav a.active,
+.site-header nav a:hover {
+  color: #d9ad52;
+}
+
+.page {
+  max-width: 1200px;
+  margin: auto;
+  padding: 65px 20px;
+}
+
+.eyebrow {
+  color: #d9ad52;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 2.5px;
+}
+
+h1 {
+  font-size: clamp(36px, 6vw, 64px);
+  margin: 20px 0;
+  font-weight: 900;
+}
+
+.intro {
+  color: #b7c9df;
+  line-height: 1.7;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 22px;
+  margin: 38px 0 25px;
+  background: #19283b;
+  border: 1px solid #354a64;
+  border-radius: 12px;
+}
+
+.controls h2 { margin: 0; }
+
+.week-nav {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+}
+
+.week-nav button,
+.week-nav select {
+  background: #101e31;
+  color: white;
+  border: 1px solid #52637a;
+  border-radius: 7px;
+  padding: 11px 14px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.week-nav button:disabled {
+  opacity: .35;
+  cursor: default;
+}
+
+.rankings {
+  display: grid;
+  gap: 15px;
+}
+
+.rank-card {
+  background: #19283b;
+  border: 1px solid #354a64;
+  border-radius: 12px;
+  padding: 25px;
+}
+
+.rank-card.first {
+  background: linear-gradient(135deg, #283e59, #19283b);
+  border: 2px solid #d9ad52;
+  padding: 35px;
+}
+
+.rank-main {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.rank-number {
+  color: #d9ad52;
+  font-size: 35px;
+  font-weight: 900;
+  min-width: 65px;
+}
+
+.first .rank-number {
+  font-size: 50px;
+}
+
+.rank-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.rank-info h3 {
+  font-size: 23px;
+  margin: 0 0 9px;
+}
+
+.rank-meta {
+  color: #b7c9df;
+  font-size: 13px;
+}
+
+.movement {
+  font-size: 18px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.movement.up { color: #31d99b; }
+.movement.down { color: #ff6575; }
+.movement.same { color: #b7c9df; }
+
+.commentary {
+  margin: 22px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid #354a64;
+  color: #d3dfed;
+  line-height: 1.75;
+  white-space: pre-line;
+}
+
+.top-label {
+  color: #d9ad52;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin-bottom: 18px;
+}
+
+.notice {
+  background: #19283b;
+  border: 1px dashed #53647a;
+  border-radius: 10px;
+  padding: 25px;
+  color: #b7c9df;
+}
+
+.back {
+  display: inline-block;
+  margin-top: 35px;
+  color: #d9ad52;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+@media (max-width: 700px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .page { padding: 40px 16px; }
+  .rank-card, .rank-card.first { padding: 20px; }
+  .rank-number { min-width: 45px; font-size: 27px; }
+  .rank-info h3 { font-size: 18px; }
+  .rank-main { gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="site-logo" href="/">THE BOIS LEAGUE</a>
+    <nav>
+      <a href="/">HOME</a>
+      <a class="active" href="/seasons/2026/">2026 SEASON</a>
+      <a href="/history/">LEAGUE HISTORY</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+  <div class="eyebrow">THE BOIS LEAGUE • SEASON THREE</div>
+  <h1>POWER RANKINGS</h1>
+  <p class="intro">
+    Twelve franchises. One ranking.
+    Weekly commissioner evaluations, momentum,
+    movement, and the race for league supremacy.
+  </p>
+
+  <div class="controls">
+    <h2 id="week-title">POWER RANKINGS</h2>
+    <div class="week-nav">
+      <button id="prev" type="button">←</button>
+      <select id="week-select" aria-label="Ranking week"></select>
+      <button id="next" type="button">→</button>
+    </div>
+  </div>
+
+  <div id="rankings" class="rankings">
+    <div class="notice">Loading official rankings...</div>
+  </div>
+
+  <a class="back" href="/seasons/2026/">
+    ← Back to 2026 Season
+  </a>
+</main>
+
+<script>
+// Copy the exact API_BASE value from your working
+// seasons/2026/matchups.html file into this line.
+const API_BASE = "PASTE_YOUR_EXISTING_APPS_SCRIPT_EXEC_URL_HERE";
+
+const rankingsContainer = document.getElementById("rankings");
+const weekSelect = document.getElementById("week-select");
+
+let allRankings = [];
+let weeks = [];
+let selectedWeek = null;
+let franchiseNames = {};
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function movementHTML(entry) {
+  if (entry.previousRank === null) {
+    return '<span class="movement same">—</span>';
+  }
+
+  if (entry.movement > 0) {
+    return '<span class="movement up">▲ ' +
+      entry.movement + '</span>';
+  }
+
+  if (entry.movement < 0) {
+    return '<span class="movement down">▼ ' +
+      Math.abs(entry.movement) + '</span>';
+  }
+
+  return '<span class="movement same">—</span>';
+}
+
+function renderRankings() {
+  document.getElementById("week-title").textContent =
+    "WEEK " + selectedWeek;
+
+  weekSelect.value = String(selectedWeek);
+
+  const index = weeks.indexOf(selectedWeek);
+  document.getElementById("prev").disabled = index <= 0;
+  document.getElementById("next").disabled =
+    index >= weeks.length - 1;
+
+  const entries = allRankings
+    .filter(entry => Number(entry.week) === selectedWeek)
+    .sort((a, b) => a.rank - b.rank);
+
+  if (!entries.length) {
+    rankingsContainer.innerHTML =
+      '<div class="notice">No rankings published for this week.</div>';
+    return;
+  }
+
+  rankingsContainer.innerHTML = entries.map(entry => {
+    const name =
+      franchiseNames[entry.abbreviation] ||
+      entry.abbreviation;
+
+    const top = entry.rank === 1;
+
+    const points = Number(entry.pointsFor).toLocaleString(
+      "en-CA",
+      { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+    );
+
+    return `
+      <article class="rank-card${top ? " first" : ""}">
+        ${top ? '<div class="top-label">★ TOP-RANKED FRANCHISE</div>' : ""}
+        <div class="rank-main">
+          <div class="rank-number">#${entry.rank}</div>
+
+          <div class="rank-info">
+            <h3>${escapeHTML(name)}</h3>
+            <div class="rank-meta">
+              ${entry.wins}–${entry.losses}
+              &nbsp; • &nbsp;
+              ${points} PF
+              &nbsp; • &nbsp;
+              ${escapeHTML(entry.abbreviation)}
+            </div>
+          </div>
+
+          ${movementHTML(entry)}
+        </div>
+
+        <p class="commentary">${
+          escapeHTML(entry.commentary || "No commissioner commentary.")
+        }</p>
+      </article>
+    `;
+  }).join("");
+}
+
+function changeWeek(index) {
+  if (index < 0 || index >= weeks.length) return;
+  selectedWeek = weeks[index];
+  renderRankings();
+}
+
+document.getElementById("prev").addEventListener("click", () => {
+  changeWeek(weeks.indexOf(selectedWeek) - 1);
+});
+
+document.getElementById("next").addEventListener("click", () => {
+  changeWeek(weeks.indexOf(selectedWeek) + 1);
+});
+
+weekSelect.addEventListener("change", () => {
+  selectedWeek = Number(weekSelect.value);
+  renderRankings();
+});
+
+async function fetchData(type) {
+  const response = await fetch(
+    API_BASE + "?type=" + encodeURIComponent(type)
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to load " + type);
+  }
+
+  const data = await response.json();
+
+  if (!data.success) {
+    throw new Error(data.error || "API error");
+  }
+
+  return data;
+}
+
+async function loadRankings() {
+  try {
+    const [rankingData, standingsData] = await Promise.all([
+      fetchData("power-rankings"),
+      fetchData("standings")
+    ]);
+
+    standingsData.teams.forEach(team => {
+      franchiseNames[team.abbreviation] = team.name;
+    });
+
+    allRankings = rankingData.rankings;
+    weeks = rankingData.weeks
+      .map(Number)
+      .sort((a, b) => a - b);
+
+    if (!weeks.length) {
+      throw new Error("No published power rankings found.");
+    }
+
+    weekSelect.innerHTML = "";
+
+    weeks.forEach(week => {
+      const option = document.createElement("option");
+      option.value = week;
+      option.textContent = "Week " + week;
+      weekSelect.appendChild(option);
+    });
+
+    selectedWeek = weeks[weeks.length - 1];
+    renderRankings();
+
+  } catch (error) {
+    console.error("Power Rankings error:", error);
+    rankingsContainer.innerHTML =
+      '<div class="notice">Unable to load rankings: ' +
+      escapeHTML(error.message) + '</div>';
+  }
+}
+
+loadRankings();
+</script>
+</body>
+</html>
