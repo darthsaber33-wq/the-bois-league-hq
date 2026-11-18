@@ -417,6 +417,10 @@ async function loadRankings() {
     });
 
     allRankings = rankingData.rankings;
+    
+    console.log("Power Rankings API data:", rankingData.rankings);
+console.log("501st Week 10:", rankingData.rankings.find(entry => Number(entry.week) === 10 && entry.abbreviation === "501st"));
+   
     weeks = rankingData.weeks
       .map(Number)
       .sort((a, b) => a - b);
