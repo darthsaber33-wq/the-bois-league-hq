@@ -556,19 +556,29 @@ async function updateLeagueNews() {
       weekLabel.textContent = "WEEK " + data.week;
     }
 
-    const sections = {
-      "Top Story": "news-top",
-      "Upset Alert": "news-upset",
-      "Power Rankings": "news-rankings",
-      "Game of the Week": "news-gotw"
-    };
+    const sectionIds = [
+  "news-top",
+  "news-upset",
+  "news-rankings",
+  "news-gotw"
+];
+
+let headlineIndex = 0;
 
     data.stories.forEach(story => {
-      const sectionId = sections[story.type];
-      if (!sectionId) return;
+  if (headlineIndex >= sectionIds.length) return;
 
-      const section = document.getElementById(sectionId);
-      if (!section) return;
+  const sectionId = sectionIds[headlineIndex];
+  headlineIndex++;
+
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+
+  const category = section.querySelector(".news-category");
+
+  if (category) {
+    category.textContent = story.type;
+  }
 
       const headline = section.querySelector("h3");
       const description = section.querySelector("p");
