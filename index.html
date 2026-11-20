@@ -736,7 +736,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const destinations = {
     standings: config.standings,
     matchups: config.matchups,
-    rankings: "/seasons/2026/power-rankings.html",
+    rankings: config.rankings,
     gotw: config.gotw,
     playoffs: config.playoffs,
     franchises: config.franchises
@@ -751,7 +751,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (text.includes("standings")) destination = destinations.standings;
     else if (text.includes("matchups")) destination = destinations.matchups;
     else if (text.includes("power rankings")) destination = destinations.rankings;
-    else if (text.includes("featured game")) destination = destinations.gotw;
+    else if (text.includes("featured game") || text.includes("game of the week")) destination = destinations.gotw;
     else if (text.includes("playoffs")) destination = destinations.playoffs;
     else if (text.includes("franchises")) destination = destinations.franchises;
 
