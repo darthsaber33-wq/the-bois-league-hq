@@ -184,13 +184,64 @@
       font-size: 24px;
     }
 
-    .article-body {
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-      line-height: 1.85;
-      color: #dce5f2;
-      font-size: 15px;
-    }
+   
+.article-body {
+  color: #dce5f2;
+  font-size: 15px;
+  line-height: 1.8;
+  overflow-wrap: break-word;
+}
+
+.article-body p {
+  margin: 0 0 18px;
+}
+
+.article-body h3 {
+  color: var(--gold);
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.7px;
+  margin: 34px 0 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.article-body .snapshot {
+  background: var(--panel-light);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  margin: 16px 0 24px;
+}
+
+.article-body .snapshot-row {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.article-body .snapshot-row:last-child {
+  border-bottom: none;
+}
+
+.article-body .snapshot-label {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.article-body .snapshot-value {
+  color: var(--text);
+}
+
+.article-body .closing {
+  font-weight: 600;
+  color: #f5e1b6;
+  border-left: 3px solid var(--gold);
+  padding: 12px 16px;
+  background: rgba(228, 187, 101, 0.06);
+  border-radius: 0 8px 8px 0;
+  margin-top: 26px;
+}
+
 
     .empty {
       color: var(--muted);
@@ -288,6 +339,112 @@
     })[char]);
   }
 
+function formatArticle(rawText) {
+  if (!rawText || !rawText.trim()) return "";
+
+  let text = rawText.trim().replace(/\r\n/g, "\n");
+
+  // Identify section headings even when Sheets stores
+  // the entire article as one continuous paragraph.
+  const headings = [
+    "HISTORY ON THE LINE",
+    "HISTORY REPEATS ITSELF",
+    "A RIVALRY BETWEEN CHAMPIONS",
+    "THE CHAMPIONSHIP RIVALRY CONTINUES",
+    "A STATEMENT IN THE EAST",
+    "A BATTLE FOR PLAYOFF POSITIONING",
+    "THE DIFFERENCE MAKERS",
+    "MATCHUP SNAPSHOT",
+    "WHAT'S AT STAKE",
+    "WHAT IT MEANS"
+  ];
+
+  // Convert heading boundaries into structural markers.
+  headings.forEach(heading => {
+    const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const regex = new RegExp("\\s*" + escaped + "\\s*", "g");
+    text = text.replace(regex, "\n\n[[HEADING:" + heading + "]]\n\n");
+  });
+
+  const sections = text
+    .split(/\n\s*\n/)
+    .map(s => s.trim())
+    .filter(Boolean);
+
+  let html = "";
+  let inSnapshot = false;
+
+  function closeSnapshot() {
+    if (inSnapshot) {
+      html += "</div>";
+      inSnapshot = false;
+    }
+  }
+
+  sections.forEach((section, index) => {
+    const headingMatch = section.match(
+      /^\[\[HEADING:(.*?)\]\]$/
+    );
+
+    if (headingMatch) {
+      closeSnapshot();
+
+      const heading = headingMatch[1];
+
+      html += "<h3>" + escapeHTML(heading) + "</h3>";
+
+      if (heading === "MATCHUP SNAPSHOT") {
+        html += '<div class="snapshot">';
+        inSnapshot = true;
+      }
+      return;
+    }
+
+    if (inSnapshot) {
+      // Separate snapshot fields even if stored on one line.
+      const fieldRegex =
+        /(?:Final Score|Winning Franchise|Updated Records|Season Records|Power Rankings(?: Entering Week \d+)?|Winning Streaks|All-Time Series|Game of the Week Records|Game of the Week Record|Winnipeg GOTW Record|Championships|Playoff Implications|Division Implications|Margin of Victory|Combined Score|Top Performer|Defensive Comparison|Offensive Comparison):/g;
+
+      const fields = section
+        .replace(fieldRegex, match => "\n" + match)
+        .split("\n")
+        .map(s => s.trim())
+        .filter(Boolean);
+
+      fields.forEach(field => {
+        const colon = field.indexOf(":");
+
+        if (colon > -1) {
+          const label = field.slice(0, colon);
+          const value = field.slice(colon + 1).trim();
+
+          html += `
+            <div class="snapshot-row">
+              <span class="snapshot-label">${escapeHTML(label)}:</span>
+              <span class="snapshot-value"> ${escapeHTML(value)}</span>
+            </div>
+          `;
+        } else {
+          html += "<p>" + escapeHTML(field) + "</p>";
+        }
+      });
+
+      return;
+    }
+
+    // Preserve existing paragraphs if the source has line breaks.
+    const paragraphs = section.split(/\n+/).filter(Boolean);
+
+    paragraphs.forEach(paragraph => {
+      html += "<p>" + escapeHTML(paragraph) + "</p>";
+    });
+  });
+
+  closeSnapshot();
+
+  return html;
+}
+
   function renderWeek(week) {
     const game = games.find(g => g.week === Number(week));
     if (!game) return;
@@ -327,14 +484,16 @@
         ${game.completed ? "FINAL" : "UPCOMING MATCHUP"}
       </div>
     `;
+preview.innerHTML = game.preview
+  ? formatArticle(game.preview)
+  : '<p class="empty">Pregame preview coming soon.</p>';
 
-    preview.textContent =
-      game.preview || "Pregame preview coming soon.";
-
-    recap.textContent =
-      game.completed
-        ? (game.recap || "Postgame recap coming soon.")
-        : "This matchup has not been completed yet.";
+recap.innerHTML = game.completed
+  ? (game.recap
+      ? formatArticle(game.recap)
+      : '<p class="empty">Postgame recap coming soon.</p>')
+  : '<p class="empty">This matchup has not been completed yet.</p>';
+    
   }
 
   async function loadPage() {
