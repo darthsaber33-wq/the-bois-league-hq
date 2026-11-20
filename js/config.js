@@ -17,7 +17,7 @@ window.LEAGUE_CONFIG = {
   },
 
   get rankings() {
-    return this.seasonHome + "rankings.html";
+    return this.seasonHome + "power-rankings.html";
   },
 
   get gotw() {
