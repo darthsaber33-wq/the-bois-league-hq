@@ -748,12 +748,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let destination = null;
 
-    if (text.includes("standings")) destination = destinations.standings;
-    else if (text.includes("matchups")) destination = destinations.matchups;
-    else if (text.includes("power rankings")) destination = destinations.rankings;
-    else if (text.includes("featured game") || text.includes("game of the week")) destination = destinations.gotw;
-    else if (text.includes("playoffs")) destination = destinations.playoffs;
-    else if (text.includes("franchises")) destination = destinations.franchises;
+    if (text.includes("game of the week") || text.includes("featured game")) {
+  destination = destinations.gotw;
+}
+else if (text.includes("power rankings")) {
+  destination = destinations.rankings;
+}
+else if (text.includes("standings")) {
+  destination = destinations.standings;
+}
+else if (text.includes("matchups")) {
+  destination = destinations.matchups;
+}
+else if (text.includes("playoffs")) {
+  destination = destinations.playoffs;
+}
+else if (text.includes("franchises")) {
+  destination = destinations.franchises;
+}
 
     if (destination) {
       link.href = destination;
