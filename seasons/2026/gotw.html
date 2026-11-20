@@ -215,8 +215,17 @@
 }
 
 .article-body .snapshot-row {
-  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+  padding: 12px 0;
   border-bottom: 1px solid var(--border);
+}
+
+.article-body .snapshot-value {
+  color: var(--text);
+  text-align: right;
 }
 
 .article-body .snapshot-row:last-child {
@@ -400,37 +409,65 @@ function formatArticle(rawText) {
       return;
     }
 
-    if (inSnapshot) {
-      // Separate snapshot fields even if stored on one line.
-      const fieldRegex =
-        /(?:Final Score|Winning Franchise|Updated Records|Season Records|Power Rankings(?: Entering Week \d+)?|Winning Streaks|All-Time Series|Game of the Week Records|Game of the Week Record|Winnipeg GOTW Record|Championships|Playoff Implications|Division Implications|Margin of Victory|Combined Score|Top Performer|Defensive Comparison|Offensive Comparison):/g;
+   
+if (inSnapshot) {
+  const fieldNames = [
+    "Power Rankings Entering Week 10",
+    "Power Rankings",
+    "Season Points",
+    "Season Records",
+    "Updated Records",
+    "Final Score",
+    "Winning Franchise",
+    "Winning Streaks",
+    "All-Time Series",
+    "Game of the Week Records",
+    "Game of the Week Record",
+    "Winnipeg GOTW Record",
+    "Championships",
+    "Playoff Implications",
+    "Division Implications",
+    "Margin of Victory",
+    "Combined Score",
+    "Top Performer",
+    "Defensive Comparison",
+    "Offensive Comparison"
+  ];
 
-      const fields = section
-        .replace(fieldRegex, match => "\n" + match)
-        .split("\n")
-        .map(s => s.trim())
-        .filter(Boolean);
+  const escapedNames = fieldNames.map(name =>
+    name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+  );
 
-      fields.forEach(field => {
-        const colon = field.indexOf(":");
+  const fieldRegex = new RegExp(
+    "(" + escapedNames.join("|") + ")\\s*:",
+    "g"
+  );
 
-        if (colon > -1) {
-          const label = field.slice(0, colon);
-          const value = field.slice(colon + 1).trim();
+  const parts = section
+    .replace(fieldRegex, "\n$1:")
+    .split("\n")
+    .map(s => s.trim())
+    .filter(Boolean);
 
-          html += `
-            <div class="snapshot-row">
-              <span class="snapshot-label">${escapeHTML(label)}:</span>
-              <span class="snapshot-value"> ${escapeHTML(value)}</span>
-            </div>
-          `;
-        } else {
-          html += "<p>" + escapeHTML(field) + "</p>";
-        }
-      });
+  parts.forEach(part => {
+    const colon = part.indexOf(":");
 
-      return;
+    if (colon !== -1) {
+      const label = part.slice(0, colon).trim();
+      const value = part.slice(colon + 1).trim();
+
+      html += `
+        <div class="snapshot-row">
+          <span class="snapshot-label">${escapeHTML(label)}:</span>
+          <span class="snapshot-value"> ${escapeHTML(value)}</span>
+        </div>
+      `;
     }
+  });
+
+  return;
+}
+
 
     // Preserve existing paragraphs if the source has line breaks.
     const paragraphs = section.split(/\n+/).filter(Boolean);
