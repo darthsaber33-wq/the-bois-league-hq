@@ -619,6 +619,124 @@ footer {
   }
 }
 
+/* =========================================
+   WEEKLY RECAP FORMATTING FIX
+   ========================================= */
+
+/* Keep each matchup in one unified card */
+
+.article-body .story-panel {
+  background: #17283e;
+  border: 1px solid #34475d;
+  border-radius: 9px;
+  padding: 20px 24px;
+  margin: 0 0 16px;
+}
+
+/* Matchup score line */
+
+.article-body .story-panel .matchup-line {
+  color: #a9c3e5;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.5;
+  margin: 0 0 7px;
+}
+
+/* Matchup headline */
+
+.article-body .story-panel h4 {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.35;
+  margin: 0 0 13px;
+}
+
+/* All matchup paragraphs use the same font size */
+
+.article-body .story-panel p,
+.article-body .story-panel .story-paragraph {
+  color: #d4deeb;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.7;
+  margin: 0 0 11px;
+}
+
+/* Remove extra spacing after the final paragraph */
+
+.article-body .story-panel p:last-child {
+  margin-bottom: 0;
+}
+
+/* Commissioner topics are visually distinct */
+
+.article-body .commissioner-panel {
+  padding: 22px 25px;
+}
+
+.article-body .commissioner-topic {
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.4;
+  margin: 22px 0 7px;
+}
+
+.article-body .commissioner-topic:first-of-type {
+  margin-top: 10px;
+}
+
+.article-body .commissioner-paragraph {
+  color: #d4deeb;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.7;
+  margin: 0 0 12px;
+}
+
+/* Compact upcoming matchup previews */
+
+.article-body .week-preview {
+  margin: 0 0 13px;
+  padding: 0 0 11px;
+  border-bottom: 1px solid #34475d;
+}
+
+.article-body .week-preview h4 {
+  font-size: 16px;
+  margin: 0 0 6px;
+}
+
+.article-body .week-preview p {
+  font-size: 15px;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Slightly reduce spacing around major sections */
+
+.article-body .section-heading {
+  margin: 34px 0 19px;
+}
+
+/* Mobile adjustments */
+
+@media (max-width: 600px) {
+  .article-body .story-panel {
+    padding: 17px 16px;
+  }
+
+  .article-body .story-panel h4 {
+    font-size: 18px;
+  }
+
+  .article-body .commissioner-panel {
+    padding: 18px 16px;
+  }
+}
+
 </style>
 </head>
 
@@ -834,17 +952,53 @@ function renderAwards(awards) {
   return html;
 }
 
+
 function formatRecap(rawText) {
   const raw = normalize(rawText);
   if (!raw) return "";
 
-  // Each blank-line-separated block is one article element.
   const blocks = raw
     .split(/\n\s*\n/)
-    .map(block => block.replace(/\s*\n\s*/g, " ").trim())
+    .flatMap(part => {
+      const lines = part
+        .split("\n")
+        .map(line => line.trim())
+        .filter(Boolean);
+
+      if (lines.length <= 1) return lines;
+
+      // Keep headings and scores separate, but merge wrapped prose.
+      const result = [];
+      let prose = [];
+
+      function flushProse() {
+        if (prose.length) {
+          result.push(prose.join(" "));
+          prose = [];
+        }
+      }
+
+      for (const line of lines) {
+        if (
+          sectionName(line) ||
+          isScoreLine(line) ||
+          isPreviewLine(line) ||
+          isUpperHeading(line)
+        ) {
+          flushProse();
+          result.push(line);
+        } else {
+          prose.push(line);
+        }
+      }
+
+      flushProse();
+      return result;
+    })
     .filter(Boolean);
 
   const root = document.createElement("div");
+
   let section = "";
   let story = null;
   let preview = null;
@@ -853,12 +1007,19 @@ function formatRecap(rawText) {
   let storyNeedsTitle = false;
   let awards = [];
   let firstParagraph = true;
+  let commissionerNeedsSubhead = false;
+  let previewNeedsIntro = false;
 
   function element(tag, className, text, parent = root) {
     const node = document.createElement(tag);
-    if (className) node.className = className;
+
+    if (className) {
+      node.className = className;
+    }
+
     node.textContent = text;
     parent.appendChild(node);
+
     return node;
   }
 
@@ -875,18 +1036,40 @@ function formatRecap(rawText) {
     awards = [];
   }
 
+  // Detect matchup headlines without confusing them with prose.
+  function isStoryTitle(text) {
+    if (!text || text.length > 100) return false;
+    if (/[.!?]$/.test(text)) return false;
+    if (isScoreLine(text)) return false;
+    if (sectionName(text)) return false;
+
+    return text.split(/\s+/).length <= 12;
+  }
+
+  // Append all matchup content to the SAME card.
+  function addStoryParagraph(text) {
+    if (!story) return;
+
+    element("p", "story-paragraph", text, story);
+  }
+
   for (const block of blocks) {
     const newSection = sectionName(block);
+
+    // ---------------------------------
+    // MAJOR SECTIONS
+    // ---------------------------------
 
     if (newSection) {
       finishAwards();
 
-      // All sections are siblings, never nested.
       story = null;
       preview = null;
       commissioner = null;
       feature = null;
       storyNeedsTitle = false;
+      commissionerNeedsSubhead = false;
+      previewNeedsIntro = false;
 
       section = newSection;
 
@@ -903,12 +1086,21 @@ function formatRecap(rawText) {
           "FROM THE COMMISSIONER",
           commissioner
         );
+
+        commissionerNeedsSubhead = true;
+      }
+
+      if (section === "LOOKING AHEAD") {
+        previewNeedsIntro = true;
       }
 
       continue;
     }
 
-    // Weekly awards are extracted directly from article text.
+    // ---------------------------------
+    // WEEKLY AWARDS
+    // ---------------------------------
+
     if (section === "WEEKLY AWARDS") {
       const award = parseAward(block);
 
@@ -920,7 +1112,10 @@ function formatRecap(rawText) {
       finishAwards();
     }
 
-    // Start each matchup as a separate sibling panel.
+    // ---------------------------------
+    // MATCHUP CARDS
+    // ---------------------------------
+
     if (
       section === "AROUND THE LEAGUE" &&
       isScoreLine(block)
@@ -930,17 +1125,36 @@ function formatRecap(rawText) {
       root.appendChild(story);
 
       element("div", "matchup-line", block, story);
+
       storyNeedsTitle = true;
       continue;
     }
 
-    if (storyNeedsTitle && story) {
-      element("h4", "", block, story);
+    // Matchup headline belongs inside its card.
+    if (
+      section === "AROUND THE LEAGUE" &&
+      storyNeedsTitle &&
+      story
+    ) {
+      element("h4", "story-title", block, story);
+
       storyNeedsTitle = false;
       continue;
     }
 
-    // Game of the Week is a small editorial feature.
+    // Every subsequent paragraph stays in that card.
+    if (
+      section === "AROUND THE LEAGUE" &&
+      story
+    ) {
+      addStoryParagraph(block);
+      continue;
+    }
+
+    // ---------------------------------
+    // OPTIONAL GAME OF THE WEEK
+    // ---------------------------------
+
     if (section === "GAME OF THE WEEK") {
       if (!feature) {
         feature = document.createElement("div");
@@ -951,47 +1165,99 @@ function formatRecap(rawText) {
       } else {
         element("p", "", block, feature);
       }
+
       continue;
     }
 
-    // Week 2 preview matchups are individual siblings.
+    // ---------------------------------
+    // COMMISSIONER'S CORNER
+    // ---------------------------------
+
     if (
-      section === "LOOKING AHEAD" &&
-      isPreviewLine(block)
+      section === "COMMISSIONER'S CORNER" &&
+      commissioner
     ) {
-      preview = document.createElement("div");
-      preview.className = "week-preview";
-      root.appendChild(preview);
+      if (isStoryTitle(block) && !commissionerNeedsSubhead) {
+        element(
+          "h4",
+          "commissioner-topic",
+          block,
+          commissioner
+        );
+      } else if (
+        commissionerNeedsSubhead &&
+        isStoryTitle(block)
+      ) {
+        element(
+          "h4",
+          "commissioner-topic",
+          block,
+          commissioner
+        );
 
-      element("h4", "", block, preview);
+        commissionerNeedsSubhead = false;
+      } else {
+        element(
+          "p",
+          "commissioner-paragraph",
+          block,
+          commissioner
+        );
+
+        commissionerNeedsSubhead = false;
+      }
+
       continue;
     }
 
-    // Other uppercase headings, including THE WEEK AHEAD,
-    // are recognized before paragraph formatting.
-    if (isUpperHeading(block)) {
-      story = null;
-      preview = null;
-      feature = null;
+    // ---------------------------------
+    // LOOKING AHEAD
+    // ---------------------------------
 
+    if (section === "LOOKING AHEAD") {
+      if (isPreviewLine(block)) {
+        preview = document.createElement("div");
+        preview.className = "week-preview";
+        root.appendChild(preview);
+
+        element("h4", "", block, preview);
+        previewNeedsIntro = false;
+        continue;
+      }
+
+      if (preview) {
+        element("p", "", block, preview);
+        continue;
+      }
+
+      if (
+        previewNeedsIntro &&
+        isStoryTitle(block)
+      ) {
+        element("h4", "editorial-subhead", block);
+        previewNeedsIntro = false;
+        continue;
+      }
+
+      element("p", "", block);
+      previewNeedsIntro = false;
+      continue;
+    }
+
+    // ---------------------------------
+    // OTHER HEADINGS
+    // ---------------------------------
+
+    if (isUpperHeading(block)) {
       element("h3", "section-heading", block);
       continue;
     }
 
-    let parent = root;
+    // ---------------------------------
+    // REGULAR ARTICLE PARAGRAPHS
+    // ---------------------------------
 
-    if (section === "AROUND THE LEAGUE" && story) {
-      parent = story;
-    } else if (section === "LOOKING AHEAD" && preview) {
-      parent = preview;
-    } else if (
-      section === "COMMISSIONER'S CORNER" &&
-      commissioner
-    ) {
-      parent = commissioner;
-    }
-
-    const paragraph = element("p", "", block, parent);
+    const paragraph = element("p", "", block);
 
     if (firstParagraph) {
       paragraph.className = "opening-paragraph";
@@ -1003,6 +1269,7 @@ function formatRecap(rawText) {
 
   return root.innerHTML;
 }
+
 
 function renderRecap(week) {
   const recap = recaps.find(
