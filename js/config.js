@@ -27,6 +27,9 @@ window.LEAGUE_CONFIG = {
   get playoffs() {
     return this.seasonHome + "playoffs.html";
   },
+  get recaps() {
+  return this.seasonHome + "recaps.html";
+},
 
   franchises: "/franchises/"
 };
