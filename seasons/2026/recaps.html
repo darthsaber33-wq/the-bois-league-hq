@@ -145,32 +145,37 @@ h1 {
 }
 
 .article-body {
+  max-width: 850px;
+  margin: 0 auto;
   color: #dce5f2;
-  font-size: 16px;
-  line-height: 1.85;
+  font-size: 15px;
+  line-height: 1.7;
   overflow-wrap: break-word;
 }
 
 .article-body p {
-  margin: 0 0 17px;
+  margin: 0 0 15px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.7;
 }
 
 .article-body .opening-paragraph {
-  font-size: 18px;
-  line-height: 1.85;
-  color: #f7f9fd;
+  font-size: 17px;
+  color: #f4f7fc;
+  line-height: 1.75;
 }
 
-/* MAJOR SECTION HEADINGS */
+/* MAJOR SECTIONS */
 
 .article-body .section-heading {
   color: var(--gold);
   font-size: clamp(20px, 3vw, 25px);
   line-height: 1.3;
-  letter-spacing: 1.1px;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  margin: 49px 0 24px;
-  padding: 0 0 15px;
+  margin: 34px 0 19px;
+  padding: 0 0 12px;
   border-bottom: 1px solid var(--border);
   position: relative;
 }
@@ -180,330 +185,77 @@ h1 {
   position: absolute;
   bottom: -1px;
   left: 0;
-  width: 68px;
+  width: 65px;
   height: 3px;
   background: var(--gold);
 }
 
-/* MATCHUP WRITEUPS - NOT SCORECARDS */
-
-.article-body .story-panel {
-  border: 1px solid #35485e;
-  border-left: 3px solid #b4a078;
-  background: #15253a;
-  border-radius: 0 10px 10px 0;
-  padding: 23px 26px 8px;
-  margin: 0 0 17px;
-}
-
-.story-panel .matchup-line {
-  color: #a9c3e5;
-  font-size: 13px;
-  line-height: 1.5;
-  font-weight: 800;
-  letter-spacing: .3px;
-  margin: 0 0 9px;
-}
-
-.story-panel h4 {
-  color: #fff;
-  font-size: clamp(18px, 2.4vw, 22px);
-  line-height: 1.35;
-  margin: 0 0 15px;
-}
-
-.story-panel p {
-  color: #d4deeb;
-}
-
-/* EDITORIAL FEATURES */
-
-.article-body .editorial-subhead {
-  font-size: 19px;
-  line-height: 1.4;
-  color: #fff;
-  margin: 21px 0 14px;
-}
-
-.article-body .feature-panel {
-  background: #172940;
-  border-left: 3px solid var(--gold);
-  padding: 22px 26px 8px;
-  border-radius: 0 9px 9px 0;
-  margin: 12px 0 26px;
-}
-
-.article-body .feature-panel h4 {
-  margin: 0 0 12px;
-  font-size: 19px;
-  color: #fff;
-}
-
-/* COMMISSIONER'S CORNER */
-
-.article-body .commissioner-panel {
-  background: #112137;
-  border: 1px solid #41536a;
-  border-left: 4px solid var(--gold);
-  border-radius: 0 10px 10px 0;
-  padding: 24px 28px 8px;
-  margin: 5px 0 27px;
-}
-
-.commissioner-kicker {
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 1.6px;
-  color: var(--gold);
-  margin-bottom: 13px;
-}
-
-/* LOOKING AHEAD */
-
-.article-body .week-preview {
-  margin: 0 0 24px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid #34475d;
-}
-
-.article-body .week-preview h4 {
-  font-size: 17px;
-  line-height: 1.4;
-  color: #f9f9fd;
-  margin: 0 0 12px;
-}
-
-.article-body .week-preview p {
-  color: #c9d5e4;
-}
-
-.article-body .closing-note {
-  color: var(--gold);
-  font-weight: 700;
-}
-
-/* WEEKLY AWARDS */
-
-.awards-gallery {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-  margin: 4px 0 18px;
-}
-
-.award-card {
-  background: #102036;
-  border: 1px solid #3a4e65;
-  border-radius: 11px;
-  padding: 17px 18px 19px;
-  min-width: 0;
-}
-
-.award-card.featured {
-  border-top: 3px solid var(--gold);
-}
-
-.award-image {
-  width: 100%;
-  max-width: 185px;
-  aspect-ratio: 1 / 1;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto 9px;
-  border-radius: 6px;
-}
-
-.award-name {
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 1.2px;
-  color: var(--gold);
-  text-transform: uppercase;
-  margin-bottom: 7px;
-}
-
-.award-winner {
-  color: #fff;
-  font-size: 16px;
-  line-height: 1.5;
-  font-weight: 800;
-}
-
-.award-description {
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--muted);
-  margin-top: 9px;
-}
-
-.minor-awards {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin: 0 0 28px;
-}
-
-.award-card.minor {
-  padding: 16px;
-  background: #1c3049;
-}
-
-.award-card.minor .award-name {
-  color: #d8c49b;
-}
-
-.award-card.minor .award-winner {
-  font-size: 14px;
-}
-
-.award-card.minor .award-description {
-  font-size: 12px;
-}
-
-/* OTHER ELEMENTS */
-
-.empty {
-  color: var(--muted);
-  text-align: center;
-  padding: 40px 10px;
-}
-
-.back-link {
-  display: inline-block;
-  margin-top: 35px;
-  color: var(--gold);
-  font-weight: bold;
-}
-
-.back-link:hover {
-  text-decoration: underline;
-}
-
-footer {
-  text-align: center;
-  color: var(--muted);
-  padding: 30px;
-  border-top: 1px solid var(--border);
-  font-size: 13px;
-}
-
-/* MOBILE */
-
-@media (max-width: 700px) {
-  .minor-awards {
-    grid-template-columns: 1fr;
-  }
-
-  .article-body .story-panel {
-    padding: 18px 17px 5px;
-  }
-
-  .article-body .commissioner-panel {
-    padding: 19px 18px 5px;
-  }
-}
-
-@media (max-width: 520px) {
-  .toolbar { align-items: stretch; }
-  .week-select { width: 100%; }
-  nav { gap: 14px; }
-
-  .awards-gallery {
-    grid-template-columns: 1fr;
-  }
-
-  .award-image {
-    max-width: 170px;
-  }
-
-  .article-inner {
-    padding: 24px 19px;
-  }
-
-  .article-body {
-    font-size: 15px;
-  }
-}
-  
-/* CLEAN, FLAT EDITORIAL LAYOUT */
-
-.article-body {
-  max-width: 850px;
-  margin: 0 auto;
-  line-height: 1.8;
-}
-
-.article-body p {
-  margin: 0 0 20px;
-}
-
-.article-body .opening-paragraph {
-  font-size: 18px;
-  color: #f4f7fc;
-}
-
-/* All major headings align to the same left edge */
-
-.article-body .section-heading {
-  margin: 48px 0 25px;
-  padding: 0 0 12px;
-  color: var(--gold);
-  font-size: clamp(20px, 3vw, 25px);
-  letter-spacing: 1px;
-  border-bottom: 1px solid var(--border);
-}
-
-.article-body .section-heading::after {
-  width: 65px;
-}
-
-/* Matchup writeups: subtle separation, no gold bars */
+/* MATCHUP CARDS */
 
 .article-body .story-panel {
   background: #17283e;
   border: 1px solid #34475d;
-  border-left: 1px solid #34475d;
   border-radius: 9px;
-  margin: 0 0 18px;
-  padding: 22px 25px 8px;
+  padding: 20px 24px;
+  margin: 0 0 16px;
 }
 
 .article-body .story-panel .matchup-line {
   color: #a9c3e5;
   font-size: 13px;
   font-weight: 800;
-  margin-bottom: 10px;
+  line-height: 1.5;
+  margin: 0 0 7px;
 }
 
-.article-body .story-panel h4 {
+.article-body .story-panel .story-title {
   color: #fff;
-  font-size: 21px;
-  margin: 0 0 15px;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.35;
+  margin: 0 0 13px;
 }
 
-/* GOTW: normal editorial content */
+.article-body .story-panel .story-paragraph {
+  color: #d4deeb;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.7;
+  margin: 0 0 11px;
+}
+
+.article-body .story-panel .story-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+/* EDITORIAL HEADINGS */
+
+.article-body .editorial-subhead {
+  font-size: 18px;
+  line-height: 1.4;
+  color: #fff;
+  margin: 19px 0 10px;
+}
+
+/* OPTIONAL GAME OF THE WEEK */
 
 .article-body .feature-panel {
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  margin: 0 0 24px;
-  padding: 0;
+  margin: 0 0 18px;
 }
 
 .article-body .feature-panel h4 {
   color: #fff;
-  font-size: 20px;
-  margin: 0 0 14px;
+  font-size: 18px;
+  margin: 0 0 9px;
 }
 
-/* Commissioner's Corner: one contained panel */
+/* COMMISSIONER'S CORNER */
 
 .article-body .commissioner-panel {
   background: #112137;
   border: 1px solid #344b66;
   border-radius: 9px;
-  padding: 24px 27px 8px;
+  padding: 22px 25px;
   margin: 0 0 25px;
 }
 
@@ -512,27 +264,65 @@ footer {
   font-size: 11px;
   font-weight: 900;
   letter-spacing: 1.5px;
-  margin-bottom: 15px;
+  margin-bottom: 14px;
 }
 
-/* Week 2 previews: clean text, not nested boxes */
+.article-body .commissioner-topic {
+  color: #fff;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.4;
+  margin: 20px 0 7px;
+}
+
+.article-body .commissioner-topic:first-of-type {
+  margin-top: 8px;
+}
+
+.article-body .commissioner-paragraph {
+  color: #d4deeb;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.7;
+  margin: 0 0 11px;
+}
+
+.article-body .commissioner-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+/* WEEK PREVIEWS */
 
 .article-body .week-preview {
-  background: transparent;
-  border: 0;
+  margin: 0 0 13px;
+  padding: 0 0 11px;
   border-bottom: 1px solid #34475d;
-  border-radius: 0;
-  margin: 0 0 23px;
-  padding: 0 0 8px;
 }
 
 .article-body .week-preview h4 {
   color: #fff;
-  font-size: 17px;
-  margin: 0 0 11px;
+  font-size: 16px;
+  line-height: 1.4;
+  margin: 0 0 6px;
 }
 
-/* Awards */
+.article-body .week-preview p {
+  color: #c9d5e4;
+  font-size: 15px;
+  line-height: 1.65;
+  margin: 0 0 7px;
+}
+
+.article-body .week-preview p:last-child {
+  margin-bottom: 0;
+}
+
+.article-body .closing-note {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* WEEKLY AWARDS */
 
 .awards-gallery {
   display: grid;
@@ -547,6 +337,7 @@ footer {
   border-radius: 10px;
   padding: 18px;
   text-align: center;
+  min-width: 0;
 }
 
 .award-card.featured {
@@ -601,142 +392,72 @@ footer {
   font-size: 14px;
 }
 
-@media (max-width: 600px) {
-  .awards-gallery {
-    grid-template-columns: 1fr;
-  }
+.award-card.minor .award-description {
+  font-size: 12px;
+}
 
+/* OTHER ELEMENTS */
+
+.empty {
+  color: var(--muted);
+  text-align: center;
+  padding: 40px 10px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 35px;
+  color: var(--gold);
+  font-weight: bold;
+}
+
+.back-link:hover { text-decoration: underline; }
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 30px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
   .minor-awards {
     grid-template-columns: 1fr;
   }
 
   .article-body .story-panel {
-    padding: 18px 17px 4px;
+    padding: 18px 17px;
   }
 
   .article-body .commissioner-panel {
-    padding: 19px 18px 4px;
+    padding: 19px 18px;
   }
 }
 
-/* =========================================
-   WEEKLY RECAP FORMATTING FIX
-   ========================================= */
+@media (max-width: 520px) {
+  .toolbar { align-items: stretch; }
+  .week-select { width: 100%; }
+  nav { gap: 14px; }
 
-/* Keep each matchup in one unified card */
-
-.article-body .story-panel {
-  background: #17283e;
-  border: 1px solid #34475d;
-  border-radius: 9px;
-  padding: 20px 24px;
-  margin: 0 0 16px;
-}
-
-/* Matchup score line */
-
-.article-body .story-panel .matchup-line {
-  color: #a9c3e5;
-  font-size: 13px;
-  font-weight: 800;
-  line-height: 1.5;
-  margin: 0 0 7px;
-}
-
-/* Matchup headline */
-
-.article-body .story-panel h4 {
-  color: #ffffff;
-  font-size: 20px;
-  font-weight: 800;
-  line-height: 1.35;
-  margin: 0 0 13px;
-}
-
-/* All matchup paragraphs use the same font size */
-
-.article-body .story-panel p,
-.article-body .story-panel .story-paragraph {
-  color: #d4deeb;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.7;
-  margin: 0 0 11px;
-}
-
-/* Remove extra spacing after the final paragraph */
-
-.article-body .story-panel p:last-child {
-  margin-bottom: 0;
-}
-
-/* Commissioner topics are visually distinct */
-
-.article-body .commissioner-panel {
-  padding: 22px 25px;
-}
-
-.article-body .commissioner-topic {
-  color: #ffffff;
-  font-size: 17px;
-  font-weight: 800;
-  line-height: 1.4;
-  margin: 22px 0 7px;
-}
-
-.article-body .commissioner-topic:first-of-type {
-  margin-top: 10px;
-}
-
-.article-body .commissioner-paragraph {
-  color: #d4deeb;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.7;
-  margin: 0 0 12px;
-}
-
-/* Compact upcoming matchup previews */
-
-.article-body .week-preview {
-  margin: 0 0 13px;
-  padding: 0 0 11px;
-  border-bottom: 1px solid #34475d;
-}
-
-.article-body .week-preview h4 {
-  font-size: 16px;
-  margin: 0 0 6px;
-}
-
-.article-body .week-preview p {
-  font-size: 15px;
-  line-height: 1.65;
-  margin: 0;
-}
-
-/* Slightly reduce spacing around major sections */
-
-.article-body .section-heading {
-  margin: 34px 0 19px;
-}
-
-/* Mobile adjustments */
-
-@media (max-width: 600px) {
-  .article-body .story-panel {
-    padding: 17px 16px;
+  .awards-gallery {
+    grid-template-columns: 1fr;
   }
 
-  .article-body .story-panel h4 {
+  .award-image {
+    max-width: 170px;
+  }
+
+  .article-inner {
+    padding: 24px 19px;
+  }
+
+  .article-body .story-panel .story-title {
     font-size: 18px;
   }
-
-  .article-body .commissioner-panel {
-    padding: 18px 16px;
-  }
 }
-
 </style>
 </head>
 
@@ -778,7 +499,6 @@ footer {
 
   <article class="recap-card">
     <div class="article-inner">
-
       <div class="recap-label" id="recap-label">
         COMMISSIONER'S WEEKLY REPORT
       </div>
@@ -788,7 +508,6 @@ footer {
       </h2>
 
       <div class="article-body" id="recap-body"></div>
-
     </div>
   </article>
 
@@ -800,7 +519,6 @@ footer {
 <footer>
   THE BOIS LEAGUE • 2026 SEASON
 </footer>
-
 
 <script>
 const API_URL =
@@ -851,8 +569,16 @@ function normalize(text) {
     .replace(/^["']|["']$/g, "");
 }
 
+function cleanLine(text) {
+  return String(text ?? "")
+    .trim()
+    .replace(/^#{1,6}\s+/, "")
+    .replace(/^\*\*(.*?)\*\*$/, "$1")
+    .trim();
+}
+
 function sectionName(text) {
-  const upper = text.toUpperCase().trim();
+  const upper = cleanLine(text).toUpperCase();
 
   if (SECTION_NAMES.includes(upper)) return upper;
 
@@ -863,28 +589,124 @@ function sectionName(text) {
   return null;
 }
 
+/*
+  STRICT SCORE DETECTION
+
+  A matchup score must occupy the entire line.
+
+  Example:
+  Team A 323.30 — Team B 173.45
+
+  A paragraph containing 323.30–173.45 will
+  NOT be mistaken for a new matchup.
+*/
+
 function isScoreLine(text) {
-  return /\b\d{2,3}\.\d{2}\s*[—–-]\s*.+\d{2,3}\.\d{2}\b/.test(text);
+  const line = cleanLine(text);
+
+  return /^[^\n]{2,100}?\s+\d{2,3}\.\d{2}\s+[—–-]\s+[^\n]{2,100}?\s+\d{2,3}\.\d{2}$/.test(line);
 }
 
+/*
+  Preview detection accepts:
+  Team A (3–0) vs Team B (1–2)
+  Team A (3-0) vs. Team B (1-2)
+*/
+
 function isPreviewLine(text) {
-  return /\(\d+\s*[–-]\s*\d+\)\s+vs\.?\s+/i.test(text);
+  const line = cleanLine(text);
+
+  return /\(\d+\s*[–—-]\s*\d+\)\s+vs\.?\s+/i.test(line);
 }
 
 function isUpperHeading(text) {
+  const line = cleanLine(text);
+
   return (
-    text.length <= 90 &&
-    /^[A-Z0-9\s'’&:—–-]+$/.test(text) &&
-    /[A-Z]/.test(text)
+    line.length <= 90 &&
+    /^[A-Z0-9\s'’&:—–-]+$/.test(line) &&
+    /[A-Z]/.test(line)
   );
 }
 
+function isShortHeading(text) {
+  const line = cleanLine(text);
+
+  if (!line || line.length > 90) return false;
+  if (/[.!?]$/.test(line)) return false;
+  if (sectionName(line)) return false;
+  if (isScoreLine(line)) return false;
+  if (isPreviewLine(line)) return false;
+
+  return line.split(/\s+/).length <= 12;
+}
+
+/*
+  TEXT BLOCK PROCESSING
+
+  Preserve paragraph breaks, but recognize
+  score lines and section headings even when
+  Google Sheets supplies inconsistent spacing.
+*/
+
+function tokenizeRecap(rawText) {
+  const raw = normalize(rawText);
+
+  if (!raw) return [];
+
+  const paragraphs = raw.split(/\n\s*\n/);
+  const tokens = [];
+
+  for (const paragraph of paragraphs) {
+    const lines = paragraph
+      .split("\n")
+      .map(cleanLine)
+      .filter(Boolean);
+
+    if (!lines.length) continue;
+
+    let prose = [];
+
+    function flushProse() {
+      if (!prose.length) return;
+
+      tokens.push(prose.join(" ").trim());
+      prose = [];
+    }
+
+    for (const line of lines) {
+      const structural =
+        Boolean(sectionName(line)) ||
+        isScoreLine(line) ||
+        isPreviewLine(line) ||
+        isUpperHeading(line);
+
+      if (structural) {
+        flushProse();
+        tokens.push(line);
+      } else {
+        prose.push(line);
+      }
+    }
+
+    flushProse();
+  }
+
+  return tokens.filter(Boolean);
+}
+
+/* AWARD PARSING */
+
 function parseAward(text) {
-  const match = text.match(/^(.+?)\s+[—–-]\s+(.+)$/);
+  const match = cleanLine(text).match(
+    /^(.+?)\s+[—–-]\s+(.+)$/
+  );
+
   if (!match) return null;
 
   const definition = AWARDS.find(
-    award => award[0].toLowerCase() ===
+    award =>
+      award[0].toLowerCase() ===
       match[1].trim().toLowerCase()
   );
 
@@ -892,14 +714,28 @@ function parseAward(text) {
 
   const content = match[2].trim();
 
-  // Separate the winner/stat from the explanatory sentence.
-  const split = content.match(/^(.+?[.!?])(?:\s+(.+))?$/);
+  /*
+    Split after the winner's points, not after
+    the first period in a decimal number.
+  */
+
+  const scoreSplit = content.match(
+    /^(.+?\b\d+(?:\.\d+)?\s+points\.)\s*(.*)$/i
+  );
+
+  const winner = scoreSplit
+    ? scoreSplit[1]
+    : content;
+
+  const description = scoreSplit
+    ? scoreSplit[2]
+    : "";
 
   return {
     name: definition[0],
     image: definition[1],
-    winner: split ? split[1] : content,
-    description: split ? (split[2] || "") : ""
+    winner,
+    description
   };
 }
 
@@ -918,8 +754,12 @@ function awardCard(award) {
   return `
     <div class="award-card ${featured ? "featured" : "minor"}">
       ${image}
-      <div class="award-name">${escapeHTML(award.name)}</div>
-      <div class="award-winner">${escapeHTML(award.winner)}</div>
+      <div class="award-name">
+        ${escapeHTML(award.name)}
+      </div>
+      <div class="award-winner">
+        ${escapeHTML(award.winner)}
+      </div>
       ${
         award.description
           ? `<div class="award-description">
@@ -938,86 +778,63 @@ function renderAwards(awards) {
   let html = "";
 
   if (featured.length) {
-    html += `<div class="awards-gallery">
-      ${featured.map(awardCard).join("")}
-    </div>`;
+    html += `
+      <div class="awards-gallery">
+        ${featured.map(awardCard).join("")}
+      </div>
+    `;
   }
 
   if (minor.length) {
-    html += `<div class="minor-awards">
-      ${minor.map(awardCard).join("")}
-    </div>`;
+    html += `
+      <div class="minor-awards">
+        ${minor.map(awardCard).join("")}
+      </div>
+    `;
   }
 
   return html;
 }
 
+/*
+  MAIN RECAP FORMATTER
+
+  IMPORTANT:
+  - One card per matchup.
+  - A score line starts the card.
+  - The next block is the headline.
+  - All following paragraphs stay in that card.
+  - Only the next FULL score line or major
+    section can end the matchup.
+*/
 
 function formatRecap(rawText) {
-  const raw = normalize(rawText);
-  if (!raw) return "";
+  const blocks = tokenizeRecap(rawText);
 
-  const blocks = raw
-    .split(/\n\s*\n/)
-    .flatMap(part => {
-      const lines = part
-        .split("\n")
-        .map(line => line.trim())
-        .filter(Boolean);
-
-      if (lines.length <= 1) return lines;
-
-      // Keep headings and scores separate, but merge wrapped prose.
-      const result = [];
-      let prose = [];
-
-      function flushProse() {
-        if (prose.length) {
-          result.push(prose.join(" "));
-          prose = [];
-        }
-      }
-
-      for (const line of lines) {
-        if (
-          sectionName(line) ||
-          isScoreLine(line) ||
-          isPreviewLine(line) ||
-          isUpperHeading(line)
-        ) {
-          flushProse();
-          result.push(line);
-        } else {
-          prose.push(line);
-        }
-      }
-
-      flushProse();
-      return result;
-    })
-    .filter(Boolean);
+  if (!blocks.length) return "";
 
   const root = document.createElement("div");
 
   let section = "";
   let story = null;
-  let preview = null;
-  let commissioner = null;
-  let feature = null;
   let storyNeedsTitle = false;
+
+  let commissioner = null;
+  let preview = null;
+  let feature = null;
+
   let awards = [];
   let firstParagraph = true;
-  let commissionerNeedsSubhead = false;
-  let previewNeedsIntro = false;
+
+  let expectingPreviewIntro = false;
+  let expectingClosingTitle = false;
 
   function element(tag, className, text, parent = root) {
     const node = document.createElement(tag);
 
-    if (className) {
-      node.className = className;
-    }
+    if (className) node.className = className;
 
-    node.textContent = text;
+    node.textContent = cleanLine(text);
     parent.appendChild(node);
 
     return node;
@@ -1036,44 +853,50 @@ function formatRecap(rawText) {
     awards = [];
   }
 
-  // Detect matchup headlines without confusing them with prose.
-  function isStoryTitle(text) {
-    if (!text || text.length > 100) return false;
-    if (/[.!?]$/.test(text)) return false;
-    if (isScoreLine(text)) return false;
-    if (sectionName(text)) return false;
+  function newStory(score) {
+    story = document.createElement("section");
+    story.className = "story-panel";
+    root.appendChild(story);
 
-    return text.split(/\s+/).length <= 12;
+    element("div", "matchup-line", score, story);
+
+    storyNeedsTitle = true;
   }
 
-  // Append all matchup content to the SAME card.
-  function addStoryParagraph(text) {
-    if (!story) return;
+  function newPreview(title) {
+    preview = document.createElement("div");
+    preview.className = "week-preview";
+    root.appendChild(preview);
 
-    element("p", "story-paragraph", text, story);
+    element("h4", "", title, preview);
   }
 
   for (const block of blocks) {
-    const newSection = sectionName(block);
+    const text = cleanLine(block);
+    const newSection = sectionName(text);
 
-    // ---------------------------------
-    // MAJOR SECTIONS
-    // ---------------------------------
+    /*
+      1. MAJOR SECTION HEADINGS
+    */
 
     if (newSection) {
       finishAwards();
 
-      story = null;
-      preview = null;
-      commissioner = null;
-      feature = null;
-      storyNeedsTitle = false;
-      commissionerNeedsSubhead = false;
-      previewNeedsIntro = false;
-
       section = newSection;
 
-      element("h3", "section-heading", block);
+      story = null;
+      storyNeedsTitle = false;
+      commissioner = null;
+      preview = null;
+      feature = null;
+
+      expectingPreviewIntro =
+        section === "LOOKING AHEAD";
+
+      expectingClosingTitle =
+        section === "THE WEEK AHEAD";
+
+      element("h3", "section-heading", text);
 
       if (section === "COMMISSIONER'S CORNER") {
         commissioner = document.createElement("div");
@@ -1086,23 +909,17 @@ function formatRecap(rawText) {
           "FROM THE COMMISSIONER",
           commissioner
         );
-
-        commissionerNeedsSubhead = true;
-      }
-
-      if (section === "LOOKING AHEAD") {
-        previewNeedsIntro = true;
       }
 
       continue;
     }
 
-    // ---------------------------------
-    // WEEKLY AWARDS
-    // ---------------------------------
+    /*
+      2. WEEKLY AWARDS
+    */
 
     if (section === "WEEKLY AWARDS") {
-      const award = parseAward(block);
+      const award = parseAward(text);
 
       if (award) {
         awards.push(award);
@@ -1112,152 +929,172 @@ function formatRecap(rawText) {
       finishAwards();
     }
 
-    // ---------------------------------
-    // MATCHUP CARDS
-    // ---------------------------------
+    /*
+      3. AROUND THE LEAGUE
 
-    if (
-      section === "AROUND THE LEAGUE" &&
-      isScoreLine(block)
-    ) {
-      story = document.createElement("section");
-      story.className = "story-panel";
-      root.appendChild(story);
+      All content belongs to the active story
+      until another complete score line appears.
+    */
 
-      element("div", "matchup-line", block, story);
+    if (section === "AROUND THE LEAGUE") {
 
-      storyNeedsTitle = true;
+      if (isScoreLine(text)) {
+        newStory(text);
+        continue;
+      }
+
+      if (story) {
+
+        if (storyNeedsTitle) {
+          element(
+            "h4",
+            "story-title",
+            text,
+            story
+          );
+
+          storyNeedsTitle = false;
+        } else {
+          element(
+            "p",
+            "story-paragraph",
+            text,
+            story
+          );
+        }
+
+        continue;
+      }
+
+      element("p", "", text);
       continue;
     }
 
-    // Matchup headline belongs inside its card.
-    if (
-      section === "AROUND THE LEAGUE" &&
-      storyNeedsTitle &&
-      story
-    ) {
-      element("h4", "story-title", block, story);
+    /*
+      4. OPTIONAL GAME OF THE WEEK
 
-      storyNeedsTitle = false;
-      continue;
-    }
-
-    // Every subsequent paragraph stays in that card.
-    if (
-      section === "AROUND THE LEAGUE" &&
-      story
-    ) {
-      addStoryParagraph(block);
-      continue;
-    }
-
-    // ---------------------------------
-    // OPTIONAL GAME OF THE WEEK
-    // ---------------------------------
+      Supports older recaps that may still
+      include a separate GOTW section.
+    */
 
     if (section === "GAME OF THE WEEK") {
       if (!feature) {
         feature = document.createElement("div");
         feature.className = "feature-panel";
         root.appendChild(feature);
+      }
 
-        element("h4", "", block, feature);
+      if (isShortHeading(text)) {
+        element("h4", "", text, feature);
       } else {
-        element("p", "", block, feature);
+        element("p", "", text, feature);
       }
 
       continue;
     }
 
-    // ---------------------------------
-    // COMMISSIONER'S CORNER
-    // ---------------------------------
+    /*
+      5. COMMISSIONER'S CORNER
 
-    if (
-      section === "COMMISSIONER'S CORNER" &&
-      commissioner
-    ) {
-      if (isStoryTitle(block) && !commissionerNeedsSubhead) {
+      Short topic headings are distinguished
+      from ordinary paragraphs.
+    */
+
+    if (section === "COMMISSIONER'S CORNER") {
+      if (isShortHeading(text)) {
         element(
           "h4",
           "commissioner-topic",
-          block,
+          text,
           commissioner
         );
-      } else if (
-        commissionerNeedsSubhead &&
-        isStoryTitle(block)
-      ) {
-        element(
-          "h4",
-          "commissioner-topic",
-          block,
-          commissioner
-        );
-
-        commissionerNeedsSubhead = false;
       } else {
         element(
           "p",
           "commissioner-paragraph",
-          block,
+          text,
           commissioner
         );
-
-        commissionerNeedsSubhead = false;
       }
 
       continue;
     }
 
-    // ---------------------------------
-    // LOOKING AHEAD
-    // ---------------------------------
+    /*
+      6. LOOKING AHEAD
+
+      One compact preview per matchup.
+    */
 
     if (section === "LOOKING AHEAD") {
-      if (isPreviewLine(block)) {
-        preview = document.createElement("div");
-        preview.className = "week-preview";
-        root.appendChild(preview);
 
-        element("h4", "", block, preview);
-        previewNeedsIntro = false;
+      if (isPreviewLine(text)) {
+        newPreview(text);
+        expectingPreviewIntro = false;
         continue;
       }
 
       if (preview) {
-        element("p", "", block, preview);
+        element("p", "", text, preview);
         continue;
       }
 
       if (
-        previewNeedsIntro &&
-        isStoryTitle(block)
+        expectingPreviewIntro &&
+        isShortHeading(text)
       ) {
-        element("h4", "editorial-subhead", block);
-        previewNeedsIntro = false;
+        element(
+          "h4",
+          "editorial-subhead",
+          text
+        );
+
+        expectingPreviewIntro = false;
         continue;
       }
 
-      element("p", "", block);
-      previewNeedsIntro = false;
+      element("p", "", text);
+      expectingPreviewIntro = false;
       continue;
     }
 
-    // ---------------------------------
-    // OTHER HEADINGS
-    // ---------------------------------
+    /*
+      7. CLOSING SECTION
+    */
 
-    if (isUpperHeading(block)) {
-      element("h3", "section-heading", block);
+    if (section === "THE WEEK AHEAD") {
+      if (
+        expectingClosingTitle &&
+        isShortHeading(text)
+      ) {
+        element(
+          "h4",
+          "editorial-subhead",
+          text
+        );
+
+        expectingClosingTitle = false;
+        continue;
+      }
+
+      element("p", "", text);
+      expectingClosingTitle = false;
       continue;
     }
 
-    // ---------------------------------
-    // REGULAR ARTICLE PARAGRAPHS
-    // ---------------------------------
+    /*
+      8. OTHER ARTICLE CONTENT
 
-    const paragraph = element("p", "", block);
+      Division races and records are
+      ordinary paragraphs, not cards.
+    */
+
+    if (isUpperHeading(text)) {
+      element("h3", "section-heading", text);
+      continue;
+    }
+
+    const paragraph = element("p", "", text);
 
     if (firstParagraph) {
       paragraph.className = "opening-paragraph";
@@ -1270,6 +1107,7 @@ function formatRecap(rawText) {
   return root.innerHTML;
 }
 
+/* DISPLAY SELECTED WEEK */
 
 function renderRecap(week) {
   const recap = recaps.find(
@@ -1296,17 +1134,28 @@ function renderRecap(week) {
   history.replaceState(null, "", url);
 }
 
+/* EMPTY STATE */
+
 function showEmpty(message) {
-  weekSelect.innerHTML = "<option>No published weeks</option>";
+  weekSelect.innerHTML =
+    "<option>No published weeks</option>";
+
   weekSelect.disabled = true;
 
-  recapStatus.textContent = "NO PUBLISHED RECAPS";
-  recapLabel.textContent = "COMMISSIONER'S WEEKLY REPORT";
-  recapTitle.textContent = "No weekly recaps published yet";
+  recapStatus.textContent =
+    "NO PUBLISHED RECAPS";
+
+  recapLabel.textContent =
+    "COMMISSIONER'S WEEKLY REPORT";
+
+  recapTitle.textContent =
+    "No weekly recaps published yet";
 
   recapBody.innerHTML =
     `<p class="empty">${escapeHTML(message)}</p>`;
 }
+
+/* LOAD RECAPS FROM GOOGLE SHEETS */
 
 async function loadRecaps() {
   try {
@@ -1321,10 +1170,14 @@ async function loadRecaps() {
     const data = await response.json();
 
     if (!data.success) {
-      throw new Error(data.error || "API request failed");
+      throw new Error(
+        data.error || "API request failed"
+      );
     }
 
-    recaps = Array.isArray(data.recaps) ? data.recaps : [];
+    recaps = Array.isArray(data.recaps)
+      ? data.recaps
+      : [];
 
     if (!recaps.length) {
       showEmpty(
@@ -1341,8 +1194,10 @@ async function loadRecaps() {
 
     for (const recap of recaps) {
       const option = document.createElement("option");
+
       option.value = recap.week;
       option.textContent = `Week ${recap.week}`;
+
       weekSelect.appendChild(option);
     }
 
@@ -1371,13 +1226,16 @@ async function loadRecaps() {
   }
 }
 
+/* WEEK SELECTOR */
+
 weekSelect.addEventListener("change", () => {
   renderRecap(weekSelect.value);
 });
 
+/* INITIALIZE */
+
 loadRecaps();
 </script>
-
 
 </body>
 </html>
