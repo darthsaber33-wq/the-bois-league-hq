@@ -424,6 +424,201 @@ footer {
     font-size: 15px;
   }
 }
+  
+/* CLEAN, FLAT EDITORIAL LAYOUT */
+
+.article-body {
+  max-width: 850px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+.article-body p {
+  margin: 0 0 20px;
+}
+
+.article-body .opening-paragraph {
+  font-size: 18px;
+  color: #f4f7fc;
+}
+
+/* All major headings align to the same left edge */
+
+.article-body .section-heading {
+  margin: 48px 0 25px;
+  padding: 0 0 12px;
+  color: var(--gold);
+  font-size: clamp(20px, 3vw, 25px);
+  letter-spacing: 1px;
+  border-bottom: 1px solid var(--border);
+}
+
+.article-body .section-heading::after {
+  width: 65px;
+}
+
+/* Matchup writeups: subtle separation, no gold bars */
+
+.article-body .story-panel {
+  background: #17283e;
+  border: 1px solid #34475d;
+  border-left: 1px solid #34475d;
+  border-radius: 9px;
+  margin: 0 0 18px;
+  padding: 22px 25px 8px;
+}
+
+.article-body .story-panel .matchup-line {
+  color: #a9c3e5;
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.article-body .story-panel h4 {
+  color: #fff;
+  font-size: 21px;
+  margin: 0 0 15px;
+}
+
+/* GOTW: normal editorial content */
+
+.article-body .feature-panel {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  margin: 0 0 24px;
+  padding: 0;
+}
+
+.article-body .feature-panel h4 {
+  color: #fff;
+  font-size: 20px;
+  margin: 0 0 14px;
+}
+
+/* Commissioner's Corner: one contained panel */
+
+.article-body .commissioner-panel {
+  background: #112137;
+  border: 1px solid #344b66;
+  border-radius: 9px;
+  padding: 24px 27px 8px;
+  margin: 0 0 25px;
+}
+
+.commissioner-kicker {
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  margin-bottom: 15px;
+}
+
+/* Week 2 previews: clean text, not nested boxes */
+
+.article-body .week-preview {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #34475d;
+  border-radius: 0;
+  margin: 0 0 23px;
+  padding: 0 0 8px;
+}
+
+.article-body .week-preview h4 {
+  color: #fff;
+  font-size: 17px;
+  margin: 0 0 11px;
+}
+
+/* Awards */
+
+.awards-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0 0 16px;
+}
+
+.award-card {
+  background: #112238;
+  border: 1px solid #344b66;
+  border-radius: 10px;
+  padding: 18px;
+  text-align: center;
+}
+
+.award-card.featured {
+  border-top: 2px solid var(--gold);
+}
+
+.award-image {
+  display: block;
+  width: min(100%, 190px);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  margin: 0 auto 12px;
+}
+
+.award-name {
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 7px;
+}
+
+.award-winner {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.award-description {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 10px;
+}
+
+.minor-awards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 26px;
+}
+
+.award-card.minor {
+  background: #1c3049;
+  padding: 17px;
+}
+
+.award-card.minor .award-winner {
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .awards-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .minor-awards {
+    grid-template-columns: 1fr;
+  }
+
+  .article-body .story-panel {
+    padding: 18px 17px 4px;
+  }
+
+  .article-body .commissioner-panel {
+    padding: 19px 18px 4px;
+  }
+}
+
 </style>
 </head>
 
@@ -488,47 +683,22 @@ footer {
   THE BOIS LEAGUE • 2026 SEASON
 </footer>
 
+
 <script>
 const API_URL =
   "https://script.google.com/macros/s/AKfycbyowj7BeP1m_2Gf2r4j9hIPzruxjDIXnzVO-ibSMFrr-Z0P4aJvUkqF6ihiVdcz4JOYag/exec";
 
-// Your four reusable award graphics.
 const AWARDS = [
-  {
-    name: "Offensive MVP",
-    image: "/images/awards/OMVP.png"
-  },
-  {
-    name: "Defensive MVP",
-    image: "/images/awards/DMVP.png"
-  },
-  {
-    name: "Special Teams MVP",
-    image: "/images/awards/STMVP.png"
-  },
-  {
-    name: "Rookie of the Week",
-    image: "/images/awards/ROTW.png"
-  },
-  {
-    name: "Team of the Week"
-  },
-  {
-    name: "Heartbreaker of the Week"
-  },
-  {
-    name: "Nail-Biter of the Week"
-  }
+  ["Offensive MVP", "/images/awards/OMVP.png"],
+  ["Defensive MVP", "/images/awards/DMVP.png"],
+  ["Special Teams MVP", "/images/awards/STMVP.png"],
+  ["Rookie of the Week", "/images/awards/ROTW.png"],
+  ["Team of the Week", null],
+  ["Heartbreaker of the Week", null],
+  ["Nail-Biter of the Week", null]
 ];
 
-const AWARD_MAP = new Map(
-  AWARDS.map(award => [
-    award.name.toLowerCase(),
-    award
-  ])
-);
-
-const SECTIONS = new Set([
+const SECTION_NAMES = [
   "AROUND THE LEAGUE",
   "GAME OF THE WEEK",
   "WEEKLY AWARDS",
@@ -536,26 +706,16 @@ const SECTIONS = new Set([
   "RECORDS AND MILESTONES",
   "COMMISSIONER'S CORNER",
   "THE WEEK AHEAD"
-]);
+];
 
 let recaps = [];
 
-const weekSelect =
-  document.getElementById("week-select");
+const weekSelect = document.getElementById("week-select");
+const recapStatus = document.getElementById("recap-status");
+const recapTitle = document.getElementById("recap-title");
+const recapBody = document.getElementById("recap-body");
+const recapLabel = document.getElementById("recap-label");
 
-const recapStatus =
-  document.getElementById("recap-status");
-
-const recapTitle =
-  document.getElementById("recap-title");
-
-const recapBody =
-  document.getElementById("recap-body");
-
-const recapLabel =
-  document.getElementById("recap-label");
-
-// Prevent text from being interpreted as HTML.
 function escapeHTML(value) {
   return String(value ?? "")
     .replace(/&/g, "&amp;")
@@ -565,381 +725,285 @@ function escapeHTML(value) {
     .replace(/'/g, "&#39;");
 }
 
-function normalize(value) {
-  return String(value ?? "")
+function normalize(text) {
+  return String(text ?? "")
     .replace(/\r\n?/g, "\n")
     .replace(/\u00a0/g, " ")
-    .trim();
+    .trim()
+    .replace(/^["']|["']$/g, "");
 }
 
-// Recognize major article sections.
-function isSection(text) {
-  const upper = text.toUpperCase();
+function sectionName(text) {
+  const upper = text.toUpperCase().trim();
 
-  return (
-    SECTIONS.has(upper) ||
-    /^LOOKING AHEAD\b/i.test(text) ||
-    /^WEEK\s+\d+\s+(?:PREVIEW|RECAP)$/i.test(text)
-  );
+  if (SECTION_NAMES.includes(upper)) return upper;
+
+  if (/^LOOKING AHEAD\b/.test(upper)) {
+    return "LOOKING AHEAD";
+  }
+
+  return null;
 }
 
-// Recognize uppercase headings.
+function isScoreLine(text) {
+  return /\b\d{2,3}\.\d{2}\s*[—–-]\s*.+\d{2,3}\.\d{2}\b/.test(text);
+}
+
+function isPreviewLine(text) {
+  return /\(\d+\s*[–-]\s*\d+\)\s+vs\.?\s+/i.test(text);
+}
+
 function isUpperHeading(text) {
   return (
-    text.length <= 85 &&
+    text.length <= 90 &&
     /^[A-Z0-9\s'’&:—–-]+$/.test(text) &&
     /[A-Z]/.test(text)
   );
 }
 
-// Recognize matchup score lines already in the article.
-function isScoreLine(text) {
-  return /\b\d{2,3}\.\d{2}\s*[—–-]\s*.+?\b\d{2,3}\.\d{2}\b/.test(text);
-}
-
-// Recognize upcoming matchup previews.
-function isPreviewMatchup(text) {
-  return /\(\d+\s*[–-]\s*\d+\)\s+vs\.?\s+/i.test(text);
-}
-
-// Extract an award from existing recap text.
 function parseAward(text) {
   const match = text.match(/^(.+?)\s+[—–-]\s+(.+)$/);
-
   if (!match) return null;
 
-  const definition = AWARD_MAP.get(
-    match[1].trim().toLowerCase()
+  const definition = AWARDS.find(
+    award => award[0].toLowerCase() ===
+      match[1].trim().toLowerCase()
   );
 
   if (!definition) return null;
 
-  const full = match[2].trim();
+  const content = match[2].trim();
 
-  const sentence = full.match(
-    /^(.+?[.!?])(?:\s+(.+))?$/
-  );
+  // Separate the winner/stat from the explanatory sentence.
+  const split = content.match(/^(.+?[.!?])(?:\s+(.+))?$/);
 
   return {
-    ...definition,
-    winner: sentence ? sentence[1] : full,
-    description: sentence
-      ? (sentence[2] || "")
-      : ""
+    name: definition[0],
+    image: definition[1],
+    winner: split ? split[1] : content,
+    description: split ? (split[2] || "") : ""
   };
 }
 
-// Create one award card.
 function awardCard(award) {
-  const featured = !!award.image;
+  const featured = Boolean(award.image);
 
-  const img = featured
-    ? `
-      <img
-        class="award-image"
-        src="${escapeHTML(award.image)}"
-        alt="${escapeHTML(award.name)} award emblem"
-        loading="lazy"
-        onerror="this.style.display='none'"
-      >
-    `
+  const image = featured
+    ? `<img
+         class="award-image"
+         src="${escapeHTML(award.image)}"
+         alt="${escapeHTML(award.name)}"
+         loading="lazy"
+       >`
     : "";
 
   return `
     <div class="award-card ${featured ? "featured" : "minor"}">
-      ${img}
-
-      <div class="award-name">
-        ${escapeHTML(award.name)}
-      </div>
-
-      <div class="award-winner">
-        ${escapeHTML(award.winner)}
-      </div>
-
+      ${image}
+      <div class="award-name">${escapeHTML(award.name)}</div>
+      <div class="award-winner">${escapeHTML(award.winner)}</div>
       ${
         award.description
-          ? `
-            <div class="award-description">
-              ${escapeHTML(award.description)}
-            </div>
-          `
+          ? `<div class="award-description">
+               ${escapeHTML(award.description)}
+             </div>`
           : ""
       }
     </div>
   `;
 }
 
-// Create the weekly awards gallery.
 function renderAwards(awards) {
-  if (!awards.length) return "";
-
-  const primary = awards.filter(
-    award => award.image
-  );
-
-  const minor = awards.filter(
-    award => !award.image
-  );
+  const featured = awards.filter(a => a.image);
+  const minor = awards.filter(a => !a.image);
 
   let html = "";
 
-  if (primary.length) {
-    html += `
-      <div class="awards-gallery">
-        ${primary.map(awardCard).join("")}
-      </div>
-    `;
+  if (featured.length) {
+    html += `<div class="awards-gallery">
+      ${featured.map(awardCard).join("")}
+    </div>`;
   }
 
   if (minor.length) {
-    html += `
-      <div class="minor-awards">
-        ${minor.map(awardCard).join("")}
-      </div>
-    `;
+    html += `<div class="minor-awards">
+      ${minor.map(awardCard).join("")}
+    </div>`;
   }
 
   return html;
 }
 
-// Turn the existing article into an editorial layout.
 function formatRecap(rawText) {
   const raw = normalize(rawText);
+  if (!raw) return "";
 
-  if (!raw) {
-    return '<p class="empty">This recap has no article text yet.</p>';
-  }
-
+  // Each blank-line-separated block is one article element.
   const blocks = raw
     .split(/\n\s*\n/)
-    .map(section => section.trim())
+    .map(block => block.replace(/\s*\n\s*/g, " ").trim())
     .filter(Boolean);
 
-  let html = "";
+  const root = document.createElement("div");
   let section = "";
-  let pending = null;
+  let story = null;
+  let preview = null;
+  let commissioner = null;
+  let feature = null;
+  let storyNeedsTitle = false;
   let awards = [];
   let firstParagraph = true;
 
-  let storyOpen = false;
-  let featureOpen = false;
-  let commissionerOpen = false;
-  let previewOpen = false;
-
-  function closeStory() {
-    if (storyOpen) {
-      html += "</div>";
-      storyOpen = false;
-    }
+  function element(tag, className, text, parent = root) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    node.textContent = text;
+    parent.appendChild(node);
+    return node;
   }
 
-  function closeFeature() {
-    if (featureOpen) {
-      html += "</div>";
-      featureOpen = false;
+  function finishAwards() {
+    if (!awards.length) return;
+
+    const holder = document.createElement("div");
+    holder.innerHTML = renderAwards(awards);
+
+    while (holder.firstChild) {
+      root.appendChild(holder.firstChild);
     }
-  }
 
-  function closeCommissioner() {
-    if (commissionerOpen) {
-      html += "</div>";
-      commissionerOpen = false;
-    }
-  }
-
-  function closePreview() {
-    if (previewOpen) {
-      html += "</div>";
-      previewOpen = false;
-    }
-  }
-
-  function flushAwards() {
-    if (awards.length) {
-      html += renderAwards(awards);
-      awards = [];
-    }
-  }
-
-  function paragraph(text) {
-    const className = firstParagraph
-      ? ' class="opening-paragraph"'
-      : "";
-
-    html += `
-      <p${className}>
-        ${escapeHTML(text)}
-      </p>
-    `;
-
-    firstParagraph = false;
+    awards = [];
   }
 
   for (const block of blocks) {
-    const lines = block
-      .split("\n")
-      .map(line => line.trim())
-      .filter(Boolean);
+    const newSection = sectionName(block);
 
-    for (const line of lines) {
+    if (newSection) {
+      finishAwards();
 
-      // Major section heading.
-      if (isSection(line)) {
-        closeStory();
-        closeFeature();
-        closeCommissioner();
-        closePreview();
-        flushAwards();
+      // All sections are siblings, never nested.
+      story = null;
+      preview = null;
+      commissioner = null;
+      feature = null;
+      storyNeedsTitle = false;
 
-        section = line.toUpperCase();
-        pending = null;
+      section = newSection;
 
-        html += `
-          <h3 class="section-heading">
-            ${escapeHTML(line)}
-          </h3>
-        `;
+      element("h3", "section-heading", block);
 
-        if (section === "COMMISSIONER'S CORNER") {
-          html += `
-            <div class="commissioner-panel">
-              <div class="commissioner-kicker">
-                FROM THE COMMISSIONER
-              </div>
-          `;
+      if (section === "COMMISSIONER'S CORNER") {
+        commissioner = document.createElement("div");
+        commissioner.className = "commissioner-panel";
+        root.appendChild(commissioner);
 
-          commissionerOpen = true;
-        }
+        element(
+          "div",
+          "commissioner-kicker",
+          "FROM THE COMMISSIONER",
+          commissioner
+        );
+      }
 
+      continue;
+    }
+
+    // Weekly awards are extracted directly from article text.
+    if (section === "WEEKLY AWARDS") {
+      const award = parseAward(block);
+
+      if (award) {
+        awards.push(award);
         continue;
       }
 
-      // Collect awards without repeating them as paragraphs.
-      if (section === "WEEKLY AWARDS") {
-        const award = parseAward(line);
+      finishAwards();
+    }
 
-        if (award) {
-          awards.push(award);
-          continue;
-        }
+    // Start each matchup as a separate sibling panel.
+    if (
+      section === "AROUND THE LEAGUE" &&
+      isScoreLine(block)
+    ) {
+      story = document.createElement("section");
+      story.className = "story-panel";
+      root.appendChild(story);
 
-        flushAwards();
+      element("div", "matchup-line", block, story);
+      storyNeedsTitle = true;
+      continue;
+    }
+
+    if (storyNeedsTitle && story) {
+      element("h4", "", block, story);
+      storyNeedsTitle = false;
+      continue;
+    }
+
+    // Game of the Week is a small editorial feature.
+    if (section === "GAME OF THE WEEK") {
+      if (!feature) {
+        feature = document.createElement("div");
+        feature.className = "feature-panel";
+        root.appendChild(feature);
+
+        element("h4", "", block, feature);
+      } else {
+        element("p", "", block, feature);
       }
+      continue;
+    }
 
-      // Start a new matchup story panel.
-      if (
-        section === "AROUND THE LEAGUE" &&
-        isScoreLine(line)
-      ) {
-        closeStory();
+    // Week 2 preview matchups are individual siblings.
+    if (
+      section === "LOOKING AHEAD" &&
+      isPreviewLine(block)
+    ) {
+      preview = document.createElement("div");
+      preview.className = "week-preview";
+      root.appendChild(preview);
 
-        html += '<section class="story-panel">';
-        storyOpen = true;
+      element("h4", "", block, preview);
+      continue;
+    }
 
-        html += `
-          <div class="matchup-line">
-            ${escapeHTML(line)}
-          </div>
-        `;
+    // Other uppercase headings, including THE WEEK AHEAD,
+    // are recognized before paragraph formatting.
+    if (isUpperHeading(block)) {
+      story = null;
+      preview = null;
+      feature = null;
 
-        pending = "story-title";
-        continue;
-      }
+      element("h3", "section-heading", block);
+      continue;
+    }
 
-      // Matchup story title.
-      if (pending === "story-title") {
-        html += `
-          <h4>${escapeHTML(line)}</h4>
-        `;
+    let parent = root;
 
-        pending = null;
-        continue;
-      }
+    if (section === "AROUND THE LEAGUE" && story) {
+      parent = story;
+    } else if (section === "LOOKING AHEAD" && preview) {
+      parent = preview;
+    } else if (
+      section === "COMMISSIONER'S CORNER" &&
+      commissioner
+    ) {
+      parent = commissioner;
+    }
 
-      // Upcoming matchup preview.
-      if (
-        section.startsWith("LOOKING AHEAD") &&
-        isPreviewMatchup(line)
-      ) {
-        closePreview();
+    const paragraph = element("p", "", block, parent);
 
-        html += '<div class="week-preview">';
-        previewOpen = true;
-
-        html += `
-          <h4>${escapeHTML(line)}</h4>
-        `;
-
-        continue;
-      }
-
-      // Special Game of the Week editorial feature.
-      if (
-        section === "GAME OF THE WEEK" &&
-        !featureOpen
-      ) {
-        html += '<div class="feature-panel">';
-        featureOpen = true;
-
-        if (
-          line.length < 115 &&
-          !/[.!?]$/.test(line)
-        ) {
-          html += `
-            <h4>${escapeHTML(line)}</h4>
-          `;
-
-          continue;
-        }
-      }
-
-      // Other uppercase article headings.
-      if (isUpperHeading(line)) {
-        closeStory();
-        closeFeature();
-        closePreview();
-
-        html += `
-          <h3 class="section-heading">
-            ${escapeHTML(line)}
-          </h3>
-        `;
-
-        continue;
-      }
-
-      // Looking Ahead subheadings.
-      if (
-        section.startsWith("LOOKING AHEAD") &&
-        !previewOpen &&
-        line.length < 100 &&
-        !/[.!?]$/.test(line)
-      ) {
-        html += `
-          <h4 class="editorial-subhead">
-            ${escapeHTML(line)}
-          </h4>
-        `;
-
-        continue;
-      }
-
-      // Normal article paragraph.
-      paragraph(line);
+    if (firstParagraph) {
+      paragraph.className = "opening-paragraph";
+      firstParagraph = false;
     }
   }
 
-  closeStory();
-  closeFeature();
-  closeCommissioner();
-  closePreview();
-  flushAwards();
+  finishAwards();
 
-  return html;
+  return root.innerHTML;
 }
 
-// Display a selected weekly recap.
 function renderRecap(week) {
   const recap = recaps.find(
     item => Number(item.week) === Number(week)
@@ -960,38 +1024,23 @@ function renderRecap(week) {
 
   weekSelect.value = String(recap.week);
 
-  // Keep the selected week in the page URL.
   const url = new URL(window.location.href);
-
   url.searchParams.set("week", recap.week);
-
   history.replaceState(null, "", url);
 }
 
-// Show a message when no recaps are available.
 function showEmpty(message) {
-  weekSelect.innerHTML =
-    "<option>No published weeks</option>";
-
+  weekSelect.innerHTML = "<option>No published weeks</option>";
   weekSelect.disabled = true;
 
-  recapStatus.textContent =
-    "NO PUBLISHED RECAPS";
+  recapStatus.textContent = "NO PUBLISHED RECAPS";
+  recapLabel.textContent = "COMMISSIONER'S WEEKLY REPORT";
+  recapTitle.textContent = "No weekly recaps published yet";
 
-  recapLabel.textContent =
-    "COMMISSIONER'S WEEKLY REPORT";
-
-  recapTitle.textContent =
-    "No weekly recaps published yet";
-
-  recapBody.innerHTML = `
-    <p class="empty">
-      ${escapeHTML(message)}
-    </p>
-  `;
+  recapBody.innerHTML =
+    `<p class="empty">${escapeHTML(message)}</p>`;
 }
 
-// Load published recaps from Google Sheets.
 async function loadRecaps() {
   try {
     const response = await fetch(
@@ -1005,20 +1054,15 @@ async function loadRecaps() {
     const data = await response.json();
 
     if (!data.success) {
-      throw new Error(
-        data.error || "API request failed"
-      );
+      throw new Error(data.error || "API request failed");
     }
 
-    recaps = Array.isArray(data.recaps)
-      ? data.recaps
-      : [];
+    recaps = Array.isArray(data.recaps) ? data.recaps : [];
 
     if (!recaps.length) {
       showEmpty(
-        "The commissioner has not published any weekly recaps yet. Check back soon."
+        "The commissioner has not published any weekly recaps yet."
       );
-
       return;
     }
 
@@ -1030,23 +1074,21 @@ async function loadRecaps() {
 
     for (const recap of recaps) {
       const option = document.createElement("option");
-
       option.value = recap.week;
-      option.textContent = "Week " + recap.week;
-
+      option.textContent = `Week ${recap.week}`;
       weekSelect.appendChild(option);
     }
 
     weekSelect.disabled = false;
 
-    const requested = new URLSearchParams(
+    const requestedWeek = new URLSearchParams(
       window.location.search
     ).get("week");
 
     const initialWeek = recaps.some(
-      recap => String(recap.week) === requested
+      recap => String(recap.week) === requestedWeek
     )
-      ? requested
+      ? requestedWeek
       : recaps[0].week;
 
     renderRecap(initialWeek);
@@ -1062,14 +1104,13 @@ async function loadRecaps() {
   }
 }
 
-// Change weeks without reloading the page.
 weekSelect.addEventListener("change", () => {
   renderRecap(weekSelect.value);
 });
 
-// Start loading.
 loadRecaps();
 </script>
+
 
 </body>
 </html>
