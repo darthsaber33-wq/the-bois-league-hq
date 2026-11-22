@@ -2,190 +2,429 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2026 Weekly Recaps | The Bois League</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 Weekly Recaps | The Bois League</title>
 
-  <style>
-    :root {
-      --bg: #0b1423;
-      --panel: #192a41;
-      --panel-light: #223650;
-      --gold: #e4bb65;
-      --text: #f4f7fc;
-      --muted: #b7c5d7;
-      --border: #344b66;
-    }
+<style>
+:root {
+  --bg: #0b1423;
+  --panel: #192a41;
+  --panel-light: #223650;
+  --gold: #e4bb65;
+  --text: #f4f7fc;
+  --muted: #b7c5d7;
+  --border: #344b66;
+}
 
-    * { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.6;
-    }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.65;
+}
 
-    a { color: inherit; text-decoration: none; }
+a { color: inherit; text-decoration: none; }
 
-    header {
-      background: #101d30;
-      border-bottom: 1px solid var(--border);
-      padding: 22px 6%;
-    }
+header {
+  background: #101d30;
+  border-bottom: 1px solid var(--border);
+  padding: 22px 6%;
+}
 
-    .header-inner {
-      max-width: 1150px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
+.header-inner {
+  max-width: 1150px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
 
-    .brand {
-      color: var(--gold);
-      font-weight: 900;
-      letter-spacing: 1.5px;
-      font-size: 19px;
-    }
+.brand {
+  color: var(--gold);
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  font-size: 19px;
+}
 
-    nav {
-      display: flex;
-      gap: 22px;
-      flex-wrap: wrap;
-      font-size: 13px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
+nav {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
 
-    nav a:hover { color: var(--gold); }
+nav a:hover { color: var(--gold); }
 
-    main {
-      max-width: 1050px;
-      margin: auto;
-      padding: 55px 22px 90px;
-    }
+main {
+  max-width: 1050px;
+  margin: auto;
+  padding: 55px 22px 90px;
+}
 
-    .eyebrow {
-      color: var(--gold);
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
+.eyebrow {
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
 
-    h1 {
-      font-size: clamp(32px, 5vw, 52px);
-      margin: 10px 0 14px;
-      line-height: 1.15;
-    }
+h1 {
+  font-size: clamp(32px, 5vw, 52px);
+  margin: 10px 0 14px;
+  line-height: 1.15;
+}
 
-    .intro {
-      color: var(--muted);
-      max-width: 760px;
-      margin-bottom: 35px;
-    }
+.intro {
+  color: var(--muted);
+  max-width: 760px;
+  margin-bottom: 35px;
+}
 
-    .toolbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 24px;
-    }
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
 
-    .week-select {
-      background: var(--panel);
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px 16px;
-      font-size: 15px;
-      cursor: pointer;
-      min-width: 170px;
-    }
+.week-select {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 15px;
+  cursor: pointer;
+  min-width: 170px;
+}
 
-    .status {
-      color: var(--gold);
-      font-size: 12px;
-      font-weight: bold;
-      letter-spacing: 1.5px;
-    }
+.status {
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+}
 
-    .recap-card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-top: 4px solid var(--gold);
-      border-radius: 12px;
-      padding: clamp(24px, 5vw, 45px);
-    }
+/* MAIN ARTICLE */
 
-    .recap-label {
-      color: var(--gold);
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: 1.5px;
-    }
+.recap-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--gold);
+  border-radius: 12px;
+  overflow: hidden;
+}
 
-    .recap-title {
-      font-size: clamp(25px, 4vw, 36px);
-      line-height: 1.25;
-      margin: 14px 0 26px;
-    }
+.article-inner {
+  padding: clamp(23px, 5vw, 50px);
+}
 
-    .article-body {
-      color: #dce5f2;
-      font-size: 16px;
-      line-height: 1.9;
-      overflow-wrap: break-word;
-    }
+.recap-label {
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
 
-    .article-body p {
-      margin: 0 0 22px;
-    }
+.recap-title {
+  font-size: clamp(27px, 4vw, 40px);
+  line-height: 1.2;
+  margin: 12px 0 27px;
+  max-width: 800px;
+}
 
-    .article-body h3 {
-      color: var(--gold);
-      font-size: 18px;
-      letter-spacing: 0.5px;
-      margin: 34px 0 15px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border);
-    }
+.article-body {
+  color: #dce5f2;
+  font-size: 16px;
+  line-height: 1.85;
+  overflow-wrap: break-word;
+}
 
-    .empty {
-      color: var(--muted);
-      text-align: center;
-      padding: 40px 10px;
-    }
+.article-body p {
+  margin: 0 0 17px;
+}
 
-    .back-link {
-      display: inline-block;
-      margin-top: 35px;
-      color: var(--gold);
-      font-weight: bold;
-    }
+.article-body .opening-paragraph {
+  font-size: 18px;
+  line-height: 1.85;
+  color: #f7f9fd;
+}
 
-    .back-link:hover { text-decoration: underline; }
+/* MAJOR SECTION HEADINGS */
 
-    footer {
-      text-align: center;
-      color: var(--muted);
-      padding: 30px;
-      border-top: 1px solid var(--border);
-      font-size: 13px;
-    }
+.article-body .section-heading {
+  color: var(--gold);
+  font-size: clamp(20px, 3vw, 25px);
+  line-height: 1.3;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  margin: 49px 0 24px;
+  padding: 0 0 15px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
 
-    @media (max-width: 600px) {
-      .toolbar { align-items: stretch; }
-      .week-select { width: 100%; }
-      nav { gap: 14px; }
-    }
-  </style>
+.article-body .section-heading::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 68px;
+  height: 3px;
+  background: var(--gold);
+}
+
+/* MATCHUP WRITEUPS - NOT SCORECARDS */
+
+.article-body .story-panel {
+  border: 1px solid #35485e;
+  border-left: 3px solid #b4a078;
+  background: #15253a;
+  border-radius: 0 10px 10px 0;
+  padding: 23px 26px 8px;
+  margin: 0 0 17px;
+}
+
+.story-panel .matchup-line {
+  color: #a9c3e5;
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 800;
+  letter-spacing: .3px;
+  margin: 0 0 9px;
+}
+
+.story-panel h4 {
+  color: #fff;
+  font-size: clamp(18px, 2.4vw, 22px);
+  line-height: 1.35;
+  margin: 0 0 15px;
+}
+
+.story-panel p {
+  color: #d4deeb;
+}
+
+/* EDITORIAL FEATURES */
+
+.article-body .editorial-subhead {
+  font-size: 19px;
+  line-height: 1.4;
+  color: #fff;
+  margin: 21px 0 14px;
+}
+
+.article-body .feature-panel {
+  background: #172940;
+  border-left: 3px solid var(--gold);
+  padding: 22px 26px 8px;
+  border-radius: 0 9px 9px 0;
+  margin: 12px 0 26px;
+}
+
+.article-body .feature-panel h4 {
+  margin: 0 0 12px;
+  font-size: 19px;
+  color: #fff;
+}
+
+/* COMMISSIONER'S CORNER */
+
+.article-body .commissioner-panel {
+  background: #112137;
+  border: 1px solid #41536a;
+  border-left: 4px solid var(--gold);
+  border-radius: 0 10px 10px 0;
+  padding: 24px 28px 8px;
+  margin: 5px 0 27px;
+}
+
+.commissioner-kicker {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.6px;
+  color: var(--gold);
+  margin-bottom: 13px;
+}
+
+/* LOOKING AHEAD */
+
+.article-body .week-preview {
+  margin: 0 0 24px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #34475d;
+}
+
+.article-body .week-preview h4 {
+  font-size: 17px;
+  line-height: 1.4;
+  color: #f9f9fd;
+  margin: 0 0 12px;
+}
+
+.article-body .week-preview p {
+  color: #c9d5e4;
+}
+
+.article-body .closing-note {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* WEEKLY AWARDS */
+
+.awards-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin: 4px 0 18px;
+}
+
+.award-card {
+  background: #102036;
+  border: 1px solid #3a4e65;
+  border-radius: 11px;
+  padding: 17px 18px 19px;
+  min-width: 0;
+}
+
+.award-card.featured {
+  border-top: 3px solid var(--gold);
+}
+
+.award-image {
+  width: 100%;
+  max-width: 185px;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 9px;
+  border-radius: 6px;
+}
+
+.award-name {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 7px;
+}
+
+.award-winner {
+  color: #fff;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 800;
+}
+
+.award-description {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin-top: 9px;
+}
+
+.minor-awards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 28px;
+}
+
+.award-card.minor {
+  padding: 16px;
+  background: #1c3049;
+}
+
+.award-card.minor .award-name {
+  color: #d8c49b;
+}
+
+.award-card.minor .award-winner {
+  font-size: 14px;
+}
+
+.award-card.minor .award-description {
+  font-size: 12px;
+}
+
+/* OTHER ELEMENTS */
+
+.empty {
+  color: var(--muted);
+  text-align: center;
+  padding: 40px 10px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 35px;
+  color: var(--gold);
+  font-weight: bold;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 30px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+  .minor-awards {
+    grid-template-columns: 1fr;
+  }
+
+  .article-body .story-panel {
+    padding: 18px 17px 5px;
+  }
+
+  .article-body .commissioner-panel {
+    padding: 19px 18px 5px;
+  }
+}
+
+@media (max-width: 520px) {
+  .toolbar { align-items: stretch; }
+  .week-select { width: 100%; }
+  nav { gap: 14px; }
+
+  .awards-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .award-image {
+    max-width: 170px;
+  }
+
+  .article-inner {
+    padding: 24px 19px;
+  }
+
+  .article-body {
+    font-size: 15px;
+  }
+}
+</style>
 </head>
 
 <body>
@@ -205,6 +444,7 @@
 
 <main>
   <div class="eyebrow">The Bois League • 2026 Season</div>
+
   <h1>Weekly Recaps</h1>
 
   <p class="intro">
@@ -224,15 +464,19 @@
   </div>
 
   <article class="recap-card">
-    <div class="recap-label" id="recap-label">
-      COMMISSIONER'S WEEKLY REPORT
+    <div class="article-inner">
+
+      <div class="recap-label" id="recap-label">
+        COMMISSIONER'S WEEKLY REPORT
+      </div>
+
+      <h2 class="recap-title" id="recap-title">
+        Loading weekly recap...
+      </h2>
+
+      <div class="article-body" id="recap-body"></div>
+
     </div>
-
-    <h2 class="recap-title" id="recap-title">
-      Loading weekly recap...
-    </h2>
-
-    <div class="article-body" id="recap-body"></div>
   </article>
 
   <a class="back-link" href="/seasons/2026/">
@@ -248,16 +492,72 @@
 const API_URL =
   "https://script.google.com/macros/s/AKfycbyowj7BeP1m_2Gf2r4j9hIPzruxjDIXnzVO-ibSMFrr-Z0P4aJvUkqF6ihiVdcz4JOYag/exec";
 
+// Your four reusable award graphics.
+const AWARDS = [
+  {
+    name: "Offensive MVP",
+    image: "/images/awards/OMVP.png"
+  },
+  {
+    name: "Defensive MVP",
+    image: "/images/awards/DMVP.png"
+  },
+  {
+    name: "Special Teams MVP",
+    image: "/images/awards/STMVP.png"
+  },
+  {
+    name: "Rookie of the Week",
+    image: "/images/awards/ROTW.png"
+  },
+  {
+    name: "Team of the Week"
+  },
+  {
+    name: "Heartbreaker of the Week"
+  },
+  {
+    name: "Nail-Biter of the Week"
+  }
+];
+
+const AWARD_MAP = new Map(
+  AWARDS.map(award => [
+    award.name.toLowerCase(),
+    award
+  ])
+);
+
+const SECTIONS = new Set([
+  "AROUND THE LEAGUE",
+  "GAME OF THE WEEK",
+  "WEEKLY AWARDS",
+  "THE DIVISION RACES",
+  "RECORDS AND MILESTONES",
+  "COMMISSIONER'S CORNER",
+  "THE WEEK AHEAD"
+]);
+
 let recaps = [];
 
-const weekSelect = document.getElementById("week-select");
-const recapStatus = document.getElementById("recap-status");
-const recapTitle = document.getElementById("recap-title");
-const recapBody = document.getElementById("recap-body");
-const recapLabel = document.getElementById("recap-label");
+const weekSelect =
+  document.getElementById("week-select");
 
+const recapStatus =
+  document.getElementById("recap-status");
+
+const recapTitle =
+  document.getElementById("recap-title");
+
+const recapBody =
+  document.getElementById("recap-body");
+
+const recapLabel =
+  document.getElementById("recap-label");
+
+// Prevent text from being interpreted as HTML.
 function escapeHTML(value) {
-  return String(value)
+  return String(value ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
@@ -265,37 +565,381 @@ function escapeHTML(value) {
     .replace(/'/g, "&#39;");
 }
 
-function formatRecap(rawText) {
-  const text = String(rawText || "")
-    .replace(/\r\n/g, "\n")
+function normalize(value) {
+  return String(value ?? "")
+    .replace(/\r\n?/g, "\n")
+    .replace(/\u00a0/g, " ")
     .trim();
-
-  if (!text) return "";
-
-  const sections = text.split(/\n\s*\n/);
-
-  return sections.map(section => {
-    const lines = section.trim().split("\n");
-
-    return lines.map(line => {
-      const clean = line.trim();
-
-      if (!clean) return "";
-
-      // Standalone uppercase section headings
-      if (
-        clean.length <= 75 &&
-        /^[A-Z0-9\s'’&:—–-]+$/.test(clean) &&
-        /[A-Z]/.test(clean)
-      ) {
-        return "<h3>" + escapeHTML(clean) + "</h3>";
-      }
-
-      return "<p>" + escapeHTML(clean) + "</p>";
-    }).join("");
-  }).join("");
 }
 
+// Recognize major article sections.
+function isSection(text) {
+  const upper = text.toUpperCase();
+
+  return (
+    SECTIONS.has(upper) ||
+    /^LOOKING AHEAD\b/i.test(text) ||
+    /^WEEK\s+\d+\s+(?:PREVIEW|RECAP)$/i.test(text)
+  );
+}
+
+// Recognize uppercase headings.
+function isUpperHeading(text) {
+  return (
+    text.length <= 85 &&
+    /^[A-Z0-9\s'’&:—–-]+$/.test(text) &&
+    /[A-Z]/.test(text)
+  );
+}
+
+// Recognize matchup score lines already in the article.
+function isScoreLine(text) {
+  return /\b\d{2,3}\.\d{2}\s*[—–-]\s*.+?\b\d{2,3}\.\d{2}\b/.test(text);
+}
+
+// Recognize upcoming matchup previews.
+function isPreviewMatchup(text) {
+  return /\(\d+\s*[–-]\s*\d+\)\s+vs\.?\s+/i.test(text);
+}
+
+// Extract an award from existing recap text.
+function parseAward(text) {
+  const match = text.match(/^(.+?)\s+[—–-]\s+(.+)$/);
+
+  if (!match) return null;
+
+  const definition = AWARD_MAP.get(
+    match[1].trim().toLowerCase()
+  );
+
+  if (!definition) return null;
+
+  const full = match[2].trim();
+
+  const sentence = full.match(
+    /^(.+?[.!?])(?:\s+(.+))?$/
+  );
+
+  return {
+    ...definition,
+    winner: sentence ? sentence[1] : full,
+    description: sentence
+      ? (sentence[2] || "")
+      : ""
+  };
+}
+
+// Create one award card.
+function awardCard(award) {
+  const featured = !!award.image;
+
+  const img = featured
+    ? `
+      <img
+        class="award-image"
+        src="${escapeHTML(award.image)}"
+        alt="${escapeHTML(award.name)} award emblem"
+        loading="lazy"
+        onerror="this.style.display='none'"
+      >
+    `
+    : "";
+
+  return `
+    <div class="award-card ${featured ? "featured" : "minor"}">
+      ${img}
+
+      <div class="award-name">
+        ${escapeHTML(award.name)}
+      </div>
+
+      <div class="award-winner">
+        ${escapeHTML(award.winner)}
+      </div>
+
+      ${
+        award.description
+          ? `
+            <div class="award-description">
+              ${escapeHTML(award.description)}
+            </div>
+          `
+          : ""
+      }
+    </div>
+  `;
+}
+
+// Create the weekly awards gallery.
+function renderAwards(awards) {
+  if (!awards.length) return "";
+
+  const primary = awards.filter(
+    award => award.image
+  );
+
+  const minor = awards.filter(
+    award => !award.image
+  );
+
+  let html = "";
+
+  if (primary.length) {
+    html += `
+      <div class="awards-gallery">
+        ${primary.map(awardCard).join("")}
+      </div>
+    `;
+  }
+
+  if (minor.length) {
+    html += `
+      <div class="minor-awards">
+        ${minor.map(awardCard).join("")}
+      </div>
+    `;
+  }
+
+  return html;
+}
+
+// Turn the existing article into an editorial layout.
+function formatRecap(rawText) {
+  const raw = normalize(rawText);
+
+  if (!raw) {
+    return '<p class="empty">This recap has no article text yet.</p>';
+  }
+
+  const blocks = raw
+    .split(/\n\s*\n/)
+    .map(section => section.trim())
+    .filter(Boolean);
+
+  let html = "";
+  let section = "";
+  let pending = null;
+  let awards = [];
+  let firstParagraph = true;
+
+  let storyOpen = false;
+  let featureOpen = false;
+  let commissionerOpen = false;
+  let previewOpen = false;
+
+  function closeStory() {
+    if (storyOpen) {
+      html += "</div>";
+      storyOpen = false;
+    }
+  }
+
+  function closeFeature() {
+    if (featureOpen) {
+      html += "</div>";
+      featureOpen = false;
+    }
+  }
+
+  function closeCommissioner() {
+    if (commissionerOpen) {
+      html += "</div>";
+      commissionerOpen = false;
+    }
+  }
+
+  function closePreview() {
+    if (previewOpen) {
+      html += "</div>";
+      previewOpen = false;
+    }
+  }
+
+  function flushAwards() {
+    if (awards.length) {
+      html += renderAwards(awards);
+      awards = [];
+    }
+  }
+
+  function paragraph(text) {
+    const className = firstParagraph
+      ? ' class="opening-paragraph"'
+      : "";
+
+    html += `
+      <p${className}>
+        ${escapeHTML(text)}
+      </p>
+    `;
+
+    firstParagraph = false;
+  }
+
+  for (const block of blocks) {
+    const lines = block
+      .split("\n")
+      .map(line => line.trim())
+      .filter(Boolean);
+
+    for (const line of lines) {
+
+      // Major section heading.
+      if (isSection(line)) {
+        closeStory();
+        closeFeature();
+        closeCommissioner();
+        closePreview();
+        flushAwards();
+
+        section = line.toUpperCase();
+        pending = null;
+
+        html += `
+          <h3 class="section-heading">
+            ${escapeHTML(line)}
+          </h3>
+        `;
+
+        if (section === "COMMISSIONER'S CORNER") {
+          html += `
+            <div class="commissioner-panel">
+              <div class="commissioner-kicker">
+                FROM THE COMMISSIONER
+              </div>
+          `;
+
+          commissionerOpen = true;
+        }
+
+        continue;
+      }
+
+      // Collect awards without repeating them as paragraphs.
+      if (section === "WEEKLY AWARDS") {
+        const award = parseAward(line);
+
+        if (award) {
+          awards.push(award);
+          continue;
+        }
+
+        flushAwards();
+      }
+
+      // Start a new matchup story panel.
+      if (
+        section === "AROUND THE LEAGUE" &&
+        isScoreLine(line)
+      ) {
+        closeStory();
+
+        html += '<section class="story-panel">';
+        storyOpen = true;
+
+        html += `
+          <div class="matchup-line">
+            ${escapeHTML(line)}
+          </div>
+        `;
+
+        pending = "story-title";
+        continue;
+      }
+
+      // Matchup story title.
+      if (pending === "story-title") {
+        html += `
+          <h4>${escapeHTML(line)}</h4>
+        `;
+
+        pending = null;
+        continue;
+      }
+
+      // Upcoming matchup preview.
+      if (
+        section.startsWith("LOOKING AHEAD") &&
+        isPreviewMatchup(line)
+      ) {
+        closePreview();
+
+        html += '<div class="week-preview">';
+        previewOpen = true;
+
+        html += `
+          <h4>${escapeHTML(line)}</h4>
+        `;
+
+        continue;
+      }
+
+      // Special Game of the Week editorial feature.
+      if (
+        section === "GAME OF THE WEEK" &&
+        !featureOpen
+      ) {
+        html += '<div class="feature-panel">';
+        featureOpen = true;
+
+        if (
+          line.length < 115 &&
+          !/[.!?]$/.test(line)
+        ) {
+          html += `
+            <h4>${escapeHTML(line)}</h4>
+          `;
+
+          continue;
+        }
+      }
+
+      // Other uppercase article headings.
+      if (isUpperHeading(line)) {
+        closeStory();
+        closeFeature();
+        closePreview();
+
+        html += `
+          <h3 class="section-heading">
+            ${escapeHTML(line)}
+          </h3>
+        `;
+
+        continue;
+      }
+
+      // Looking Ahead subheadings.
+      if (
+        section.startsWith("LOOKING AHEAD") &&
+        !previewOpen &&
+        line.length < 100 &&
+        !/[.!?]$/.test(line)
+      ) {
+        html += `
+          <h4 class="editorial-subhead">
+            ${escapeHTML(line)}
+          </h4>
+        `;
+
+        continue;
+      }
+
+      // Normal article paragraph.
+      paragraph(line);
+    }
+  }
+
+  closeStory();
+  closeFeature();
+  closeCommissioner();
+  closePreview();
+  flushAwards();
+
+  return html;
+}
+
+// Display a selected weekly recap.
 function renderRecap(week) {
   const recap = recaps.find(
     item => Number(item.week) === Number(week)
@@ -303,29 +947,56 @@ function renderRecap(week) {
 
   if (!recap) return;
 
-  recapStatus.textContent = "WEEK " + recap.week + " • PUBLISHED";
-  recapLabel.textContent =
-    "WEEK " + recap.week + " • COMMISSIONER'S REPORT";
+  recapStatus.textContent =
+    `WEEK ${recap.week} • PUBLISHED`;
 
-  recapTitle.textContent = recap.headline;
+  recapLabel.textContent =
+    `WEEK ${recap.week} • COMMISSIONER'S REPORT`;
+
+  recapTitle.textContent =
+    recap.headline || `Week ${recap.week} Recap`;
+
   recapBody.innerHTML = formatRecap(recap.recap);
 
   weekSelect.value = String(recap.week);
+
+  // Keep the selected week in the page URL.
+  const url = new URL(window.location.href);
+
+  url.searchParams.set("week", recap.week);
+
+  history.replaceState(null, "", url);
 }
 
+// Show a message when no recaps are available.
 function showEmpty(message) {
-  weekSelect.innerHTML = "<option>No published weeks</option>";
+  weekSelect.innerHTML =
+    "<option>No published weeks</option>";
+
   weekSelect.disabled = true;
-  recapStatus.textContent = "NO PUBLISHED RECAPS";
-  recapLabel.textContent = "COMMISSIONER'S WEEKLY REPORT";
-  recapTitle.textContent = "No weekly recaps published yet";
-  recapBody.innerHTML =
-    '<p class="empty">' + escapeHTML(message) + '</p>';
+
+  recapStatus.textContent =
+    "NO PUBLISHED RECAPS";
+
+  recapLabel.textContent =
+    "COMMISSIONER'S WEEKLY REPORT";
+
+  recapTitle.textContent =
+    "No weekly recaps published yet";
+
+  recapBody.innerHTML = `
+    <p class="empty">
+      ${escapeHTML(message)}
+    </p>
+  `;
 }
 
+// Load published recaps from Google Sheets.
 async function loadRecaps() {
   try {
-    const response = await fetch(API_URL + "?type=recaps");
+    const response = await fetch(
+      API_URL + "?type=recaps"
+    );
 
     if (!response.ok) {
       throw new Error("HTTP " + response.status);
@@ -334,53 +1005,69 @@ async function loadRecaps() {
     const data = await response.json();
 
     if (!data.success) {
-      throw new Error(data.error || "API request failed");
+      throw new Error(
+        data.error || "API request failed"
+      );
     }
 
-    recaps = Array.isArray(data.recaps) ? data.recaps : [];
+    recaps = Array.isArray(data.recaps)
+      ? data.recaps
+      : [];
 
     if (!recaps.length) {
       showEmpty(
         "The commissioner has not published any weekly recaps yet. Check back soon."
       );
+
       return;
     }
 
-    recaps.sort((a, b) => Number(b.week) - Number(a.week));
+    recaps.sort(
+      (a, b) => Number(b.week) - Number(a.week)
+    );
 
     weekSelect.innerHTML = "";
 
-    recaps.forEach(recap => {
+    for (const recap of recaps) {
       const option = document.createElement("option");
+
       option.value = recap.week;
       option.textContent = "Week " + recap.week;
+
       weekSelect.appendChild(option);
-    });
+    }
 
     weekSelect.disabled = false;
 
-    const requestedWeek =
-      new URLSearchParams(window.location.search).get("week");
+    const requested = new URLSearchParams(
+      window.location.search
+    ).get("week");
 
     const initialWeek = recaps.some(
-      recap => String(recap.week) === requestedWeek
+      recap => String(recap.week) === requested
     )
-      ? requestedWeek
+      ? requested
       : recaps[0].week;
 
     renderRecap(initialWeek);
 
   } catch (error) {
     console.error("Weekly Recaps error:", error);
-    showEmpty("Unable to load weekly recaps. Please try again later.");
+
+    showEmpty(
+      "Unable to load weekly recaps. Please try again later."
+    );
+
     recapStatus.textContent = "LOADING ERROR";
   }
 }
 
+// Change weeks without reloading the page.
 weekSelect.addEventListener("change", () => {
   renderRecap(weekSelect.value);
 });
 
+// Start loading.
 loadRecaps();
 </script>
 
