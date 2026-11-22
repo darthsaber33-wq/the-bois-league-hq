@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 Weekly Recaps | The Bois League</title>
+
+  <style>
+    :root {
+      --bg: #0b1423;
+      --panel: #192a41;
+      --panel-light: #223650;
+      --gold: #e4bb65;
+      --text: #f4f7fc;
+      --muted: #b7c5d7;
+      --border: #344b66;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    header {
+      background: #101d30;
+      border-bottom: 1px solid var(--border);
+      padding: 22px 6%;
+    }
+
+    .header-inner {
+      max-width: 1150px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      color: var(--gold);
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      font-size: 19px;
+    }
+
+    nav {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    nav a:hover { color: var(--gold); }
+
+    main {
+      max-width: 1050px;
+      margin: auto;
+      padding: 55px 22px 90px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      margin: 10px 0 14px;
+      line-height: 1.15;
+    }
+
+    .intro {
+      color: var(--muted);
+      max-width: 760px;
+      margin-bottom: 35px;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .week-select {
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 15px;
+      cursor: pointer;
+      min-width: 170px;
+    }
+
+    .status {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+    }
+
+    .recap-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--gold);
+      border-radius: 12px;
+      padding: clamp(24px, 5vw, 45px);
+    }
+
+    .recap-label {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+    }
+
+    .recap-title {
+      font-size: clamp(25px, 4vw, 36px);
+      line-height: 1.25;
+      margin: 14px 0 26px;
+    }
+
+    .article-body {
+      color: #dce5f2;
+      font-size: 16px;
+      line-height: 1.9;
+      overflow-wrap: break-word;
+    }
+
+    .article-body p {
+      margin: 0 0 22px;
+    }
+
+    .article-body h3 {
+      color: var(--gold);
+      font-size: 18px;
+      letter-spacing: 0.5px;
+      margin: 34px 0 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .empty {
+      color: var(--muted);
+      text-align: center;
+      padding: 40px 10px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 35px;
+      color: var(--gold);
+      font-weight: bold;
+    }
+
+    .back-link:hover { text-decoration: underline; }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 30px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      .toolbar { align-items: stretch; }
+      .week-select { width: 100%; }
+      nav { gap: 14px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="brand" href="/">THE BOIS LEAGUE</a>
+
+    <nav>
+      <a href="/">HOME</a>
+      <a href="/seasons/2026/">2026 SEASON</a>
+      <a href="/franchises/">FRANCHISES</a>
+      <a href="/history/">LEAGUE HISTORY</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="eyebrow">The Bois League • 2026 Season</div>
+  <h1>Weekly Recaps</h1>
+
+  <p class="intro">
+    Every week has a story. Relive the biggest victories,
+    crushing defeats, historic performances, and defining
+    moments of the 2026 fantasy football season.
+  </p>
+
+  <div class="toolbar">
+    <select id="week-select" class="week-select" disabled>
+      <option>Loading weeks...</option>
+    </select>
+
+    <span class="status" id="recap-status">
+      LOADING RECAPS
+    </span>
+  </div>
+
+  <article class="recap-card">
+    <div class="recap-label" id="recap-label">
+      COMMISSIONER'S WEEKLY REPORT
+    </div>
+
+    <h2 class="recap-title" id="recap-title">
+      Loading weekly recap...
+    </h2>
+
+    <div class="article-body" id="recap-body"></div>
+  </article>
+
+  <a class="back-link" href="/seasons/2026/">
+    ← Back to 2026 Season Hub
+  </a>
+</main>
+
+<footer>
+  THE BOIS LEAGUE • 2026 SEASON
+</footer>
+
+<script>
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbyowj7BeP1m_2Gf2r4j9hIPzruxjDIXnzVO-ibSMFrr-Z0P4aJvUkqF6ihiVdcz4JOYag/exec";
+
+let recaps = [];
+
+const weekSelect = document.getElementById("week-select");
+const recapStatus = document.getElementById("recap-status");
+const recapTitle = document.getElementById("recap-title");
+const recapBody = document.getElementById("recap-body");
+const recapLabel = document.getElementById("recap-label");
+
+function escapeHTML(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function formatRecap(rawText) {
+  const text = String(rawText || "")
+    .replace(/\r\n/g, "\n")
+    .trim();
+
+  if (!text) return "";
+
+  const sections = text.split(/\n\s*\n/);
+
+  return sections.map(section => {
+    const lines = section.trim().split("\n");
+
+    return lines.map(line => {
+      const clean = line.trim();
+
+      if (!clean) return "";
+
+      // Standalone uppercase section headings
+      if (
+        clean.length <= 75 &&
+        /^[A-Z0-9\s'’&:—–-]+$/.test(clean) &&
+        /[A-Z]/.test(clean)
+      ) {
+        return "<h3>" + escapeHTML(clean) + "</h3>";
+      }
+
+      return "<p>" + escapeHTML(clean) + "</p>";
+    }).join("");
+  }).join("");
+}
+
+function renderRecap(week) {
+  const recap = recaps.find(
+    item => Number(item.week) === Number(week)
+  );
+
+  if (!recap) return;
+
+  recapStatus.textContent = "WEEK " + recap.week + " • PUBLISHED";
+  recapLabel.textContent =
+    "WEEK " + recap.week + " • COMMISSIONER'S REPORT";
+
+  recapTitle.textContent = recap.headline;
+  recapBody.innerHTML = formatRecap(recap.recap);
+
+  weekSelect.value = String(recap.week);
+}
+
+function showEmpty(message) {
+  weekSelect.innerHTML = "<option>No published weeks</option>";
+  weekSelect.disabled = true;
+  recapStatus.textContent = "NO PUBLISHED RECAPS";
+  recapLabel.textContent = "COMMISSIONER'S WEEKLY REPORT";
+  recapTitle.textContent = "No weekly recaps published yet";
+  recapBody.innerHTML =
+    '<p class="empty">' + escapeHTML(message) + '</p>';
+}
+
+async function loadRecaps() {
+  try {
+    const response = await fetch(API_URL + "?type=recaps");
+
+    if (!response.ok) {
+      throw new Error("HTTP " + response.status);
+    }
+
+    const data = await response.json();
+
+    if (!data.success) {
+      throw new Error(data.error || "API request failed");
+    }
+
+    recaps = Array.isArray(data.recaps) ? data.recaps : [];
+
+    if (!recaps.length) {
+      showEmpty(
+        "The commissioner has not published any weekly recaps yet. Check back soon."
+      );
+      return;
+    }
+
+    recaps.sort((a, b) => Number(b.week) - Number(a.week));
+
+    weekSelect.innerHTML = "";
+
+    recaps.forEach(recap => {
+      const option = document.createElement("option");
+      option.value = recap.week;
+      option.textContent = "Week " + recap.week;
+      weekSelect.appendChild(option);
+    });
+
+    weekSelect.disabled = false;
+
+    const requestedWeek =
+      new URLSearchParams(window.location.search).get("week");
+
+    const initialWeek = recaps.some(
+      recap => String(recap.week) === requestedWeek
+    )
+      ? requestedWeek
+      : recaps[0].week;
+
+    renderRecap(initialWeek);
+
+  } catch (error) {
+    console.error("Weekly Recaps error:", error);
+    showEmpty("Unable to load weekly recaps. Please try again later.");
+    recapStatus.textContent = "LOADING ERROR";
+  }
+}
+
+weekSelect.addEventListener("change", () => {
+  renderRecap(weekSelect.value);
+});
+
+loadRecaps();
+</script>
+
+</body>
+</html>
