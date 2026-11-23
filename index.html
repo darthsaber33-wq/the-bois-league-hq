@@ -46,23 +46,7 @@
       color: var(--gold);
     }
 
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    nav a {
-      color: var(--white);
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: bold;
-      transition: color 0.2s;
-    }
-
-    nav a:hover {
-      color: var(--gold);
-    }
+    
 
     .hero {
       text-align: center;
@@ -158,23 +142,17 @@
       }
     }
 
-    @media (max-width: 550px) {
-      .card-grid {
-        grid-template-columns: 1fr;
-      }
+    
+@media (max-width: 550px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
 
-      header {
-        justify-content: center;
-      }
+  .hero {
+    padding: 60px 20px;
+  }
+}
 
-      nav {
-        justify-content: center;
-      }
-
-      .hero {
-        padding: 60px 20px;
-      }
-    }
   </style>
   <script src="/js/config.js" defer></script>
 </head>
@@ -187,13 +165,16 @@
     <a href="/" class="site-logo">THE BOIS LEAGUE</a>
 
     <nav class="nav-links">
-      <a href="/" class="active">Home</a>
-      <a href="/seasons/2026/">2026 Season</a>
+      <a href="/" class="active">HOME</a>
+      <a href="/seasons/2026/">2026 SEASON</a>
       <a href="/franchises.html">FRANCHISES</a>
-      <a href="#history">League History</a>
+      <a href="/#history">LEAGUE HISTORY</a>
     </nav>
   </div>
 </header>
+
+
+
 
 <section class="stadium-hero">
   <div class="hero-content">
