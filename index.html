@@ -749,7 +749,7 @@ document.addEventListener("DOMContentLoaded", function () {
     rankings: config.rankings,
     gotw: config.gotw,
     playoffs: config.playoffs,
-    franchises: config.franchises
+    recaps: config.recaps
   };
 
   // Update the six Season Central cards.
@@ -773,8 +773,8 @@ else if (text.includes("matchups")) {
 else if (text.includes("playoffs")) {
   destination = destinations.playoffs;
 }
-else if (text.includes("franchises")) {
-  destination = destinations.franchises;
+else if (text.includes("recaps")) {
+  destination = destinations.recaps;
 }
 
     if (destination) {
