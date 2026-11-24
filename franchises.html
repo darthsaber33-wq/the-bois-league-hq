@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Franchises | The Bois League HQ</title>
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    :root {
+      --bg: #080e19;
+      --panel: #121d30;
+      --border: #30415a;
+      --text: #f0f4fa;
+      --muted: #a9b8ce;
+      --gold: #e4bb65;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .franchise-main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 50px 20px 90px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(34px, 5vw, 52px);
+      margin: 10px 0 12px;
+    }
+
+    .intro {
+      color: var(--muted);
+      max-width: 750px;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .directory-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 25px;
+    }
+
+    .franchise-count {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .franchise-search {
+      width: min(100%, 330px);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 15px;
+      color: white;
+      font-size: 14px;
+    }
+
+    .franchise-search:focus {
+      outline: 1px solid var(--gold);
+    }
+
+    .franchise-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .franchise-card {
+      background: linear-gradient(145deg, #172740, #101a2b);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 20px;
+      text-align: center;
+      min-width: 0;
+      transition: transform .2s, border-color .2s;
+    }
+
+    .franchise-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--gold);
+    }
+
+    .franchise-emblem {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: #0b1423;
+      color: var(--gold);
+      font-size: 35px;
+      font-weight: 900;
+    }
+
+    .franchise-name {
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1.35;
+      min-height: 54px;
+      margin-bottom: 10px;
+    }
+
+    .franchise-code {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 18px;
+    }
+
+    .franchise-status {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .profile-button {
+      display: inline-block;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      border-radius: 7px;
+      padding: 10px 18px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-decoration: none;
+    }
+
+    .profile-button:hover {
+      background: var(--gold);
+      color: #080e19;
+    }
+
+    .empty-state {
+      display: none;
+      text-align: center;
+      padding: 50px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 850px) {
+      .franchise-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 550px) {
+      .franchise-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .franchise-search {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+
+    <a href="/" class="site-logo">
+      THE BOIS LEAGUE
+    </a>
+
+    <nav class="nav-links">
+      <a href="/">HOME</a>
+      <a href="/seasons/2026/">2026 SEASON</a>
+      <a href="/franchises.html" class="active">FRANCHISES</a>
+      <a href="/#history">LEAGUE HISTORY</a>
+    </nav>
+
+  </div>
+</header>
+
+<main class="franchise-main">
+
+  <div class="eyebrow">The Bois League · Established 2024</div>
+
+  <h1>Franchise Directory</h1>
+
+  <p class="intro">
+    Twelve franchises. One league. Explore the teams,
+    rivalries, and histories that define The Bois League.
+  </p>
+
+  <div class="directory-toolbar">
+    <div class="franchise-count" id="franchiseCount">
+      12 ACTIVE FRANCHISES
+    </div>
+
+    <input
+      type="search"
+      class="franchise-search"
+      id="franchiseSearch"
+      placeholder="Search franchises..."
+      aria-label="Search franchises"
+    >
+  </div>
+
+  <div class="franchise-grid" id="franchiseGrid"></div>
+
+  <div class="empty-state" id="emptyState">
+    No franchises match your search.
+  </div>
+
+</main>
+
+<script>
+  /*
+    Franchise directory data.
+
+    The names and abbreviations below are initial
+    placeholders where official current branding
+    still needs confirmation.
+
+    No divisions are hardcoded.
+  */
+
+  const franchises = [
+    { name: "Dreadlords", code: "DRG" },
+    { name: "501st", code: "501" },
+    { name: "Riley Reid", code: "RRO" },
+    { name: "Celestial", code: "CEL" },
+    { name: "Josh Downs Syndrome", code: "JDS" },
+    { name: "Winnipeg Redskins", code: "WPG" },
+    { name: "Banana Splitters", code: "BAN" },
+    { name: "Outdoor Guys", code: "OUT" },
+    { name: "Carolina Panthers", code: "CAR" },
+    { name: "Xdmemes124", code: "XDM" },
+    { name: "Lunar", code: "LUN" },
+    { name: "Paris", code: "PAR" }
+  ];
+
+  const grid = document.getElementById("franchiseGrid");
+  const search = document.getElementById("franchiseSearch");
+  const count = document.getElementById("franchiseCount");
+  const empty = document.getElementById("emptyState");
+
+  function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[char]);
+  }
+
+  function renderFranchises(query = "") {
+    const filtered = franchises.filter(team =>
+      team.name.toLowerCase().includes(query.toLowerCase()) ||
+      team.code.toLowerCase().includes(query.toLowerCase())
+    );
+
+    count.textContent =
+      filtered.length + " OF " +
+      franchises.length + " FRANCHISES";
+
+    grid.innerHTML = filtered.map(team => `
+      <article class="franchise-card">
+        <div class="franchise-emblem">
+          ${escapeHTML(team.code.slice(0, 2))}
+        </div>
+
+        <div class="franchise-name">
+          ${escapeHTML(team.name)}
+        </div>
+
+        <div class="franchise-code">
+          ${escapeHTML(team.code)}
+        </div>
+
+        <div class="franchise-status">
+          Active Franchise
+        </div>
+
+        <span class="profile-button">
+          PROFILE COMING SOON
+        </span>
+      </article>
+    `).join("");
+
+    empty.style.display =
+      filtered.length ? "none" : "block";
+  }
+
+  search.addEventListener("input", () => {
+    renderFranchises(search.value.trim());
+  });
+
+  renderFranchises();
+</script>
+
+</body>
+</html>
