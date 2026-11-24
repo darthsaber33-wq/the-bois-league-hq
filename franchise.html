@@ -258,7 +258,12 @@ tr:last-child td {
 </section>
 
 <section class="profile-section">
-  <h2>Season History</h2>
+  
+<h2>Season History</h2>
+<p class="team-meta">
+  Records include regular-season and postseason games.
+</p>
+
   <div class="table-wrap">
     <table>
       <thead>
@@ -391,12 +396,20 @@ function renderProfile(data) {
     </div>
   `).join("");
 
-  renderRows("nameHistory", data.names, [
-    row => row.startSeason +
-      "–" + (row.endSeason || "Present"),
-    row => row.name,
-    row => row.abbreviation
-  ]);
+  
+renderRows("nameHistory", data.names, [
+  row => {
+    if (row.endSeason === row.startSeason) {
+      return String(row.startSeason);
+    }
+
+    return row.startSeason + "–" +
+      (row.endSeason || "Present");
+  },
+  row => row.name,
+  row => row.abbreviation
+]);
+
 
   renderRows("seasonHistory", data.seasons, [
     row => row.season,
