@@ -26,46 +26,6 @@ body {
   font-family: Arial, sans-serif;
 }
 
-.site-header {
-  background: #0b1525;
-  border-bottom: 1px solid var(--gold);
-}
-
-.header-inner {
-  max-width: 1200px;
-  margin: auto;
-  padding: 24px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.site-logo {
-  color: var(--gold);
-  font-size: 24px;
-  font-weight: 900;
-  text-decoration: none;
-  letter-spacing: 2px;
-}
-
-.site-header nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 25px;
-}
-
-.site-header nav a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 13px;
-}
-
-.site-header nav a.active,
-.site-header nav a:hover {
-  color: var(--gold);
-}
 
 .page-container {
   max-width: 1200px;
@@ -308,10 +268,6 @@ body {
 }
 
 @media (max-width: 700px) {
-  .header-inner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 
   .matchup-grid {
     grid-template-columns: 1fr;
@@ -334,17 +290,18 @@ body {
 
 <body>
 
-<header class="site-header">
-  <div class="header-inner">
-    <a class="site-logo" href="/">THE BOIS LEAGUE</a>
-    <nav>
-      <a href="/">HOME</a>
-      <a class="active" href="/seasons/2026/">2026 SEASON</a>
-      <a href="/franchises.html">FRANCHISES</a>
-      <a href="/history/">LEAGUE HISTORY</a>
-    </nav>
-  </div>
+
+<header>
+  <div class="logo">THE BOIS LEAGUE</div>
+
+  <nav>
+    <a href="/">HOME</a>
+    <a href="/seasons/2026/" class="active">2026 SEASON</a>
+    <a href="/franchises.html">FRANCHISES</a>
+    <a href="/#history">LEAGUE HISTORY</a>
+  </nav>
 </header>
+
 
 <main class="page-container">
   <div class="eyebrow">THE BOIS LEAGUE • SEASON THREE</div>
