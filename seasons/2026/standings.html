@@ -9,6 +9,79 @@
 
   <style>
     
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #0b1423;
+  color: #f5f6f8;
+  font-family: Arial, sans-serif;
+}
+
+/* Shared navigation styling */
+.site-header {
+  background: #0b1423;
+  border-bottom: 1px solid #d7b46a;
+  width: 100%;
+}
+
+.site-header .nav-inner {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.site-header .site-logo {
+  color: #d7b46a;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-header .nav-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.site-header .nav-links a {
+  color: #f5f6f8;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.site-header .nav-links a:hover,
+.site-header .nav-links a.active {
+  color: #d7b46a;
+}
+
+@media (max-width: 700px) {
+  .site-header .nav-inner {
+    flex-direction: column;
+    padding: 18px;
+  }
+
+  .site-header .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .site-header .site-logo {
+    font-size: 21px;
+  }
+}
+
 /* Consistent site navigation */
 
 <header class="site-header">
