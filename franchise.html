@@ -268,8 +268,12 @@ tr:last-child td {
     <table>
       <thead>
         <tr>
-          <th>SEASON</th>
-          <th>RECORD</th>
+          
+<th>SEASON</th>
+<th>REGULAR SEASON</th>
+<th>POSTSEASON</th>
+<th>OVERALL</th>
+
         </tr>
       </thead>
       <tbody id="seasonHistory"></tbody>
@@ -411,10 +415,14 @@ renderRows("nameHistory", data.names, [
 ]);
 
 
-  renderRows("seasonHistory", data.seasons, [
-    row => row.season,
-    row => row.record
-  ]);
+  
+renderRows("seasonHistory", data.seasons, [
+  row => row.season,
+  row => row.regular,
+  row => row.postseason,
+  row => row.record
+]);
+
 
   renderRows("h2hHistory", data.h2h, [
     row => row.opponentName || row.opponentID,
