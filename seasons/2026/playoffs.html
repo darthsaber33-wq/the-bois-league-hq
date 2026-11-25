@@ -21,6 +21,22 @@
   letter-spacing: 0.4px;
 }
 
+/* Eliminated franchise styling */
+.picture-team.eliminated-team {
+  background: #2b2028;
+  border-color: #a34b54;
+  opacity: 0.85;
+}
+
+.picture-team.eliminated-team .picture-seed {
+  color: #ff7d86;
+}
+
+.picture-team.eliminated-team .playoff-race-label {
+  background: rgba(255, 90, 100, 0.12);
+  color: #ff9299;
+}
+
 .picture-team {
   transition: transform 0.2s ease,
               border-color 0.2s ease;
@@ -1169,40 +1185,67 @@ window.updatePlayoffBrackets(
 
     
 
+
 const finalWildcard = wildcards[wildcards.length - 1];
+
+// Look up how many regular-season games each team has left.
+const remainingByTeam = new Map(
+  playoffPossibilities.map(team => [
+    team.abbreviation,
+    team.remaining
+  ])
+);
+
+function calculateGB(leader, challenger) {
+  if (!leader) return Infinity;
+
+  return Math.max(0, (
+    (leader.wins - challenger.wins) +
+    (challenger.losses - leader.losses)
+  ) / 2);
+}
 
 hunt.forEach(team => {
   const card = makePlayoffCard(team, null);
-
   const divisionLeader = divisionLeaders.get(team.division);
-
-  function calculateGB(leader, challenger) {
-    if (!leader) return Infinity;
-
-    return Math.max(0, (
-      (leader.wins - challenger.wins) +
-      (challenger.losses - leader.losses)
-    ) / 2);
-  }
 
   const wildcardGB = calculateGB(finalWildcard, team);
   const divisionGB = calculateGB(divisionLeader, team);
+
+  const gamesLeft = remainingByTeam.get(team.abbreviation) ?? 0;
+
+  // Basic elimination rule: both routes must be out of reach.
+  const eliminated =
+    wildcardGB > gamesLeft &&
+    divisionGB > gamesLeft;
 
   const useDivision = divisionGB < wildcardGB;
   const gamesBack = useDivision ? divisionGB : wildcardGB;
   const route = useDivision ? "DIVISION" : "WILD CARD";
 
   const seedLabel = card.querySelector(".picture-seed");
-  seedLabel.textContent = "PLAYOFF CONTENDER";
+  seedLabel.textContent = eliminated
+    ? "ELIMINATED"
+    : "PLAYOFF CONTENDER";
 
   const raceLabel = document.createElement("span");
   raceLabel.className = "playoff-race-label";
+
   raceLabel.textContent =
-    gamesBack.toFixed(1) + " GB • " + route;
+    gamesBack.toFixed(1) + " GB • " +
+    route + " • " + gamesLeft + " LEFT";
+
+  if (eliminated) {
+    card.classList.add("eliminated-team");
+    raceLabel.textContent = "ELIMINATED • " +
+      gamesBack.toFixed(1) + " GB • " +
+      gamesLeft + " LEFT";
+  }
 
   card.appendChild(raceLabel);
   huntContainer.appendChild(card);
 });
+
 
 
 
