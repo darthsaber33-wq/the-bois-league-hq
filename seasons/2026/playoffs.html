@@ -38,11 +38,16 @@
 }
 
 /* Separate eliminated teams section */
+
 .eliminated-section {
   margin-top: 24px;
   padding-top: 20px;
   border-top: 1px solid #35465f;
+  width: 100%;
+  grid-column: 1 / -1;
+  box-sizing: border-box;
 }
+
 
 .eliminated-section[hidden] {
   display: none;
@@ -56,17 +61,32 @@
   margin: 0 0 16px;
 }
 
+
 .eliminated-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
+  width: 100%;
 }
 
-@media (max-width: 750px) {
+.eliminated-grid .picture-team {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  .eliminated-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
   .eliminated-grid {
     grid-template-columns: 1fr;
   }
 }
+
 
 .picture-team {
   transition: transform 0.2s ease,
