@@ -249,20 +249,22 @@
     No divisions are hardcoded.
   */
 
-  const franchises = [
-    { name: "Dreadlords", code: "DRG" },
-    { name: "501st", code: "501" },
-    { name: "Riley Reid", code: "RRO" },
-    { name: "Celestial", code: "CEL" },
-    { name: "Josh Downs Syndrome", code: "JDS" },
-    { name: "Winnipeg Redskins", code: "WPG" },
-    { name: "Banana Splitters", code: "BAN" },
-    { name: "Outdoor Guys", code: "OUT" },
-    { name: "Carolina Panthers", code: "CAR" },
-    { name: "Xdmemes124", code: "XDM" },
-    { name: "Lunar", code: "LUN" },
-    { name: "Paris", code: "PAR" }
-  ];
+  
+const franchises = [
+  { name: "The Dreadlord's Royal Guard", code: "DRG" },
+  { name: "501st Legion", code: "501st" },
+  { name: "Riley Reid Option", code: "RRO" },
+  { name: "Celestial Guardians", code: "CG" },
+  { name: "Josh Downs Syndrome", code: "JDS" },
+  { name: "Winnipeg Redskins", code: "WPG" },
+  { name: "The Banana Splitters", code: "BAN" },
+  { name: "The Outdoor Guys", code: "OG" },
+  { name: "Carolina-Panthers", code: "CAR" },
+  { name: "XDMemes124", code: "XDM" },
+  { name: "The Lunar Eclipses", code: "LUN" },
+  { name: "Njigbas In Paris", code: "NIP" }
+];
+
 
   const grid = document.getElementById("franchiseGrid");
   const search = document.getElementById("franchiseSearch");
@@ -307,9 +309,14 @@
           Active Franchise
         </div>
 
-        <span class="profile-button">
-          PROFILE COMING SOON
-        </span>
+<a
+  class="profile-button"
+  href="/franchise.html?id=${encodeURIComponent(team.code)}"
+>
+  VIEW PROFILE
+</a>
+
+        
       </article>
     `).join("");
 
