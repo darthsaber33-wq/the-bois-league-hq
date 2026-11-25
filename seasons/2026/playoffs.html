@@ -37,6 +37,37 @@
   color: #ff9299;
 }
 
+/* Separate eliminated teams section */
+.eliminated-section {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #35465f;
+}
+
+.eliminated-section[hidden] {
+  display: none;
+}
+
+.eliminated-section h3 {
+  color: #ff9299;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin: 0 0 16px;
+}
+
+.eliminated-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 750px) {
+  .eliminated-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .picture-team {
   transition: transform 0.2s ease,
               border-color 0.2s ease;
@@ -254,6 +285,11 @@
     <h3>IN THE HUNT</h3>
     <div id="playoff-hunt"></div>
   </div>
+
+<div id="eliminatedSection" class="eliminated-section" hidden>
+  <h3>ELIMINATED FROM PLAYOFF CONTENTION</h3>
+  <div id="eliminatedContainer" class="eliminated-grid"></div>
+</div>
 
 </div>
 
@@ -1171,6 +1207,9 @@ window.updatePlayoffBrackets(
     wildcardsContainer.replaceChildren();
     huntContainer.replaceChildren();
 
+document.getElementById("eliminatedContainer").replaceChildren();
+document.getElementById("eliminatedSection").hidden = true;
+
     qualifiers.forEach((team, index) => {
       const seed = index + 1;
 
@@ -1242,8 +1281,16 @@ hunt.forEach(team => {
       gamesLeft + " LEFT";
   }
 
-  card.appendChild(raceLabel);
+card.appendChild(raceLabel);
+
+if (eliminated) {
+  document.getElementById("eliminatedContainer").appendChild(card);
+  document.getElementById("eliminatedSection").hidden = false;
+} else {
   huntContainer.appendChild(card);
+}
+
+ 
 });
 
 
