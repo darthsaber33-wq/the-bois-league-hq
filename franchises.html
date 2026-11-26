@@ -273,48 +273,95 @@ let franchises = [];
     })[char]);
   }
 
-  function renderFranchises(query = "") {
-    const filtered = franchises.filter(team =>
-      team.name.toLowerCase().includes(query.toLowerCase()) ||
-      team.code.toLowerCase().includes(query.toLowerCase())
+
+function renderFranchises(query = "") {
+  const searchTerm = query.toLowerCase();
+
+  const filtered = franchises.filter(team =>
+    team.name.toLowerCase().includes(searchTerm) ||
+    team.abbreviation.toLowerCase().includes(searchTerm) ||
+    team.id.toLowerCase().includes(searchTerm)
+  );
+
+  count.textContent =
+    filtered.length + " OF " +
+    franchises.length + " FRANCHISES";
+
+  grid.innerHTML = filtered.map(team => `
+    <article class="franchise-card">
+      <div class="franchise-emblem">
+        ${escapeHTML(team.abbreviation.slice(0, 2))}
+      </div>
+
+      <div class="franchise-name">
+        ${escapeHTML(team.name)}
+      </div>
+
+      <div class="franchise-code">
+        ${escapeHTML(team.abbreviation)}
+      </div>
+
+      <div class="franchise-status">
+        EST. ${escapeHTML(team.founded)}
+      </div>
+
+      <a
+        class="profile-button"
+        href="/franchise.html?id=${encodeURIComponent(team.id)}"
+      >
+        VIEW PROFILE
+      </a>
+    </article>
+  `).join("");
+
+  empty.style.display =
+    filtered.length ? "none" : "block";
+}
+
+search.addEventListener("input", () => {
+  renderFranchises(search.value.trim());
+});
+
+async function loadFranchises() {
+  count.textContent = "LOADING FRANCHISES...";
+
+  try {
+    const response = await fetch(
+      API_URL + "?type=franchise-directory"
     );
 
-    count.textContent =
-      filtered.length + " OF " +
-      franchises.length + " FRANCHISES";
+    if (!response.ok) {
+      throw new Error("Unable to load franchise data.");
+    }
 
-    grid.innerHTML = filtered.map(team => `
-      <article class="franchise-card">
-        <div class="franchise-emblem">
-          ${escapeHTML(team.code.slice(0, 2))}
-        </div>
+    const data = await response.json();
 
-        <div class="franchise-name">
-          ${escapeHTML(team.name)}
-        </div>
+    if (!data.success || !Array.isArray(data.franchises)) {
+      throw new Error(
+        data.error || "Invalid franchise directory response."
+      );
+    }
 
-        <div class="franchise-code">
-          ${escapeHTML(team.code)}
-        </div>
+    franchises = data.franchises;
+    renderFranchises(search.value.trim());
 
-        <div class="franchise-status">
-          Active Franchise
-        </div>
-
-<a
-  class="profile-button"
-  href="/franchise.html?id=${encodeURIComponent(team.code)}"
->
-  VIEW PROFILE
-</a>
-
-        
-      </article>
-    `).join("");
-
-    empty.style.display =
-      filtered.length ? "none" : "block";
+  } catch (error) {
+    console.error("Franchise directory error:", error);
+    count.textContent = "UNABLE TO LOAD FRANCHISES";
+    grid.innerHTML = `
+      <p style="color:#ff9299;">
+        Franchise data is currently unavailable.
+      </p>
+    `;
   }
+}
+
+loadFranchises();
+</script>
+
+</body>
+</html>
+
 
   search.addEventListener("input", () => {
     renderFranchises(search.value.trim());
