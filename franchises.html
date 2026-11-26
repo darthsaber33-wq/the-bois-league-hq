@@ -122,6 +122,13 @@
       font-weight: 900;
     }
 
+.franchise-emblem img {
+  width: 85%;
+  height: 85%;
+  object-fit: contain;
+  display: block;
+}
+
     .franchise-name {
       font-size: 20px;
       font-weight: 900;
@@ -289,9 +296,15 @@ function renderFranchises(query = "") {
 
   grid.innerHTML = filtered.map(team => `
     <article class="franchise-card">
-      <div class="franchise-emblem">
-        ${escapeHTML(team.abbreviation.slice(0, 2))}
-      </div>
+      
+<div class="franchise-emblem">
+  <img
+    src="/images/teams/${encodeURIComponent(team.id)}.png"
+    alt="${escapeHTML(team.name)} logo"
+    loading="lazy"
+  >
+</div>
+
 
       <div class="franchise-name">
         ${escapeHTML(team.name)}
@@ -357,17 +370,6 @@ async function loadFranchises() {
 }
 
 loadFranchises();
-</script>
-
-</body>
-</html>
-
-
-  search.addEventListener("input", () => {
-    renderFranchises(search.value.trim());
-  });
-
-  renderFranchises();
 </script>
 
 </body>
