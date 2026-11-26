@@ -253,6 +253,19 @@ tr:last-child td {
   }
 }
 
+/* FRANCHISE STREAKS */
+
+.streak-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+  .streak-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 </style>
 </head>
 
@@ -299,6 +312,27 @@ tr:last-child td {
 <p class="story" id="teamStory"></p>
 
 <section class="stat-grid" id="statGrid"></section>
+
+<section class="profile-section">
+  <h2>Franchise Streaks</h2>
+
+  <div class="stat-grid streak-grid" id="streakGrid">
+    <div class="stat-card">
+      <div class="stat-value">—</div>
+      <div class="stat-label">ACTIVE STREAK</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-value">—</div>
+      <div class="stat-label">LONGEST WIN STREAK</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-value">—</div>
+      <div class="stat-label">LONGEST LOSS STREAK</div>
+    </div>
+  </div>
+</section>
 
 <section class="profile-section">
   <h2>Franchise Name History</h2>
@@ -479,6 +513,22 @@ function renderProfile(data) {
   `).join("");
 
   
+  // FRANCHISE STREAKS
+  const streaks = data.streaks || {};
+
+  const streakCards = [
+    ["ACTIVE STREAK", streaks.active ?? "—"],
+    ["LONGEST WIN STREAK", streaks.longestWin ?? "—"],
+    ["LONGEST LOSS STREAK", streaks.longestLoss ?? "—"]
+  ];
+
+  $("streakGrid").innerHTML = streakCards.map(([label, value]) => `
+    <div class="stat-card">
+      <div class="stat-value">${escapeHTML(value)}</div>
+      <div class="stat-label">${escapeHTML(label)}</div>
+    </div>
+  `).join("");
+
 renderRows("nameHistory", data.names, [
   row => {
     if (row.endSeason === row.startSeason) {
