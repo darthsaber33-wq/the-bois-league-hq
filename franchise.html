@@ -282,6 +282,25 @@ tr:last-child td {
 </section>
 
 <section class="profile-section">
+  <h2>Franchise Records</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>CATEGORY</th>
+          <th>WINS</th>
+          <th>LOSSES</th>
+          <th>WIN %</th>
+        </tr>
+      </thead>
+
+      <tbody id="franchiseRecords"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="profile-section">
   <h2>All-Time Head-to-Head</h2>
   <div class="table-wrap">
     <table>
@@ -422,6 +441,32 @@ renderRows("seasonHistory", data.seasons, [
   row => row.postseason,
   row => row.record
 ]);
+
+  const records = data.records || {};
+
+  const recordCategories = [
+    ["Regular Season", records.regular],
+    ["Championship Playoffs", records.championship],
+    ["Consolation Playoffs", records.consolation],
+    ["Game of the Week", records.gotw],
+    ["Bowl Games", records.bowl],
+    ["Overall", records.overall]
+  ];
+
+  const recordRows = recordCategories.map(([category, record]) => ({
+    category,
+    wins: record?.wins ?? "—",
+    losses: record?.losses ?? "—"
+  }));
+
+  renderRows("franchiseRecords", recordRows, [
+    row => row.category,
+    row => row.wins,
+    row => row.losses,
+    row => row.wins === "—"
+      ? "—"
+      : percent(row.wins, row.losses)
+  ]);
 
 
   renderRows("h2hHistory", data.h2h, [
