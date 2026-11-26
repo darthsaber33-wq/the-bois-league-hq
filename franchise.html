@@ -266,6 +266,38 @@ tr:last-child td {
   }
 }
 
+/* WEEKLY HISTORY DROPDOWN */
+
+.history-dropdown summary {
+  color: var(--gold);
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.history-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.history-dropdown summary::after {
+  content: "+";
+  float: right;
+  font-size: 24px;
+}
+
+.history-dropdown[open] summary::after {
+  content: "−";
+}
+
+.history-dropdown[open] summary {
+  margin-bottom: 22px;
+}
+
+.history-dropdown summary:hover {
+  color: var(--text);
+}
+
 </style>
 </head>
 
@@ -372,6 +404,29 @@ tr:last-child td {
       <tbody id="seasonHistory"></tbody>
     </table>
   </div>
+</section>
+
+<section class="profile-section">
+  <details class="history-dropdown">
+    <summary>Weekly History</summary>
+
+    <p class="team-meta">
+      All-time regular-season record by week.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>WEEK</th>
+            <th>RECORD</th>
+            <th>WIN %</th>
+          </tr>
+        </thead>
+        <tbody id="weeklyHistory"></tbody>
+      </table>
+    </div>
+  </details>
 </section>
 
 <section class="profile-section">
@@ -550,6 +605,23 @@ renderRows("seasonHistory", data.seasons, [
   row => row.postseason,
   row => row.record
 ]);
+
+  // WEEKLY HISTORY
+  const weeklyHistory = data.weeklyHistory || [];
+
+  renderRows("weeklyHistory", weeklyHistory, [
+    row => "Week " + String(row.week).replace(/^W/i, ""),
+    row => row.record,
+    row => {
+      const [wins, losses] = String(row.record)
+        .split("-")
+        .map(Number);
+
+      return Number.isFinite(wins) && Number.isFinite(losses)
+        ? percent(wins, losses)
+        : "—";
+    }
+  ]);
 
   const records = data.records || {};
 
