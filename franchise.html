@@ -194,6 +194,65 @@ tr:last-child td {
     font-size: 22px;
   }
 }
+  
+/* ==========================================
+   FRANCHISE ACHIEVEMENT CARDS
+========================================== */
+
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.achievement-card {
+  background: var(--panel-light);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  min-height: 105px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.achievement-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.achievement-symbol {
+  color: var(--gold);
+  font-size: 23px;
+}
+
+.achievement-count {
+  color: var(--gold);
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.achievement-name {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+@media (max-width: 750px) {
+  .achievement-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .achievement-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 </style>
 </head>
 
@@ -475,15 +534,28 @@ renderRows("seasonHistory", data.seasons, [
     row => percent(row.wins, row.losses)
   ]);
 
+  
   if (Array.isArray(data.achievements) &&
       data.achievements.length) {
+
+    const achievements = [...data.achievements].sort((a, b) =>
+      b.count - a.count || a.name.localeCompare(b.name)
+    );
+
     $("achievements").classList.remove("empty");
-    $("achievements").innerHTML =
-      data.achievements.map(item =>
-        "<p>" + escapeHTML(item.name) +
-        " ×" + escapeHTML(item.count) + "</p>"
-      ).join("");
+    $("achievements").classList.add("achievement-grid");
+
+    $("achievements").innerHTML = achievements.map(item => `
+      <div class="achievement-card">
+        <div class="achievement-card-top">
+          <span class="achievement-symbol">★</span>
+          <span class="achievement-count">×${escapeHTML(item.count)}</span>
+        </div>
+        <div class="achievement-name">${escapeHTML(item.name)}</div>
+      </div>
+    `).join("");
   }
+
 
   if (team.fullStory) {
     $("fullStory").classList.remove("empty");
