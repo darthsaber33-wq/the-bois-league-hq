@@ -21,6 +21,20 @@
   letter-spacing: 0.4px;
 }
 
+.playoff-clinch-label {
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: 6px;
+  padding: 6px 9px;
+  border-radius: 5px;
+  background: rgba(75, 190, 125, 0.13);
+  color: #80e0a5;
+  border: 1px solid rgba(75, 190, 125, 0.35);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+}
+
 /* Eliminated franchise styling */
 .picture-team.eliminated-team {
   background: #2b2028;
@@ -951,7 +965,8 @@ window.addEventListener("load", loadLiveBracketSeeds);
     "AKfycbyowj7BeP1m_2Gf2r4j9hIPzru xjDIXnzVO-ibSMFrr-Z0P4aJvUkqF6ihiVdcz4JOYag".replace(" ", "") +
     "/exec?type=standings";
 
-function makePlayoffCard(team, seed, isBye = false) {
+
+function makePlayoffCard(team, seed, isBye = false, clinch = null) {
   const card = document.createElement("div");
   card.className = "picture-team" + (isBye ? " bye-team" : "");
 
@@ -968,8 +983,29 @@ function makePlayoffCard(team, seed, isBye = false) {
   record.textContent = team.wins + "–" + team.losses;
 
   card.append(seedLabel, name, record);
+
+  if (clinch) {
+    let status = "";
+
+    if (clinch.clinchedFirstSeed) {
+      status = "Z · CLINCHED #1 SEED";
+    } else if (clinch.clinchedDivision) {
+      status = "Y · CLINCHED DIVISION";
+    } else if (clinch.clinchedPlayoffs) {
+      status = "X · CLINCHED PLAYOFFS";
+    }
+
+    if (status) {
+      const badge = document.createElement("span");
+      badge.className = "playoff-clinch-label";
+      badge.textContent = status;
+      card.appendChild(badge);
+    }
+  }
+
   return card;
 }
+
 
 function checkDivisionPath(team, teams, remainingGames) {
   const divisionTeams = teams.filter(
@@ -1071,6 +1107,68 @@ function calculatePlayoffPossibilities(teams, remainingGames) {
   });
 }
 
+function calculatePlayoffClinches(teams, remainingGames) {
+  const remainingByTeam = new Map();
+
+  teams.forEach(team => {
+    remainingByTeam.set(team.abbreviation, 0);
+  });
+
+  remainingGames.forEach(game => {
+    remainingByTeam.set(
+      game.team1,
+      (remainingByTeam.get(game.team1) || 0) + 1
+    );
+
+    remainingByTeam.set(
+      game.team2,
+      (remainingByTeam.get(game.team2) || 0) + 1
+    );
+  });
+
+  const maxWins = team =>
+    team.wins +
+    (remainingByTeam.get(team.abbreviation) || 0);
+
+  return teams.map(team => {
+    const opponents = teams.filter(
+      other => other.abbreviation !== team.abbreviation
+    );
+
+    const divisionOpponents = opponents.filter(
+      other => other.division === team.division
+    );
+
+    // Division is clinched when no rival can tie or pass.
+    const clinchedDivision = divisionOpponents.every(
+      other => team.wins > maxWins(other)
+    );
+
+    // Overall #1 seed is clinched when nobody can tie or pass.
+    const clinchedFirstSeed = opponents.every(
+      other => team.wins > maxWins(other)
+    );
+
+    // Conservative playoff berth check:
+    // If fewer than seven other teams can tie or pass
+    // this team's current wins, it cannot fall outside
+    // the seven-team playoff field.
+    const teamsThatCanCatch = opponents.filter(
+      other => maxWins(other) >= team.wins
+    ).length;
+
+    const clinchedPlayoffs =
+      clinchedDivision || teamsThatCanCatch < 7;
+
+    return {
+      abbreviation: team.abbreviation,
+      clinchedDivision,
+      clinchedPlayoffs,
+      clinchedFirstSeed
+    };
+  });
+}
+
 async function loadPlayoffStandings() {
   const note = document.querySelector(".picture-note");
 
@@ -1140,6 +1238,20 @@ console.log(
   teams,
   remainingGames
 );
+
+const playoffClinches = calculatePlayoffClinches(
+  teams,
+  remainingGames
+);
+
+const clinchesByTeam = new Map(
+  playoffClinches.map(team => [
+    team.abbreviation,
+    team
+  ])
+);
+
+console.table(playoffClinches);
 
 console.table(playoffPossibilities);
     const divisionPossibilities = playoffPossibilities.map(team => {
@@ -1230,17 +1342,26 @@ window.updatePlayoffBrackets(
 document.getElementById("eliminatedContainer").replaceChildren();
 document.getElementById("eliminatedSection").hidden = true;
 
-    qualifiers.forEach((team, index) => {
-      const seed = index + 1;
+ 
+qualifiers.forEach((team, index) => {
+  const seed = index + 1;
+  const clinch = clinchesByTeam.get(team.abbreviation);
 
-      if (seed === 1) {
-        byeContainer.appendChild(makePlayoffCard(team, seed, true));
-      } else if (leaderCodes.has(team.abbreviation)) {
-        leadersContainer.appendChild(makePlayoffCard(team, seed));
-      } else {
-        wildcardsContainer.appendChild(makePlayoffCard(team, seed));
-      }
-    });
+  if (seed === 1) {
+    byeContainer.appendChild(
+      makePlayoffCard(team, seed, true, clinch)
+    );
+  } else if (leaderCodes.has(team.abbreviation)) {
+    leadersContainer.appendChild(
+      makePlayoffCard(team, seed, false, clinch)
+    );
+  } else {
+    wildcardsContainer.appendChild(
+      makePlayoffCard(team, seed, false, clinch)
+    );
+  }
+});
+   
 
     
 
